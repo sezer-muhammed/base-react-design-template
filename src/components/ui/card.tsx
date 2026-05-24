@@ -25,14 +25,14 @@ export const cardVariants = cva(
       },
       tone: {
         accent:
-          "border-[var(--ds-blue-400)] bg-[var(--ds-blue-100)] text-[var(--ds-blue-1000)]",
-        dark: "border-white/15 bg-[var(--ds-gray-1000)] text-[var(--ds-background-100)]",
+          "border-[var(--ds-blue-400)] bg-[var(--ds-blue-100)] text-[var(--ds-blue-1000)] hover:border-[var(--ds-blue-500)]",
+        dark: "border-white/15 bg-[var(--ds-gray-1000)] text-[var(--ds-background-100)] hover:border-white/25",
         default:
-          "border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] text-[var(--ds-gray-1000)]",
+          "border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] text-[var(--ds-gray-1000)] hover:border-[var(--ds-gray-alpha-500)]",
         muted:
-          "border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] text-[var(--ds-gray-1000)]",
+          "border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] text-[var(--ds-gray-1000)] hover:border-[var(--ds-gray-alpha-400)]",
         warning:
-          "border-[var(--ds-amber-400)] bg-[var(--ds-amber-100)] text-[var(--ds-amber-1000)]",
+          "border-[var(--ds-amber-400)] bg-[var(--ds-amber-100)] text-[var(--ds-amber-1000)] hover:border-[var(--ds-amber-500)]",
       },
     },
   },

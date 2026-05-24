@@ -87,7 +87,7 @@ export function ShowroomPage() {
               summary="The same card skeleton, with tone, density, and depth controlled separately."
             >
               <div className="space-y-3">
-                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                <div className="stagger grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                   {cardSamples.map((card) => (
                     <Card depth="lifted" key={card.title} tone="default">
                       <CardHeader>
@@ -342,9 +342,6 @@ function DotLabel({
   );
 }
 
-function GlassBadge({ children }: { children: React.ReactNode }) {
-  return <GlassTag>{children}</GlassTag>;
-}
 
 function FoundationTokenTable() {
   return (
@@ -540,7 +537,7 @@ function AssetWideVisualCard() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/38 via-transparent to-black/12" />
         <div className="absolute left-4 top-4 flex flex-wrap gap-2">
           <ComponentIdBadge id="CARD-03" />
-          <GlassBadge>wide visual</GlassBadge>
+          <GlassTag>wide visual</GlassTag>
         </div>
         <div className="absolute inset-x-4 bottom-4 grid gap-4 rounded-[10px] border border-white/28 bg-white/[0.57] p-4 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.74),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md sm:p-5 lg:grid-cols-[1fr_430px] lg:items-end">
           <div>
@@ -686,25 +683,25 @@ function ImageFrame({
         )}
         <div className="absolute left-4 top-4 flex flex-wrap gap-2">
           <ComponentIdBadge id={componentId} />
-          <GlassBadge>{soft ? "soft glass" : "2026-05-24"}</GlassBadge>
+          <GlassTag>{soft ? "soft glass" : "2026-05-24"}</GlassTag>
         </div>
         <div className="absolute right-4 top-4 flex flex-wrap justify-end gap-2">
-          <GlassBadge>{assetDemo.identity.name}</GlassBadge>
-          <GlassBadge>{soft ? assetDemo.identity.version : assetDemo.media.color}</GlassBadge>
+          <GlassTag>{assetDemo.identity.name}</GlassTag>
+          <GlassTag>{soft ? assetDemo.identity.version : assetDemo.media.color}</GlassTag>
         </div>
         <div className="absolute inset-x-0 bottom-0 grid gap-3 p-4 text-white sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
             <div className="mb-3 flex flex-wrap gap-2">
-              <GlassBadge>{soft ? "crop-safe" : "full bleed"}</GlassBadge>
-              <GlassBadge>{soft ? "edge meta" : "vignette"}</GlassBadge>
+              <GlassTag>{soft ? "crop-safe" : "full bleed"}</GlassTag>
+              <GlassTag>{soft ? "edge meta" : "vignette"}</GlassTag>
             </div>
             <h3 className="text-[22px] font-semibold leading-7">{frameTitle}</h3>
             <p className="mt-2 max-w-md text-[13px] leading-5 text-white/70">{caption}</p>
           </div>
           <div className="flex flex-wrap gap-2 sm:max-w-[280px] sm:justify-end">
-            <GlassBadge>mode: {assetDemo.media.trim}</GlassBadge>
-            <GlassBadge>scope: {assetDemo.identity.market}</GlassBadge>
-            <GlassBadge>latency: {assetDemo.metrics.latencyMs}ms</GlassBadge>
+            <GlassTag>mode: {assetDemo.media.trim}</GlassTag>
+            <GlassTag>scope: {assetDemo.identity.market}</GlassTag>
+            <GlassTag>latency: {assetDemo.metrics.latencyMs}ms</GlassTag>
           </div>
         </div>
       </div>
@@ -726,7 +723,7 @@ function SystemBlueprint() {
         summary="These are intentionally contract-level placeholders: enough structure to extend later without hard-coding infrastructure today."
         title="Runtime capability map"
       />
-      <div className="grid gap-3 p-3 md:grid-cols-2 xl:grid-cols-3">
+      <div className="stagger grid gap-3 p-3 md:grid-cols-2 xl:grid-cols-3">
         {platformCapabilities.map((capability) => (
           <Card
             data-component-id={capability.id}
@@ -797,7 +794,7 @@ function TopBar() {
 
 function IntroPanel() {
   return (
-    <section className="grid gap-3 xl:grid-cols-[1fr_360px]">
+    <section className="reveal grid gap-3 xl:grid-cols-[1fr_360px]">
       <div className="py-4">
         <p className="font-mono text-[12px] uppercase tracking-normal text-[var(--ds-gray-700)]">
           Template showroom
@@ -856,7 +853,7 @@ function ShowcaseSection({
 }) {
   return (
     <section
-      className={cn("scroll-mt-24", className)}
+      className={cn("scroll-mt-24 reveal", className)}
       data-component-id={componentId}
       id={id}
     >

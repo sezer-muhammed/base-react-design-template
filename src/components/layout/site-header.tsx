@@ -1,3 +1,6 @@
+"use client";
+
+import * as Popover from "@radix-ui/react-popover";
 import Link from "next/link";
 import { ChevronDown, Menu } from "lucide-react";
 import { RecursiveMenu } from "@/components/ui/recursive-menu";
@@ -55,23 +58,29 @@ export function SiteHeader() {
 
 function NavigationTreeDropdown({ compact = false }: { compact?: boolean }) {
   return (
-    <details className="group relative">
-      <summary className="flex h-9 cursor-pointer list-none items-center justify-center gap-2 rounded-[7px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-3 text-[13px] font-medium text-[var(--ds-gray-1000)] transition hover:bg-[var(--ds-gray-100)] [&::-webkit-details-marker]:hidden">
+    <Popover.Root>
+      <Popover.Trigger className="flex h-9 cursor-pointer items-center gap-2 rounded-[7px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-3 text-[13px] font-medium text-[var(--ds-gray-1000)] outline-none transition hover:bg-[var(--ds-gray-100)] focus-visible:shadow-[var(--ds-focus-ring)] data-[state=open]:bg-[var(--ds-gray-100)]">
         {compact ? <Menu aria-hidden="true" className="h-4 w-4" /> : null}
         {compact ? "Menu" : "Navigate"}
         <ChevronDown
           aria-hidden="true"
-          className="h-3.5 w-3.5 text-[var(--ds-gray-700)] transition group-open:rotate-180"
+          className="h-3.5 w-3.5 text-[var(--ds-gray-700)] transition duration-200 [[data-state=open]_&]:rotate-180"
         />
-      </summary>
-      <div className="depth-surface absolute right-0 top-[calc(100%+10px)] z-50 w-[min(430px,calc(100vw-24px))] overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)]">
-        <div className="border-b border-[var(--ds-gray-alpha-300)] px-3 py-2">
-          <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
-            Site navigation
-          </p>
-        </div>
-        <RecursiveMenu items={siteNavigationTree} />
-      </div>
-    </details>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          align="end"
+          className="depth-surface z-50 w-[min(430px,calc(100vw-24px))] overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] data-[state=open]:animate-[fade-in_0.15s_ease] data-[state=closed]:animate-[fade-out_0.1s_ease]"
+          sideOffset={10}
+        >
+          <div className="border-b border-[var(--ds-gray-alpha-300)] px-3 py-2">
+            <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
+              Site navigation
+            </p>
+          </div>
+          <RecursiveMenu items={siteNavigationTree} />
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }

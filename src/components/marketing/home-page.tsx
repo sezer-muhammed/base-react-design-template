@@ -1,6 +1,3 @@
-"use client";
-
-import * as Dialog from "@radix-ui/react-dialog";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -9,36 +6,26 @@ import {
   Cable,
   Gauge,
   GitBranch,
-  Inbox,
   Layers3,
-  Loader2,
   Route,
   ShieldCheck,
   Sparkles,
   Workflow,
 } from "lucide-react";
-import { useMemo, useState } from "react";
 import { SiteShell } from "@/components/layout/site-shell";
 import { ActionBar } from "@/components/ui/action-bar";
-import { Badge } from "@/components/ui/badge";
-import { Button, ButtonLink } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DataTable, type TableColumn } from "@/components/ui/data-table";
 import { DataPanel } from "@/components/ui/data-panel";
 import { GlassTag } from "@/components/ui/glass-tag";
-import { DefaultDialogFooter, DialogFrame } from "@/components/ui/overlay-frame";
 import { ProgressCell } from "@/components/ui/progress-cell";
-import { RecordCard } from "@/components/ui/record-card";
 import { RecordTable, type RecordTableColumn } from "@/components/ui/record-table";
-import { FilterButton, SearchFilterHeader } from "@/components/ui/search-filter-header";
-import { StateBlock } from "@/components/ui/state-block";
 import { StatusSignal } from "@/components/ui/status-signal";
-import { Surface } from "@/components/ui/surface";
-import { ToggleCell } from "@/components/ui/toggle-cell";
 import { platformCapabilities } from "@/config/capabilities";
 import { frameworkBadges, siteConfig } from "@/config/site";
 import { operationRows } from "@/data/operations";
 import { assetDemo } from "@/data/showroom";
+import { ProofSection } from "./proof-section";
 
 const featureCards = [
   {
@@ -122,85 +109,6 @@ const structureColumns: RecordTableColumn<(typeof structureRows)[number]>[] = [
   },
   {
     className: "w-[110px]",
-    header: "Status",
-    key: "status",
-    render: (row) => (
-      <StatusSignal color={row.color} variant="pill">
-        {row.status}
-      </StatusSignal>
-    ),
-  },
-];
-
-const consoleRows = [
-  {
-    id: "flow-intake",
-    flow: "Intake router",
-    kind: "Push",
-    owner: "Platform",
-    status: "Live",
-    color: "var(--ds-blue-700)",
-    load: 82,
-  },
-  {
-    id: "flow-sync",
-    flow: "Source sync",
-    kind: "Pull",
-    owner: "Data",
-    status: "Queued",
-    color: "var(--ds-amber-700)",
-    load: 48,
-  },
-  {
-    id: "flow-review",
-    flow: "Review gate",
-    kind: "Human",
-    owner: "Ops",
-    status: "Ready",
-    color: "var(--ds-green-700)",
-    load: 64,
-  },
-  {
-    id: "flow-stream",
-    flow: "Live stream",
-    kind: "Realtime",
-    owner: "Runtime",
-    status: "Live",
-    color: "var(--ds-purple-700)",
-    load: 91,
-  },
-] as const;
-
-type ConsoleRow = (typeof consoleRows)[number];
-
-const consoleColumns: TableColumn<ConsoleRow>[] = [
-  {
-    header: "Flow",
-    key: "flow",
-    render: (row) => (
-      <span className="flex min-w-0 items-center gap-2 font-semibold">
-        <StatusSignal color={row.color} variant="dot" />
-        <span className="truncate">{row.flow}</span>
-      </span>
-    ),
-  },
-  {
-    header: "Kind",
-    key: "kind",
-    render: (row) => row.kind,
-  },
-  {
-    header: "Owner",
-    key: "owner",
-    render: (row) => row.owner,
-  },
-  {
-    header: "Load",
-    key: "load",
-    render: (row) => <ProgressCell color="var(--ds-gray-1000)" showValue value={row.load} />,
-  },
-  {
-    className: "w-[108px]",
     header: "Status",
     key: "status",
     render: (row) => (
@@ -332,8 +240,8 @@ function Hero() {
 
 function PlatformSection() {
   return (
-    <section className="scroll-mt-24" id="platform">
-      <div className="grid gap-3 lg:grid-cols-3">
+    <section className="scroll-mt-24 reveal" id="platform">
+      <div className="stagger grid gap-3 lg:grid-cols-3">
         {featureCards.map((feature) => {
           const Icon = feature.icon;
 
@@ -358,7 +266,7 @@ function PlatformSection() {
 
 function ComponentsSection() {
   return (
-    <section className="scroll-mt-24" id="components">
+    <section className="scroll-mt-24 reveal" id="components">
       <DataPanel
         action={<ButtonLink href="/showroom" icon={ArrowRight} size="sm">Showroom</ButtonLink>}
         eyebrow="Components"
@@ -366,7 +274,7 @@ function ComponentsSection() {
         summary="The landing page consumes the same primitives that the showroom documents."
         title="Reusable pieces, already used in the website."
       >
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+        <div className="stagger grid gap-3 md:grid-cols-2 xl:grid-cols-5">
           {componentCards.map((component) => {
             const Icon = component.icon;
 
@@ -388,7 +296,7 @@ function ComponentsSection() {
 
 function RuntimeSection() {
   return (
-    <section className="scroll-mt-24" id="runtime">
+    <section className="scroll-mt-24 reveal" id="runtime">
       <div className="grid gap-3 xl:grid-cols-[1fr_380px]">
         <DataPanel
           action={<StatusSignal color="var(--ds-green-700)" variant="pill">runtime map</StatusSignal>}
@@ -396,7 +304,7 @@ function RuntimeSection() {
           summary="The project is still frontend-first, but the server-facing contracts have named slots."
           title="Built to accept push, pull, jobs and streams."
         >
-          <div className="grid gap-3 p-3 md:grid-cols-2 xl:grid-cols-3">
+          <div className="stagger grid gap-3 p-3 md:grid-cols-2 xl:grid-cols-3">
             {platformCapabilities.map((capability) => (
               <Card depth="base" key={capability.id}>
                 <CardHeader action={<StatusSignal color={capability.color} variant="pill">{capability.mode}</StatusSignal>}>
@@ -438,127 +346,9 @@ function RuntimeSection() {
   );
 }
 
-function ProofSection() {
-  const [query, setQuery] = useState("");
-  const [kind, setKind] = useState("All");
-  const [liveMode, setLiveMode] = useState(true);
-
-  const filteredRows = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-
-    return consoleRows.filter((row) => {
-      const matchesKind = kind === "All" || row.kind === kind;
-      const matchesQuery =
-        !normalizedQuery ||
-        [row.flow, row.kind, row.owner, row.status].some((value) =>
-          value.toLowerCase().includes(normalizedQuery),
-        );
-
-      return matchesKind && matchesQuery;
-    });
-  }, [kind, query]);
-
-  return (
-    <section className="scroll-mt-24" id="proof">
-      <DataPanel
-        action={<StatusSignal color="var(--ds-blue-700)" variant="pill">site proof</StatusSignal>}
-        eyebrow="Component proof"
-        summary="Showroom primitives are used here as a real product console: search, filters, toggles, cards, state blocks, modal frame, and table composition."
-        title="The site uses the system it documents."
-      >
-        <div className="grid gap-3 p-3 xl:grid-cols-[1fr_380px]">
-          <Surface className="overflow-hidden" tone="flat">
-            <SearchFilterHeader
-              onQueryChange={setQuery}
-              placeholder="Search flows, owners, or status"
-              query={query}
-            >
-              {["All", "Push", "Pull", "Realtime", "Human"].map((option) => (
-                <FilterButton
-                  active={kind === option}
-                  key={option}
-                  onClick={() => setKind(option)}
-                >
-                  {option}
-                </FilterButton>
-              ))}
-              <div className="ml-auto flex items-center gap-2">
-                <span className="text-[12px] font-medium text-[var(--ds-gray-900)]">
-                  Live
-                </span>
-                <ToggleCell checked={liveMode} onChange={() => setLiveMode((value) => !value)} />
-              </div>
-            </SearchFilterHeader>
-            <DataTable columns={consoleColumns} rows={filteredRows} />
-          </Surface>
-
-          <div className="grid gap-3">
-            <RecordCard
-              action={<Badge tone="gray">{filteredRows.length} visible</Badge>}
-              componentId="SITE-RECORD"
-              description="A reusable record container for dense product summaries."
-              eyebrow={<StatusSignal color="var(--ds-green-700)" variant="pill">record</StatusSignal>}
-              footer={
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="font-mono text-[11px] text-[var(--ds-gray-700)]">
-                    source: local preview
-                  </span>
-                  <Dialog.Root>
-                    <Dialog.Trigger asChild>
-                      <Button size="sm" type="button" variant="secondary">
-                        Open modal
-                      </Button>
-                    </Dialog.Trigger>
-                    <Dialog.Portal>
-                      <Dialog.Overlay className="fixed inset-0 z-40 bg-black/35" />
-                      <DialogFrame
-                        description="This modal uses the same neutral overlay frame from the showroom, now attached to the real website flow."
-                        footer={<DefaultDialogFooter />}
-                        title="Runtime action"
-                      />
-                    </Dialog.Portal>
-                  </Dialog.Root>
-                </div>
-              }
-              title="Runtime control card"
-            >
-              <div className="grid gap-2">
-                {["Webhook intake", "Pull scheduler", "Realtime channel"].map((item, index) => (
-                  <div
-                    className="flex items-center justify-between gap-3 rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] px-3 py-2"
-                    key={item}
-                  >
-                    <span className="truncate text-[13px] font-medium">{item}</span>
-                    <StatusSignal
-                      color={index === 1 ? "var(--ds-amber-700)" : "var(--ds-green-700)"}
-                      variant="dot"
-                    />
-                  </div>
-                ))}
-              </div>
-            </RecordCard>
-
-            <StateBlock
-              action={liveMode ? "Monitoring" : "Paused"}
-              color={liveMode ? "var(--ds-blue-700)" : "var(--ds-amber-700)"}
-              componentId="SITE-STATE"
-              description="A state primitive can carry loading, empty, paused, and error moments without changing the page language."
-              icon={liveMode ? Loader2 : Inbox}
-              loading={liveMode}
-              title={liveMode ? "Live preview running" : "Preview paused"}
-            >
-              <Badge tone="gray">StateBlock</Badge>
-            </StateBlock>
-          </div>
-        </div>
-      </DataPanel>
-    </section>
-  );
-}
-
 function StructureSection() {
   return (
-    <section className="scroll-mt-24" id="structure">
+    <section className="scroll-mt-24 reveal" id="structure">
       <DataPanel
         action={<StatusSignal color="var(--ds-gray-1000)" variant="pill">file system</StatusSignal>}
         eyebrow="Structure"
