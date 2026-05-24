@@ -1,10 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowDown, ArrowUp, ChevronsUpDown, Search } from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
+import { ProgressCell } from "@/components/ui/progress-cell";
+import { FilterButton, SearchFilterHeader } from "@/components/ui/search-filter-header";
+import { StatusSignal } from "@/components/ui/status-signal";
 import { cn } from "@/lib/cn";
 import { componentRows, type ComponentRow } from "@/data/showroom";
-import { programRows, type ProgramRow } from "@/data/leadership";
+import { operationRows, type OperationRow } from "@/data/operations";
 
 type SortDirection = "asc" | "desc";
 type SortState<T> = {
@@ -37,11 +40,12 @@ const componentColumns: InteractiveColumn<ComponentRow>[] = [
     header: "State",
     key: "state",
     render: (row) => (
-      <DotLabel
+      <StatusSignal
         color={row.state === "Ready" ? "var(--ds-green-700)" : row.state === "Review" ? "var(--ds-amber-700)" : "var(--ds-gray-1000)"}
+        variant="cell"
       >
         {row.state}
-      </DotLabel>
+      </StatusSignal>
     ),
   },
   {
@@ -52,9 +56,9 @@ const componentColumns: InteractiveColumn<ComponentRow>[] = [
   { header: "Usage", key: "usage" },
 ];
 
-const programColumns: InteractiveColumn<ProgramRow>[] = [
+const operationColumns: InteractiveColumn<OperationRow>[] = [
   {
-    header: "Modül",
+    header: "Module",
     key: "module",
     render: (row) => (
       <div>
@@ -63,31 +67,31 @@ const programColumns: InteractiveColumn<ProgramRow>[] = [
       </div>
     ),
   },
-  { header: "Kitle", key: "cohort" },
-  { header: "Lider", key: "lead" },
+  { header: "Audience", key: "cohort" },
+  { header: "Lead", key: "lead" },
   {
     header: "Risk",
     key: "risk",
     render: (row) => (
-      <DotLabel color={row.risk === "Yüksek" ? "var(--ds-pink-700)" : row.risk === "Orta" ? "var(--ds-amber-700)" : "var(--ds-green-700)"}>
+      <StatusSignal color={row.risk === "High" ? "var(--ds-pink-700)" : row.risk === "Medium" ? "var(--ds-amber-700)" : "var(--ds-green-700)"} variant="cell">
         {row.risk}
-      </DotLabel>
+      </StatusSignal>
     ),
   },
   {
     align: "right",
-    header: "Hazırlık",
+    header: "Readiness",
     key: "readiness",
     render: (row) => <Readiness value={row.readiness} />,
     sortValue: (row) => row.readiness,
   },
   {
-    header: "Durum",
+    header: "Status",
     key: "status",
     render: (row) => (
-      <DotLabel color={row.status === "Aktif" ? "var(--ds-blue-700)" : row.status === "Tamam" ? "var(--ds-green-700)" : "var(--ds-gray-1000)"}>
+      <StatusSignal color={row.status === "Active" ? "var(--ds-blue-700)" : row.status === "Done" ? "var(--ds-green-700)" : "var(--ds-gray-1000)"} variant="cell">
         {row.status}
-      </DotLabel>
+      </StatusSignal>
     ),
   },
 ];
@@ -100,20 +104,20 @@ export function ComponentInventoryTable() {
       filterKey="state"
       filterLabel="State"
       rows={componentRows}
-      searchPlaceholder="Component, owner, usage ara"
+      searchPlaceholder="Search component, owner, usage"
     />
   );
 }
 
-export function ProgramOperationTable() {
+export function OperationTable() {
   return (
     <InteractiveTable
-      columns={programColumns}
+      columns={operationColumns}
       defaultSort={{ direction: "desc", key: "readiness" }}
       filterKey="status"
-      filterLabel="Durum"
-      rows={programRows.slice(0, 10)}
-      searchPlaceholder="Modül, kitle, lider ara"
+      filterLabel="Status"
+      rows={operationRows.slice(0, 10)}
+      searchPlaceholder="Search module, audience, lead"
     />
   );
 }
@@ -140,18 +144,18 @@ function InteractiveTable<T extends { id: string }>({
   const filterOptions = useMemo(
     () =>
       Array.from(new Set(rows.map((row) => String(row[filterKey])))).sort((a, b) =>
-        a.localeCompare(b, "tr"),
+        a.localeCompare(b, "en"),
       ),
     [filterKey, rows],
   );
 
   const visibleRows = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase("tr");
+    const normalizedQuery = query.trim().toLocaleLowerCase("en");
     const sortedRows = [...rows]
       .filter((row) => {
         const matchesQuery =
           normalizedQuery.length === 0 ||
-          Object.values(row).join(" ").toLocaleLowerCase("tr").includes(normalizedQuery);
+          Object.values(row).join(" ").toLocaleLowerCase("en").includes(normalizedQuery);
         const matchesFilter =
           selectedFilters.length === 0 ||
           selectedFilters.includes(String(row[filterKey]));
@@ -168,8 +172,8 @@ function InteractiveTable<T extends { id: string }>({
         }
 
         return sort.direction === "asc"
-          ? String(aValue).localeCompare(String(bValue), "tr")
-          : String(bValue).localeCompare(String(aValue), "tr");
+          ? String(aValue).localeCompare(String(bValue), "en")
+          : String(bValue).localeCompare(String(aValue), "en");
       });
 
     return sortedRows;
@@ -198,19 +202,11 @@ function InteractiveTable<T extends { id: string }>({
 
   return (
     <div>
-      <div className="flex flex-col gap-3 border-b border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] p-3 xl:flex-row xl:items-center xl:justify-between">
-        <label className="flex h-9 min-w-0 items-center gap-2 rounded-[7px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-200)] px-2 text-[13px] text-[var(--ds-gray-700)] xl:w-[310px]">
-          <Search aria-hidden="true" className="h-4 w-4 shrink-0" />
-          <input
-            className="min-w-0 flex-1 bg-transparent text-[var(--ds-gray-1000)] outline-none placeholder:text-[var(--ds-gray-700)]"
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={searchPlaceholder}
-            type="search"
-            value={query}
-          />
-        </label>
-
-        <div className="flex flex-wrap items-center gap-2">
+      <SearchFilterHeader
+        onQueryChange={setQuery}
+        placeholder={searchPlaceholder}
+        query={query}
+      >
           <span className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
             {filterLabel}
           </span>
@@ -218,23 +214,16 @@ function InteractiveTable<T extends { id: string }>({
             const active = selectedFilters.includes(option);
 
             return (
-              <button
-                className={cn(
-                  "h-7 rounded-[6px] border px-2 text-[12px] font-medium transition",
-                  active
-                    ? "border-[var(--ds-gray-1000)] bg-[var(--ds-gray-1000)] text-[var(--ds-background-100)]"
-                    : "border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] text-[var(--ds-gray-900)] hover:bg-[var(--ds-gray-100)]",
-                )}
+              <FilterButton
+                active={active}
                 key={option}
                 onClick={() => toggleFilter(option)}
-                type="button"
               >
                 {option}
-              </button>
+              </FilterButton>
             );
           })}
-        </div>
-      </div>
+      </SearchFilterHeader>
 
       <div className="overflow-x-auto">
         <table className="w-full min-w-[780px] border-collapse text-left text-[13px]">
@@ -313,34 +302,11 @@ function InteractiveTable<T extends { id: string }>({
 
 function Readiness({ value }: { value: number }) {
   return (
-    <div className="ml-auto flex w-[104px] items-center justify-end gap-2">
-      <div className="h-1.5 w-14 overflow-hidden rounded-full bg-[var(--ds-gray-alpha-300)]">
-        <div
-          className="h-full rounded-full bg-[var(--ds-gray-1000)]"
-          style={{ width: `${value}%` }}
-        />
-      </div>
-      <span className="w-8 font-mono text-[11px] text-[var(--ds-gray-900)]">
-        {value}%
-      </span>
-    </div>
-  );
-}
-
-function DotLabel({
-  children,
-  color,
-}: {
-  children: React.ReactNode;
-  color: string;
-}) {
-  return (
-    <span className="inline-flex items-center gap-2 text-[13px] font-medium text-[var(--ds-gray-1000)]">
-      <span
-        className="h-2.5 w-2.5 rounded-full border border-[var(--ds-gray-alpha-500)]"
-        style={{ background: color }}
-      />
-      {children}
-    </span>
+    <ProgressCell
+      className="ml-auto"
+      color="var(--ds-gray-1000)"
+      showValue
+      value={value}
+    />
   );
 }

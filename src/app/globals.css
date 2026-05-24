@@ -3,6 +3,8 @@
 :root {
   --background: #fafafa;
   --foreground: #171717;
+  --page-grid-line: rgb(0 0 0 / 0.035);
+  --page-grid-softener: rgb(250 250 250 / 0.72);
 
   --ds-background-100-value: 0, 0%, 100%;
   --ds-background-200-value: 0, 0%, 98%;
@@ -166,6 +168,8 @@
   :root {
     --background: #000000;
     --foreground: #ededed;
+    --page-grid-line: rgb(255 255 255 / 0.055);
+    --page-grid-softener: rgb(0 0 0 / 0.58);
     --ds-background-100-value: 0, 0%, 4%;
     --ds-background-200-value: 0, 0%, 0%;
     --ds-gray-100-value: 0, 0%, 10%;
@@ -222,10 +226,12 @@ html {
 body {
   min-width: 320px;
   background:
-    linear-gradient(var(--ds-gray-alpha-100) 1px, transparent 1px),
-    linear-gradient(90deg, var(--ds-gray-alpha-100) 1px, transparent 1px),
+    radial-gradient(circle at 50% 0%, var(--page-grid-softener) 0, transparent 720px),
+    linear-gradient(var(--page-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--page-grid-line) 1px, transparent 1px),
     var(--background);
-  background-size: 44px 44px;
+  background-position: center top;
+  background-size: auto, 72px 72px, 72px 72px, auto;
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
@@ -236,12 +242,15 @@ body {
 }
 
 .depth-surface {
-  position: relative;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.85),
     inset 0 -1px 0 rgb(0 0 0 / 0.035),
     0 1px 1px rgb(0 0 0 / 0.04),
     0 18px 32px -28px rgb(0 0 0 / 0.55);
+}
+
+.depth-surface:not(.fixed):not(.absolute):not(.sticky) {
+  position: relative;
 }
 
 .depth-surface::after {

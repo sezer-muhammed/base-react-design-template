@@ -14,33 +14,67 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { ActionBar } from "@/components/ui/action-bar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { GlassTag } from "@/components/ui/glass-tag";
+import { DefaultDialogFooter, DialogFrame } from "@/components/ui/overlay-frame";
+import { ProgressCell } from "@/components/ui/progress-cell";
+import { RecordTable, type RecordTableColumn } from "@/components/ui/record-table";
+import { StatusSignal } from "@/components/ui/status-signal";
 import { Surface } from "@/components/ui/surface";
-import { cn } from "@/lib/cn";
 
 const alertRows = [
-  ["ALERT-01", "Info", "Sistem notu, renkli zemin yerine küçük sinyal noktasıyla durur.", "var(--ds-blue-700)"],
-  ["ALERT-02", "Saved", "Başarılı durumlar aynı yüzeyde kalır, sadece sinyal rengi değişir.", "var(--ds-green-700)"],
-  ["ALERT-03", "Risk", "Kritik mesajlar bağırmadan fark edilir.", "var(--ds-pink-700)"],
+  ["ALERT-01", "Info", "System notes stay neutral and use a small signal dot instead of a colored surface.", "var(--ds-blue-700)"],
+  ["ALERT-02", "Saved", "Successful states keep the same surface; only the signal color changes.", "var(--ds-green-700)"],
+  ["ALERT-03", "Risk", "Critical messages stay noticeable without shouting.", "var(--ds-pink-700)"],
 ] as const;
 
 const graphRows = [
-  ["Vision", 72, "var(--ds-blue-700)"],
-  ["Empathy", 88, "var(--ds-teal-700)"],
-  ["Risk", 54, "var(--ds-amber-700)"],
-  ["Trust", 67, "var(--ds-purple-700)"],
+  { color: "var(--ds-blue-700)", id: "graph-vision", label: "Vision", stage: "Baseline", value: 72 },
+  { color: "var(--ds-teal-700)", id: "graph-empathy", label: "Empathy", stage: "Live", value: 88 },
+  { color: "var(--ds-amber-700)", id: "graph-risk", label: "Risk", stage: "Review", value: 54 },
+  { color: "var(--ds-purple-700)", id: "graph-trust", label: "Trust", stage: "Ready", value: 67 },
 ] as const;
+
+const graphColumns: RecordTableColumn<(typeof graphRows)[number]>[] = [
+  {
+    header: "Signal",
+    key: "signal",
+    render: (row) => (
+      <span className="flex min-w-0 items-center gap-2 font-semibold">
+        <StatusSignal color={row.color} variant="dot" />
+        <span className="truncate">{row.label}</span>
+      </span>
+    ),
+  },
+  {
+    className: "w-[112px]",
+    header: "Stage",
+    key: "stage",
+    render: (row) => (
+      <StatusSignal color={row.color} variant="pill">
+        {row.stage}
+      </StatusSignal>
+    ),
+  },
+  {
+    className: "w-[180px]",
+    header: "Value",
+    key: "value",
+    render: (row) => <ProgressCell color="var(--ds-gray-1000)" showValue value={row.value} />,
+  },
+];
 
 const badgeRows = [
   ["Retail", "var(--ds-gray-1000)"],
-  ["Aktif", "var(--ds-blue-700)"],
-  ["Tamam", "var(--ds-green-700)"],
-  ["Orta Risk", "var(--ds-amber-700)"],
-  ["Yüksek Risk", "var(--ds-pink-700)"],
-  ["Muhakeme", "var(--ds-purple-700)"],
-  ["Empati", "var(--ds-teal-700)"],
+  ["Active", "var(--ds-blue-700)"],
+  ["Done", "var(--ds-green-700)"],
+  ["Medium Risk", "var(--ds-amber-700)"],
+  ["High Risk", "var(--ds-pink-700)"],
+  ["Judgment", "var(--ds-purple-700)"],
+  ["Empathy", "var(--ds-teal-700)"],
 ] as const;
 
 export function ActionShowcase() {
@@ -58,31 +92,31 @@ export function ActionShowcase() {
           <div className="mb-3">
             <ComponentIdBadge id="ACTION-01" />
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          <ActionBar>
             <Button icon={BookOpen} variant="primary">
-              Eğitimleri İncele
+              Explore flows
             </Button>
             <Button icon={ArrowUpRight} variant="secondary">
-              Program Detayı
+              Runtime detail
             </Button>
             <Button icon={Search} variant="ghost">
-              Ara
+              Search
             </Button>
             <Button icon={Menu} size="sm" variant="secondary">
-              Menü
+              Menu
             </Button>
-          </div>
+          </ActionBar>
           <div className="mt-4 flex flex-wrap items-center gap-2">
             {badgeRows.map(([label, color]) => (
-              <DotBadge color={color} key={label}>
+              <StatusSignal color={color} key={label} variant="pill">
                 {label}
-              </DotBadge>
+              </StatusSignal>
             ))}
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
-            <GlassPill>glass tag</GlassPill>
-            <GlassPill>blur edge</GlassPill>
-            <GlassPill>soft light</GlassPill>
+            <GlassTag tone="dark">glass tag</GlassTag>
+            <GlassTag tone="dark">blur edge</GlassTag>
+            <GlassTag tone="dark">soft light</GlassTag>
           </div>
         </Surface>
 
@@ -103,7 +137,7 @@ export function ActionShowcase() {
             </div>
           </div>
           <div className="grid grid-cols-3 divide-x divide-[var(--ds-gray-alpha-300)]">
-            {["Analiz", "Öncelik", "Yol"].map((item, index) => (
+            {["Analysis", "Priority", "Path"].map((item, index) => (
               <button
                 className="flex h-20 flex-col items-center justify-center gap-2 text-[13px] font-medium hover:bg-[var(--ds-gray-100)]"
                 key={item}
@@ -138,41 +172,30 @@ export function ActionShowcase() {
               </div>
               <h3 className="mt-4 text-[18px] font-semibold">Signal bars</h3>
               <p className="mt-1 max-w-xl text-[13px] leading-5 text-[var(--ds-gray-900)]">
-                Simsiyah blok yerine ince ray, küçük renk sinyali ve daha açık veri ritmi.
+                The same signal data expressed with the reusable table primitive.
               </p>
-              <div className="mt-4 grid gap-3">
-                {graphRows.map(([label, value, color]) => (
-                  <div className="grid gap-2" key={label}>
-                    <div className="flex items-center justify-between text-[12px]">
-                      <span className="flex items-center gap-2 font-medium">
-                        <ColorDot color={color} />
-                        {label}
-                      </span>
-                      <span className="font-mono text-[var(--ds-gray-700)]">{value}%</span>
-                    </div>
-                    <div className="h-2 rounded-full border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-[2px]">
-                      <div
-                        className="h-full rounded-full bg-[var(--ds-gray-1000)] opacity-80"
-                        style={{ width: `${value}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
+              <div className="mt-4 overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-300)]">
+                <RecordTable
+                  columns={graphColumns}
+                  fit
+                  getRowId={(row) => row.id}
+                  rows={graphRows}
+                />
               </div>
             </div>
             <Card depth="flat" tone="muted">
               <CardHeader action={<Sparkles className="h-4 w-4 text-[var(--ds-gray-700)]" />}>
                 <CardTitle>Badge rail</CardTitle>
                 <CardDescription>
-                  Aynı badge ailesi biraz daha süslü, ama hala tablo diliyle uyumlu.
+                  The same badge family, slightly more decorative, while staying aligned with the table language.
                 </CardDescription>
               </CardHeader>
               <div className="flex flex-wrap gap-2">
-                <DotBadge color="var(--ds-blue-700)">AI Ready</DotBadge>
-                <DotBadge color="var(--ds-green-700)">Governed</DotBadge>
-                <DotBadge color="var(--ds-purple-700)">Judgment</DotBadge>
-                <DotBadge color="var(--ds-amber-700)">Review</DotBadge>
-                <GlassPill>glass</GlassPill>
+                <StatusSignal color="var(--ds-blue-700)" variant="pill">AI Ready</StatusSignal>
+                <StatusSignal color="var(--ds-green-700)" variant="pill">Governed</StatusSignal>
+                <StatusSignal color="var(--ds-purple-700)" variant="pill">Judgment</StatusSignal>
+                <StatusSignal color="var(--ds-amber-700)" variant="pill">Review</StatusSignal>
+                <GlassTag tone="dark">glass</GlassTag>
               </div>
             </Card>
           </div>
@@ -189,7 +212,7 @@ export function ActionShowcase() {
             <DialogExample />
             <ComponentIdBadge id="OVER-02" />
             <Button icon={Bell} onClick={() => setToastOpen(true)} type="button">
-              Toast göster
+              Show toast
             </Button>
             <Badge tone="gray">Radix powered</Badge>
           </div>
@@ -204,13 +227,13 @@ export function ActionShowcase() {
         open={toastOpen}
       >
         <div className="flex items-start gap-3">
-          <ColorDot className="mt-2" color="var(--ds-green-700)" />
+          <StatusSignal className="mt-2" color="var(--ds-green-700)" variant="dot" />
           <div className="min-w-0">
             <Toast.Title className="text-[13px] font-semibold">
               Component saved
             </Toast.Title>
             <Toast.Description className="mt-1 text-[12px] leading-5 text-[var(--ds-gray-900)]">
-              Toast çalışıyor; yüzey neutral, sinyal küçük renk noktasıyla geliyor.
+              Toast is working; the surface stays neutral and the signal comes from a small color dot.
             </Toast.Description>
           </div>
           <Toast.Close className="ml-auto rounded-[5px] p-1 text-[var(--ds-gray-700)] hover:bg-[var(--ds-gray-100)]">
@@ -228,30 +251,20 @@ function DialogExample() {
     <Dialog.Root>
       <Dialog.Trigger asChild>
         <Button data-component-id="OVER-01" icon={Layers} type="button" variant="primary">
-          Modal aç
+          Open modal
         </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-40 bg-black/35" />
-        <Dialog.Content className="depth-surface fixed left-1/2 top-1/2 z-50 w-[min(420px,calc(100vw-32px))] -translate-x-1/2 -translate-y-1/2 rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)]">
-          <div className="flex items-center justify-between border-b border-[var(--ds-gray-alpha-400)] p-4">
-            <Dialog.Title className="text-[16px] font-semibold">Modal</Dialog.Title>
-            <Dialog.Close className="rounded-[5px] p-1 hover:bg-[var(--ds-gray-100)]">
-              <X aria-hidden="true" className="h-4 w-4" />
-            </Dialog.Close>
-          </div>
-          <Dialog.Description className="p-4 text-[13px] leading-5 text-[var(--ds-gray-900)]">
-            Neutral modal yüzeyi. Renkli karar değil, net çerçeve ve kısa aksiyon.
-          </Dialog.Description>
-          <div className="flex justify-end gap-2 border-t border-[var(--ds-gray-alpha-300)] p-3">
-            <Dialog.Close asChild>
-              <Button type="button" variant="secondary">Cancel</Button>
-            </Dialog.Close>
-            <Dialog.Close asChild>
-              <Button type="button" variant="primary">Confirm</Button>
-            </Dialog.Close>
-          </div>
-        </Dialog.Content>
+        <DialogFrame
+          description={
+            <>
+            Neutral modal surface. No colored decision block, just a clear frame and short action.
+            </>
+          }
+          footer={<DefaultDialogFooter />}
+          title="Modal"
+        />
       </Dialog.Portal>
     </Dialog.Root>
   );
@@ -275,7 +288,7 @@ function NeutralAlert({
       id={id.toLowerCase()}
     >
       <div className="flex items-start gap-2">
-        <ColorDot className="mt-1.5" color={color} />
+        <StatusSignal className="mt-1.5" color={color} variant="dot" />
         <div className="min-w-0">
           <p className="flex flex-wrap items-center gap-2 text-[13px] font-semibold">
             <ComponentIdBadge id={id} />
@@ -285,38 +298,6 @@ function NeutralAlert({
         </div>
       </div>
     </div>
-  );
-}
-
-function DotBadge({
-  children,
-  color,
-}: {
-  children: React.ReactNode;
-  color: string;
-}) {
-  return (
-    <span className="inline-flex h-7 items-center gap-2 rounded-[7px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-2.5 text-[12px] font-medium text-[var(--ds-gray-1000)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.76),0_1px_1px_rgb(0_0_0_/_0.04)]">
-      <ColorDot color={color} />
-      {children}
-    </span>
-  );
-}
-
-function ColorDot({ className, color }: { className?: string; color: string }) {
-  return (
-    <span
-      className={cn("h-2.5 w-2.5 shrink-0 rounded-full border border-[var(--ds-gray-alpha-500)]", className)}
-      style={{ background: color }}
-    />
-  );
-}
-
-function GlassPill({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex h-7 items-center rounded-[7px] border border-white/35 bg-white/18 px-2.5 text-[12px] font-medium text-[var(--ds-gray-1000)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.85),inset_0_-1px_0_rgb(255_255_255_/_0.16),0_8px_18px_-16px_rgb(0_0_0_/_0.55)] backdrop-blur-md">
-      {children}
-    </span>
   );
 }
 

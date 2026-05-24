@@ -30,6 +30,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   Tooltip,
   XAxis,
   YAxis,
@@ -47,11 +48,11 @@ import { SectionHeader, Surface } from "@/components/ui/surface";
 import { cn } from "@/lib/cn";
 
 const graphData = [
-  { label: "Vision", value: 72 },
-  { label: "Empathy", value: 88 },
-  { label: "Risk", value: 54 },
-  { label: "AI", value: 91 },
-  { label: "Trust", value: 67 },
+  { color: "var(--ds-blue-700)", label: "Vision", value: 72 },
+  { color: "var(--ds-green-700)", label: "Empathy", value: 88 },
+  { color: "var(--ds-teal-700)", label: "Risk", value: 54 },
+  { color: "var(--ds-amber-700)", label: "AI", value: 91 },
+  { color: "var(--ds-purple-700)", label: "Trust", value: 67 },
 ];
 
 const listItems = [
@@ -72,7 +73,7 @@ export function ComponentGallery() {
         <ShowroomBand
           componentId="C-01"
           eyebrow="Application structure"
-          summary="AppShell, Header, Sidebar, PageHeader, Section ve Footer için küçük yerleşim denemeleri."
+          summary="Small layout studies for AppShell, Header, Sidebar, PageHeader, Section, and Footer."
           title="Shell and layout"
         >
           <div className="grid gap-3 xl:grid-cols-[1.1fr_0.9fr]">
@@ -87,7 +88,7 @@ export function ComponentGallery() {
         <ShowroomBand
           componentId="C-02"
           eyebrow="Core UI"
-          summary="Button, Badge, Alert, inline action ve avatar örnekleri aynı kontrast dilinde."
+          summary="Button, Badge, Alert, inline action, and avatar examples in the same contrast language."
           title="Actions, flags and inline"
         >
           <div className="grid gap-3 lg:grid-cols-3">
@@ -100,7 +101,7 @@ export function ComponentGallery() {
         <ShowroomBand
           componentId="C-03"
           eyebrow="Forms"
-          summary="Form, Datepicker, inline validation ve küçük submit alanları."
+          summary="Form, Datepicker, inline validation, and compact submit areas."
           title="Input patterns"
         >
           <div className="grid gap-3 xl:grid-cols-[1fr_360px]">
@@ -112,7 +113,7 @@ export function ComponentGallery() {
         <ShowroomBand
           componentId="C-04"
           eyebrow="Overlays"
-          summary="Modal ve toast örnekleri; hafif, kontrollü ve dashboard hissinde."
+          summary="Modal and toast examples that feel light, controlled, and dashboard-ready."
           title="Modal and toast"
         >
           <Surface
@@ -131,7 +132,7 @@ export function ComponentGallery() {
                 onClick={() => setToastOpen(true)}
                 type="button"
               >
-                Toast göster
+                Show toast
               </Button>
               <Badge tone="gray">Radix powered</Badge>
             </div>
@@ -141,7 +142,7 @@ export function ComponentGallery() {
         <ShowroomBand
           componentId="C-05"
           eyebrow="Data display"
-          summary="Bar graph, stats/metrics, list, pagination ve grid örnekleri."
+          summary="Bar graph, stats/metrics, list, pagination, and grid examples."
           title="Data and navigation"
         >
           <div className="grid gap-3 xl:grid-cols-[1fr_380px]">
@@ -157,19 +158,19 @@ export function ComponentGallery() {
         <ShowroomBand
           componentId="C-06"
           eyebrow="States"
-          summary="EmptyState, LoadingState ve ErrorState; ürün yüzeylerinde en çok gereken üç boşluk."
+          summary="EmptyState, LoadingState, and ErrorState for the three gaps product surfaces need most often."
           title="Empty, loading and error"
         >
           <div className="grid gap-3 lg:grid-cols-3">
             <StateCard
-              description="Henüz segment seçilmedi. Filtre ekleyerek başlayın."
+              description="No segment is selected yet. Start by adding a filter."
               componentId="STATE-01"
               icon={<Inbox aria-hidden="true" className="h-5 w-5" />}
               title="EmptyState"
             />
             <LoadingStateCard componentId="STATE-02" />
             <StateCard
-              description="Kaynak yanıt vermedi. Tekrar dene veya fallback veri kullan."
+              description="The source did not respond. Try again or use fallback data."
               componentId="STATE-03"
               icon={<ShieldAlert aria-hidden="true" className="h-5 w-5" />}
               title="ErrorState"
@@ -195,7 +196,7 @@ export function ComponentGallery() {
               Component saved
             </Toast.Title>
             <Toast.Description className="mt-1 text-[12px] leading-5 text-[var(--ds-gray-900)]">
-              Toast yüzeyi kompakt, okunur ve aksiyonsuz durumlar için sakin.
+              The toast surface is compact, readable, and calm for states without actions.
             </Toast.Description>
           </div>
           <Toast.Close className="ml-auto rounded-[5px] p-1 text-[var(--ds-gray-700)] hover:bg-[var(--ds-gray-100)]">
@@ -274,7 +275,7 @@ function MiniAppShell() {
             Sidebar
           </p>
           <div className="mt-3 space-y-1">
-            {["Overview", "Programs", "Reports"].map((item) => (
+            {["Overview", "Workflows", "Reports"].map((item) => (
               <div
                 className="rounded-[6px] px-2 py-1.5 text-[12px] font-medium hover:bg-[var(--ds-background-100)]"
                 key={item}
@@ -288,9 +289,9 @@ function MiniAppShell() {
           <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
             PageHeader
           </p>
-          <h3 className="mt-1 text-[20px] font-semibold">Leadership dashboard</h3>
+          <h3 className="mt-1 text-[20px] font-semibold">Operations dashboard</h3>
           <p className="mt-2 max-w-md text-[13px] leading-5 text-[var(--ds-gray-900)]">
-            Section yüzeyleri tablo, kart ve form bloklarını aynı grid içinde taşır.
+            Section surfaces carry table, card, and form blocks inside the same grid.
           </p>
           <div className="mt-4 grid gap-2 sm:grid-cols-3">
             {["Card", "Table", "Form"].map((item) => (
@@ -329,7 +330,7 @@ function PageHeaderExample() {
         </p>
         <CardTitle className="mt-2">Compact but descriptive</CardTitle>
         <CardDescription>
-          Başlık kullanıcıyla konuşur; mono açıklama sistemi anlatır.
+          The title speaks to the user; the mono description explains the system.
         </CardDescription>
       </CardHeader>
     </Card>
@@ -357,12 +358,12 @@ function CoreActionsCard() {
     <Card data-component-id="CORE-01" id="core-01-actions">
       <CardHeader action={<ComponentIdBadge id="CORE-01" />}>
         <CardTitle>Button + Badge</CardTitle>
-        <CardDescription>2-3 varyant aynı satırda stres testi.</CardDescription>
+        <CardDescription>Two or three variants stress-tested in the same row.</CardDescription>
       </CardHeader>
       <div className="flex flex-wrap gap-2">
-        <Button icon={Send} variant="primary">Gönder</Button>
-        <Button icon={FileText} variant="secondary">Taslak</Button>
-        <Button icon={Search} variant="ghost">Ara</Button>
+        <Button icon={Send} variant="primary">Send</Button>
+        <Button icon={FileText} variant="secondary">Draft</Button>
+        <Button icon={Search} variant="ghost">Search</Button>
       </div>
       <div className="mt-4 flex flex-wrap gap-2">
         <Badge tone="blue">Active</Badge>
@@ -377,13 +378,13 @@ function AlertStack() {
   return (
     <div className="grid gap-2">
       <Alert componentId="ALERT-01" tone="info" title="Alert">
-        Sistem bilgisi kısa ve doğrudan okunmalı.
+        System information should read short and direct.
       </Alert>
       <Alert componentId="ALERT-02" tone="success" title="Saved">
-        Form validasyonu ve kayıt geri bildirimi.
+        Form validation and save feedback.
       </Alert>
       <Alert componentId="ALERT-03" tone="danger" title="Error">
-        Kritik hata rengi az ama net kullanılmalı.
+        Critical error color should be minimal but clear.
       </Alert>
     </div>
   );
@@ -432,7 +433,7 @@ function AvatarInlineCard() {
     <Card data-component-id="CORE-02" id="core-02-avatar-inline">
       <CardHeader action={<ComponentIdBadge id="CORE-02" />}>
         <CardTitle>Avatar + inline</CardTitle>
-        <CardDescription>Kısa kimlik ve inline aksiyon örneği.</CardDescription>
+        <CardDescription>A compact identity and inline action example.</CardDescription>
       </CardHeader>
       <div className="flex items-center gap-3">
         <AvatarPrimitive.Root className="grid h-10 w-10 place-items-center overflow-hidden rounded-full border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-gray-100)]">
@@ -443,7 +444,7 @@ function AvatarInlineCard() {
         <div className="min-w-0">
           <p className="truncate text-[13px] font-semibold">Isil Hasdemir</p>
           <p className="truncate text-[12px] text-[var(--ds-gray-700)]">
-            Program lead · Retail cohort
+            Runtime owner · Core cohort
           </p>
         </div>
       </div>
@@ -451,7 +452,7 @@ function AvatarInlineCard() {
         className="mt-4 inline-flex items-center gap-1 text-[13px] font-medium text-[var(--ds-gray-1000)]"
         type="button"
       >
-        Profili aç <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
+        Open profile <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
       </button>
     </Card>
   );
@@ -474,21 +475,21 @@ function FormExample({
       <SectionHeader
         action={<ComponentIdBadge id="FORM-01" />}
         eyebrow="Form"
-        summary="Label, helper text ve validation yoğunluğu."
-        title="Program request form"
+        summary="Label, helper text, and validation density."
+        title="Runtime request form"
       />
       <form className="grid gap-3 p-4 md:grid-cols-2">
         <Field label="Name">
-          <input className={inputClass} placeholder="Leadership cohort" />
+          <input className={inputClass} placeholder="Operations cohort" />
         </Field>
         <Field label="Email">
           <input className={inputClass} placeholder="team@example.com" type="email" />
         </Field>
         <Field label="Track">
           <select className={inputClass} defaultValue="ai">
-            <option value="ai">AI danışmanlığı</option>
-            <option value="leadership">Liderlik programı</option>
-            <option value="coaching">Koçluk</option>
+            <option value="api">API platform</option>
+            <option value="runtime">Runtime workflow</option>
+            <option value="coaching">Coaching</option>
           </select>
         </Field>
         <Field label="Start date">
@@ -502,7 +503,7 @@ function FormExample({
         <Field className="md:col-span-2" label="Notes">
           <textarea
             className={cn(inputClass, "min-h-24 resize-none py-2")}
-            placeholder="Kurum hedefi, ekip büyüklüğü, beklenen çıktı..."
+            placeholder="Company goal, team size, expected outcome..."
           />
         </Field>
         <div className="flex flex-wrap items-center gap-2 md:col-span-2">
@@ -535,7 +536,7 @@ function DatePickerCard({
         }
       >
         <CardTitle>Datepicker</CardTitle>
-        <CardDescription>Popover tabanlı kompakt tarih seçimi.</CardDescription>
+        <CardDescription>Compact date selection powered by a popover.</CardDescription>
       </CardHeader>
       <Popover.Root>
         <Popover.Trigger asChild>
@@ -570,7 +571,7 @@ function DatePickerCard({
       </Popover.Root>
       <CardFooter>
         <p className="text-[12px] text-[var(--ds-gray-700)]">
-          Native date input + popover seçici birlikte test ediliyor.
+          Native date input and popover picker are tested together.
         </p>
       </CardFooter>
     </Card>
@@ -587,7 +588,7 @@ function DialogExample() {
           type="button"
           variant="primary"
         >
-          Modal aç
+          Open modal
         </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
@@ -602,8 +603,8 @@ function DialogExample() {
             </Dialog.Close>
           </div>
           <Dialog.Description className="p-4 text-[13px] leading-5 text-[var(--ds-gray-900)]">
-            Kritik olmayan onaylar için küçük, yoğun ve sakin modal. İçerik kısa
-            tutulduğunda görsel sistem bozulmuyor.
+            A small, dense, and calm modal for non-critical confirmations. When the
+            content stays short, the visual system remains intact.
           </Dialog.Description>
           <div className="flex justify-end gap-2 border-t border-[var(--ds-gray-alpha-300)] p-3">
             <Dialog.Close asChild>
@@ -663,7 +664,17 @@ function GraphCard() {
               fontSize: 12,
             }}
           />
-          <Bar dataKey="value" fill="var(--ds-gray-1000)" radius={[6, 6, 0, 0]} />
+          <Bar
+            dataKey="value"
+            fill="var(--ds-blue-700)"
+            radius={[6, 6, 0, 0]}
+            stroke="var(--ds-gray-1000)"
+            strokeWidth={1}
+          >
+            {graphData.map((entry) => (
+              <Cell fill={entry.color} key={entry.label} />
+            ))}
+          </Bar>
         </BarChart>
       </div>
     </Surface>
@@ -714,7 +725,7 @@ function ListExample() {
       <SectionHeader
         action={<ComponentIdBadge id="LIST-01" />}
         eyebrow="List"
-        summary="Kart yerine satır listesi gerektiğinde."
+        summary="For moments when a row list works better than cards."
         title="Workflow list"
       />
       <div className="divide-y divide-[var(--ds-gray-alpha-300)]">
@@ -744,7 +755,7 @@ function PaginationExample() {
     <Card data-component-id="NAV-01" id="nav-01-pagination">
       <CardHeader action={<ComponentIdBadge id="NAV-01" />}>
         <CardTitle>Pagination</CardTitle>
-        <CardDescription>Dense tablo altında kullanılacak kompakt sayfalama.</CardDescription>
+        <CardDescription>Compact pagination for dense tables.</CardDescription>
       </CardHeader>
       <div className="flex items-center justify-between rounded-[7px] border border-[var(--ds-gray-alpha-300)] p-2">
         <Button icon={ChevronLeft} size="sm" variant="ghost">Prev</Button>
@@ -821,7 +832,7 @@ function LoadingStateCard({ componentId }: { componentId: string }) {
         <div className="h-3 w-2/3 rounded-full bg-[var(--ds-gray-alpha-300)]" />
       </div>
       <CardDescription className="mt-5">
-        Skeleton çizgileri layout kaymasını azaltır.
+        Skeleton lines reduce layout shift.
       </CardDescription>
     </Card>
   );

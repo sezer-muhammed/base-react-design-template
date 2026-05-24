@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { siteConfig } from "@/config/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Base Component Showroom",
-  description: "A compact Geist-inspired component showroom for reusable web pages.",
+  title: siteConfig.name,
+  description: siteConfig.description,
 };
 
 export default function RootLayout({

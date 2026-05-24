@@ -1,0 +1,63 @@
+export const platformCapabilities = [
+  {
+    color: "var(--ds-blue-700)",
+    id: "CAP-01",
+    items: ["REST route handlers", "server actions", "typed response envelopes"],
+    mode: "API",
+    title: "HTTP API Surface",
+  },
+  {
+    color: "var(--ds-teal-700)",
+    id: "CAP-02",
+    items: ["webhook intake", "signed events", "idempotency keys"],
+    mode: "Push",
+    title: "Inbound Push Events",
+  },
+  {
+    color: "var(--ds-purple-700)",
+    id: "CAP-03",
+    items: ["scheduled sync", "cursor pagination", "retry windows"],
+    mode: "Pull",
+    title: "Outbound Pull Jobs",
+  },
+  {
+    color: "var(--ds-amber-700)",
+    id: "CAP-04",
+    items: ["manual trigger", "cron trigger", "queue trigger"],
+    mode: "Trigger",
+    title: "Workflow Triggers",
+  },
+  {
+    color: "var(--ds-green-700)",
+    id: "CAP-05",
+    items: ["SSE", "WebSocket", "broadcast channel"],
+    mode: "Realtime",
+    title: "Realtime Channels",
+  },
+  {
+    color: "var(--ds-gray-1000)",
+    id: "CAP-06",
+    items: ["HTTP", "TCP adapter slot", "UDP adapter slot"],
+    mode: "Transport",
+    title: "Transport Adapters",
+  },
+] as const;
+
+export const suggestedShowroomSections = [
+  "Forms",
+  "Datepicker",
+  "Pagination",
+  "Metrics",
+  "Charts",
+  "Tabs",
+  "Command menu",
+  "Search",
+  "Empty / loading / error states",
+  "Auth shell",
+  "API playground",
+  "Webhook inbox",
+  "Job monitor",
+  "Realtime stream",
+  "Settings",
+  "Audit log",
+] as const;

@@ -3,11 +3,19 @@ import type { RecursiveMenuItem } from "@/components/ui/recursive-menu";
 export const showroomNav = [
   { href: "#foundation", label: "Foundation" },
   { href: "#actions", label: "Actions" },
+  { href: "#charts", label: "Charts" },
   { href: "#cards", label: "Cards" },
   { href: "#media", label: "Media" },
   { href: "#tables", label: "Tables" },
   { href: "#menus", label: "Menus" },
-];
+  { href: "#command", label: "Command" },
+  { href: "#states", label: "States" },
+  { href: "#auth", label: "Auth" },
+  { href: "#jobs", label: "Jobs" },
+  { href: "#realtime", label: "Realtime" },
+  { href: "#settings", label: "Settings" },
+  { href: "#blueprint", label: "Blueprint" },
+] as const;
 
 export const tokenRows = [
   {
@@ -75,34 +83,28 @@ export const tokenRows = [
 export const cardSamples = [
   {
     eyebrow: "01 / Signal",
-    title: "Stratejik Vizyon",
-    body: "Veriye anlam katma ve uzun vadeli yön belirleme.",
+    title: "Live Event Inbox",
+    body: "A compact record card for webhook events, queue jobs, alerts, or approval items.",
     dot: "var(--ds-gray-1000)",
   },
   {
     eyebrow: "02 / Advisory",
-    title: "AI Yol Haritası",
-    body: "Darboğazları, veri uygunluğunu ve yatırım önceliğini birlikte netleştirir.",
+    title: "Sync Health",
+    body: "Summarizes pull windows, stale records, retry counts, and the next scheduled run.",
     dot: "var(--ds-teal-700)",
   },
   {
     eyebrow: "03 / Accent",
-    title: "Program Aktif",
-    body: "Kritik liderlik modülleri pilot ekiplerle canlıda test edilir.",
+    title: "Release Gate",
+    body: "Shows launch readiness, blockers, ownership, and environment-specific checks.",
     dot: "var(--ds-blue-700)",
   },
   {
     eyebrow: "04 / Risk",
-    title: "Yönetişim Eksik",
-    body: "Onay akışları ve kalite kontrolleri karar masasına taşınmalı.",
+    title: "Transport Watch",
+    body: "Flags adapter drift, packet loss, schema mismatch, and unhandled edge states.",
     dot: "var(--ds-amber-700)",
   },
-] as const;
-
-export const densityCards = [
-  ["compact", "Kısa not", "Bir satırlık operasyon kartı."],
-  ["md", "Standart kart", "Başlık, açıklama, meta ve aksiyon için dengeli ritim."],
-  ["spacious", "Anlatı kartı", "Blog, vaka veya hizmet açıklaması için daha rahat nefes."],
 ] as const;
 
 export const componentRows = [
@@ -158,56 +160,46 @@ export const componentRows = [
 
 export type ComponentRow = (typeof componentRows)[number];
 
-export const vehicleDemo = {
-  availableTrims: [
-    { name: "S", startingMsrp: 34590 },
-    { name: "SE", startingMsrp: 39080 },
-    { name: "Autobahn", startingMsrp: 42480 },
+export const assetDemo = {
+  channels: [
+    { name: "Core", monthlyVolume: 34590 },
+    { name: "Edge", monthlyVolume: 39080 },
+    { name: "Realtime", monthlyVolume: 42480 },
   ],
-  chassis: {
-    adaptiveChassisControl: "DCC Adaptive Chassis Control",
-    availability: "available",
+  identity: {
+    category: "visual / operations demo",
+    label: "Motion Asset",
+    market: "Global",
+    name: "Signal Runner",
+    version: "2026.05",
   },
   media: {
     color: "Moonstone Gray",
     image: "/showroom/pexels-vahapdmr-14436192.jpg",
-    trim: "Autobahn",
+    image02: "/showroom/image-02.jpg",
+    trim: "Preview",
   },
-  powertrain: {
-    engine: "2.0L TSI turbocharged gas engine",
-    horsepower: 241,
-    torqueLbFt: 273,
-    transmission: "automatic",
+  metrics: {
+    latencyMs: 241,
+    reliability: "99.97%",
+    throughput: 273,
+    transport: "event-driven",
   },
-  pricing: {
-    amount: 34590,
-    currency: "USD",
-    note: "Starting MSRP excludes taxes, title, accessory installation costs, and dealer charges.",
+  notes: {
+    budget: 34590,
+    text: "Placeholder metrics are intentionally generic so the template can fit products, dashboards, admin tools, or content systems.",
   },
-  source: {
-    lastChecked: "2026-05-23",
-    note: "Specifications, equipment, options, accessories, and prices are subject to change without notice.",
-    primaryPage: "Volkswagen official Golf GTI model page",
-  },
-  technology: [
-    "12.9 in touchscreen",
-    "IQ.DRIVE standard",
-    "Wireless App-Connect",
-    "Wi-Fi hotspot",
+  stack: [
+    "REST API",
+    "Webhook ready",
+    "Pull sync",
+    "Realtime channel",
   ],
-  vehicle: {
-    bodyStyle: "hatchback",
-    category: "compact / hot hatch",
-    make: "Volkswagen",
-    market: "US",
-    model: "Golf GTI",
-    modelYear: 2026,
-  },
 };
 
 export const menuShowcase: RecursiveMenuItem[] = [
   {
-    label: "Base Design System",
+    label: "Base Template",
     meta: "root",
     status: "active",
     children: [
@@ -222,23 +214,23 @@ export const menuShowcase: RecursiveMenuItem[] = [
         ],
       },
       {
-        label: "Primitives",
+        label: "Interfaces",
         meta: "ui",
         status: "active",
         children: [
-          { label: "Buttons", meta: "3 variants", status: "ready" },
+          { label: "Actions", meta: "3 variants", status: "ready" },
           { label: "Cards", meta: "review", status: "active" },
           { label: "Tables", meta: "dense", status: "ready" },
         ],
       },
       {
-        label: "Leadership Uncoded",
-        meta: "demo data",
+        label: "Runtime",
+        meta: "future",
         status: "draft",
         children: [
-          { label: "Eğitimler", meta: "retail", status: "draft" },
-          { label: "Blog", meta: "content", status: "draft" },
-          { label: "Danışmanlık", meta: "AI", status: "draft" },
+          { label: "Push events", meta: "webhooks", status: "ready" },
+          { label: "Pull jobs", meta: "scheduler", status: "draft" },
+          { label: "TCP / UDP", meta: "adapter slots", status: "draft" },
         ],
       },
     ],
