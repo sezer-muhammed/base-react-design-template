@@ -10,6 +10,8 @@ import {
   Cell,
   Line,
   LineChart,
+  Pie,
+  PieChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -51,6 +53,14 @@ const latencyData = [
   { label: "16", p50: 118, p95: 249 },
   { label: "20", p50: 104, p95: 226 },
 ];
+
+const channelShareData = [
+  { label: "API", value: 34, color: "var(--ds-blue-700)" },
+  { label: "Jobs", value: 21, color: "var(--ds-amber-700)" },
+  { label: "Realtime", value: 18, color: "var(--ds-teal-700)" },
+  { label: "UI", value: 16, color: "var(--ds-green-700)" },
+  { label: "Adapters", value: 11, color: "var(--ds-purple-700)" },
+] as const;
 
 const barColors = [
   "var(--ds-blue-700)",
@@ -154,6 +164,7 @@ export function ChartShowcase() {
 
       <div className="grid gap-3">
         <ChartDecisionCard />
+        <DonutChartCard />
         <Card data-component-id="CHART-02" depth="base" id="chart-02-latency-line">
           <CardHeader
             action={
@@ -296,6 +307,67 @@ export function ChartShowcase() {
         </div>
       </Surface>
     </div>
+  );
+}
+
+function DonutChartCard() {
+  const total = channelShareData.reduce((sum, item) => sum + item.value, 0);
+
+  return (
+    <Card data-component-id="CHART-05" depth="base" id="chart-05-donut">
+      <CardHeader
+        action={<ComponentIdBadge id="CHART-05" />}
+      >
+        <CardTitle>Channel share donut</CardTitle>
+        <CardDescription>
+          A compact pie variant for proportional category scans.
+        </CardDescription>
+      </CardHeader>
+      <div className="grid gap-3 sm:grid-cols-[150px_1fr] sm:items-center">
+        <div className="h-[150px]">
+          <ResponsiveContainer
+            height="100%"
+            initialDimension={{ height: 150, width: 150 }}
+            width="100%"
+          >
+            <PieChart accessibilityLayer>
+              <Pie
+                cx="50%"
+                cy="50%"
+                data={channelShareData}
+                dataKey="value"
+                innerRadius={42}
+                outerRadius={66}
+                paddingAngle={2}
+                stroke="var(--ds-background-100)"
+                strokeWidth={2}
+              >
+                {channelShareData.map((entry) => (
+                  <Cell fill={entry.color} key={entry.label} />
+                ))}
+              </Pie>
+              <Tooltip content={<ChartTooltip />} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="grid gap-1.5">
+          {channelShareData.map((item) => (
+            <div
+              className="grid grid-cols-[minmax(0,1fr)_52px] items-center gap-2 rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] px-2.5 py-1.5"
+              key={item.label}
+            >
+              <span className="flex min-w-0 items-center gap-2 text-[12px] font-medium">
+                <StatusDot color={item.color} />
+                <span className="truncate">{item.label}</span>
+              </span>
+              <span className="text-right font-mono text-[12px] text-[var(--ds-gray-900)]">
+                {Math.round((item.value / total) * 100)}%
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Card>
   );
 }
 

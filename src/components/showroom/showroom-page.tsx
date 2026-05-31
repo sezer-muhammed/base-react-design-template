@@ -4,6 +4,7 @@ import { ActiveSectionNav } from "@/components/showroom/active-section-nav";
 import { ActionShowcase } from "@/components/showroom/action-showcase";
 import { ChartShowcase } from "@/components/showroom/chart-showcase";
 import {
+  NestedHierarchyTable,
   OperationTable,
 } from "@/components/showroom/interactive-tables";
 import {
@@ -142,6 +143,25 @@ export function ShowroomPage() {
               summary="A compact table system with filters and sortable column headers."
             >
               <div className="space-y-3">
+                <Surface
+                  className="overflow-hidden"
+                  data-component-id="TABLE-01"
+                  id="table-01-nested-hierarchy"
+                  tone="flat"
+                >
+                  <SectionHeader
+                    action={
+                      <>
+                        <ComponentIdBadge id="TABLE-01" />
+                        <DotLabel color="var(--ds-blue-700)">nested</DotLabel>
+                      </>
+                    }
+                    eyebrow="Hierarchy table"
+                    summary="Expandable rows for taxonomy, folders, routes, permissions, or any parent-child record set."
+                    title="Nested hierarchy table"
+                  />
+                  <NestedHierarchyTable />
+                </Surface>
                 <Surface
                   className="overflow-hidden"
                   data-component-id="TABLE-02"
@@ -539,7 +559,7 @@ function AssetWideVisualCard() {
           <ComponentIdBadge id="CARD-03" />
           <GlassTag>wide visual</GlassTag>
         </div>
-        <div className="absolute inset-x-4 bottom-4 grid gap-4 rounded-[10px] border border-white/28 bg-white/[0.57] p-4 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.74),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md sm:p-5 lg:grid-cols-[1fr_430px] lg:items-end">
+        <div className="absolute inset-x-4 bottom-4 grid gap-4 rounded-[10px] border border-white/24 bg-white/[0.40] p-4 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.62),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md sm:p-5 lg:grid-cols-[1fr_430px] lg:items-end">
           <div>
             <div className="flex flex-wrap gap-2">
               <Badge tone="gray">Horizontal</Badge>

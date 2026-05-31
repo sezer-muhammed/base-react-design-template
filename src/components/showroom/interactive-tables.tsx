@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronDown, ChevronRight, ChevronsUpDown } from "lucide-react";
 import { ProgressCell } from "@/components/ui/progress-cell";
 import { FilterButton, SearchFilterHeader } from "@/components/ui/search-filter-header";
 import { StatusSignal } from "@/components/ui/status-signal";
@@ -23,6 +23,85 @@ type InteractiveColumn<T> = {
   render?: (row: T) => React.ReactNode;
   sortValue?: (row: T) => number | string;
 };
+
+type HierarchyRank = "domain" | "group" | "module" | "endpoint";
+
+type HierarchyRow = {
+  childCount: number;
+  depth: number;
+  hasChildren: boolean;
+  id: string;
+  label: string;
+  parent: string;
+  rank: HierarchyRank;
+  status: "Active" | "Ready" | "Review";
+};
+
+const hierarchyData = [
+  {
+    name: "Runtime",
+    groups: [
+      {
+        name: "Events",
+        modules: [
+          { name: "Webhook Intake", endpoints: ["POST /events", "GET /events/:id"] },
+          { name: "Realtime Stream", endpoints: ["GET /stream", "POST /broadcast"] },
+        ],
+      },
+      {
+        name: "Jobs",
+        modules: [
+          { name: "Pull Sync", endpoints: ["POST /jobs/sync", "GET /jobs/:id"] },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Interface",
+    groups: [
+      {
+        name: "Components",
+        modules: [
+          { name: "Showroom", endpoints: ["GET /showroom", "GET /showroom#tables"] },
+          { name: "Navigation", endpoints: ["GET /navigation"] },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Adapters",
+    groups: [
+      {
+        name: "Transport",
+        modules: [
+          { name: "HTTP", endpoints: ["GET /health", "POST /proxy"] },
+          { name: "TCP / UDP", endpoints: ["CONNECT /socket"] },
+        ],
+      },
+    ],
+  },
+] as const;
+
+const hierarchyRankColor: Record<HierarchyRank, string> = {
+  domain: "var(--ds-gray-1000)",
+  endpoint: "var(--ds-amber-700)",
+  group: "var(--ds-blue-700)",
+  module: "var(--ds-green-700)",
+};
+
+const allHierarchyExpandableIds = hierarchyData.flatMap((domain) => {
+  const domainId = `domain:${domain.name}`;
+  return [
+    domainId,
+    ...domain.groups.flatMap((group) => {
+      const groupId = `${domainId}/group:${group.name}`;
+      return [
+        groupId,
+        ...group.modules.map((module) => `${groupId}/module:${module.name}`),
+      ];
+    }),
+  ];
+});
 
 const componentColumns: InteractiveColumn<ComponentRow>[] = [
   {
@@ -119,6 +198,188 @@ export function OperationTable() {
       rows={operationRows.slice(0, 10)}
       searchPlaceholder="Search module, audience, lead"
     />
+  );
+}
+
+export function NestedHierarchyTable() {
+  const [expanded, setExpanded] = useState<Set<string>>(
+    () => new Set(["domain:Runtime", "domain:Runtime/group:Events"]),
+  );
+
+  const rows = useMemo(() => {
+    const nextRows: HierarchyRow[] = [];
+
+    hierarchyData.forEach((domain) => {
+      const domainId = `domain:${domain.name}`;
+      const domainEndpointCount = domain.groups.reduce(
+        (groupTotal, group) =>
+          groupTotal + group.modules.reduce((moduleTotal, module) => moduleTotal + module.endpoints.length, 0),
+        0,
+      );
+
+      nextRows.push({
+        childCount: domainEndpointCount,
+        depth: 0,
+        hasChildren: true,
+        id: domainId,
+        label: domain.name,
+        parent: "-",
+        rank: "domain",
+        status: "Active",
+      });
+
+      if (!expanded.has(domainId)) return;
+
+      domain.groups.forEach((group) => {
+        const groupId = `${domainId}/group:${group.name}`;
+        const groupEndpointCount = group.modules.reduce((total, module) => total + module.endpoints.length, 0);
+
+        nextRows.push({
+          childCount: groupEndpointCount,
+          depth: 1,
+          hasChildren: true,
+          id: groupId,
+          label: group.name,
+          parent: domain.name,
+          rank: "group",
+          status: "Ready",
+        });
+
+        if (!expanded.has(groupId)) return;
+
+        group.modules.forEach((module) => {
+          const moduleId = `${groupId}/module:${module.name}`;
+
+          nextRows.push({
+            childCount: module.endpoints.length,
+            depth: 2,
+            hasChildren: true,
+            id: moduleId,
+            label: module.name,
+            parent: group.name,
+            rank: "module",
+            status: "Ready",
+          });
+
+          if (!expanded.has(moduleId)) return;
+
+          module.endpoints.forEach((endpoint) => {
+            nextRows.push({
+              childCount: 0,
+              depth: 3,
+              hasChildren: false,
+              id: `${moduleId}/endpoint:${endpoint}`,
+              label: endpoint,
+              parent: module.name,
+              rank: "endpoint",
+              status: "Review",
+            });
+          });
+        });
+      });
+    });
+
+    return nextRows;
+  }, [expanded]);
+
+  function toggle(row: HierarchyRow) {
+    if (!row.hasChildren) return;
+    setExpanded((current) => {
+      const next = new Set(current);
+      if (next.has(row.id)) {
+        next.delete(row.id);
+      } else {
+        next.add(row.id);
+      }
+      return next;
+    });
+  }
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--ds-gray-alpha-300)] px-3 py-2">
+        <div className="flex flex-wrap gap-2">
+          <FilterButton
+            active={expanded.size === allHierarchyExpandableIds.length}
+            onClick={() => setExpanded(new Set(allHierarchyExpandableIds))}
+          >
+            Expand
+          </FilterButton>
+          <FilterButton active={expanded.size === 0} onClick={() => setExpanded(new Set())}>
+            Collapse
+          </FilterButton>
+        </div>
+        <span className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
+          {rows.length} visible nodes
+        </span>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[780px] border-collapse text-left text-[13px]">
+          <thead>
+            <tr className="border-b border-[var(--ds-gray-alpha-400)] bg-[var(--ds-gray-100)]">
+              <th className="h-9 px-3 font-mono text-[11px] font-medium uppercase text-[var(--ds-gray-700)]">Node</th>
+              <th className="h-9 px-3 font-mono text-[11px] font-medium uppercase text-[var(--ds-gray-700)]">Rank</th>
+              <th className="h-9 px-3 font-mono text-[11px] font-medium uppercase text-[var(--ds-gray-700)]">Parent</th>
+              <th className="h-9 px-3 font-mono text-[11px] font-medium uppercase text-[var(--ds-gray-700)]">State</th>
+              <th className="h-9 px-3 text-right font-mono text-[11px] font-medium uppercase text-[var(--ds-gray-700)]">Leafs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => {
+              const isOpen = expanded.has(row.id);
+
+              return (
+                <tr
+                  className="border-b border-[var(--ds-gray-alpha-300)] last:border-b-0 hover:bg-[var(--ds-gray-100)]"
+                  key={row.id}
+                >
+                  <td className="h-10 px-3 text-[var(--ds-gray-1000)]">
+                    <div className="flex min-w-0 items-center gap-2" style={{ paddingLeft: row.depth * 22 }}>
+                      {row.hasChildren ? (
+                        <button
+                          className="grid h-7 w-7 shrink-0 place-items-center rounded-[6px] border border-[var(--ds-gray-alpha-300)] hover:bg-[var(--ds-background-200)]"
+                          onClick={() => toggle(row)}
+                          type="button"
+                        >
+                          {isOpen ? <ChevronDown aria-hidden="true" className="h-4 w-4" /> : <ChevronRight aria-hidden="true" className="h-4 w-4" />}
+                        </button>
+                      ) : (
+                        <span className="grid h-7 w-7 shrink-0 place-items-center font-mono text-[10px] uppercase text-[var(--ds-gray-700)]">
+                          ep
+                        </span>
+                      )}
+                      <button
+                        className="min-w-0 truncate text-left font-medium"
+                        onClick={() => toggle(row)}
+                        type="button"
+                      >
+                        {row.label}
+                      </button>
+                    </div>
+                  </td>
+                  <td className="h-10 px-3">
+                    <StatusSignal color={hierarchyRankColor[row.rank]} variant="pill">
+                      {row.rank}
+                    </StatusSignal>
+                  </td>
+                  <td className="h-10 px-3 text-[var(--ds-gray-700)]">{row.parent}</td>
+                  <td className="h-10 px-3">
+                    <StatusSignal
+                      color={row.status === "Ready" ? "var(--ds-green-700)" : row.status === "Review" ? "var(--ds-amber-700)" : "var(--ds-blue-700)"}
+                      variant="cell"
+                    >
+                      {row.status}
+                    </StatusSignal>
+                  </td>
+                  <td className="h-10 px-3 text-right tabular-nums">{row.childCount || "-"}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 

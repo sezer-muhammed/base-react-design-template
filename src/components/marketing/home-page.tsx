@@ -219,7 +219,7 @@ function Hero() {
           <GlassTag>visual system</GlassTag>
           <GlassTag>showroom linked</GlassTag>
         </div>
-        <div className="absolute inset-x-4 bottom-4 rounded-[10px] border border-white/28 bg-white/[0.57] p-4 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.74),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md">
+        <div className="absolute inset-x-4 bottom-4 rounded-[10px] border border-white/24 bg-white/[0.40] p-4 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.62),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md">
           <div className="grid gap-4 sm:grid-cols-[1fr_220px] sm:items-end">
             <div>
               <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
