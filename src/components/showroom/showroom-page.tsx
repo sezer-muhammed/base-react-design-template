@@ -559,7 +559,7 @@ function AssetWideVisualCard() {
           <ComponentIdBadge id="CARD-03" />
           <GlassTag>wide visual</GlassTag>
         </div>
-        <div className="absolute inset-x-4 bottom-4 grid gap-4 rounded-[10px] border border-white/24 bg-white/[0.40] p-4 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.62),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md sm:p-5 lg:grid-cols-[1fr_430px] lg:items-end">
+        <div className="absolute inset-x-4 bottom-4 grid gap-4 rounded-[10px] border border-white/18 bg-white/[0.26] p-4 text-[var(--ds-gray-1000)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.42),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md sm:p-5 lg:grid-cols-[1fr_430px] lg:items-end">
           <div>
             <div className="flex flex-wrap gap-2">
               <Badge tone="gray">Horizontal</Badge>
@@ -669,6 +669,8 @@ function ImageFrame({
 }) {
   const soft = mode === "soft";
   const frameTitle = soft ? "Soft metadata surface" : title;
+  const transparentTagClass =
+    "border-white/18 bg-white/[0.20] text-[var(--ds-gray-1000)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.38),0_10px_24px_-18px_rgb(0_0_0_/_0.72)] before:bg-white/30 after:bg-white/[0.04]";
 
   return (
     <Surface
@@ -703,25 +705,25 @@ function ImageFrame({
         )}
         <div className="absolute left-4 top-4 flex flex-wrap gap-2">
           <ComponentIdBadge id={componentId} />
-          <GlassTag>{soft ? "soft glass" : "2026-05-24"}</GlassTag>
+          <GlassTag className={transparentTagClass} tone="dark">{soft ? "soft glass" : "2026-05-24"}</GlassTag>
         </div>
         <div className="absolute right-4 top-4 flex flex-wrap justify-end gap-2">
-          <GlassTag>{assetDemo.identity.name}</GlassTag>
-          <GlassTag>{soft ? assetDemo.identity.version : assetDemo.media.color}</GlassTag>
+          <GlassTag className={transparentTagClass} tone="dark">{assetDemo.identity.name}</GlassTag>
+          <GlassTag className={transparentTagClass} tone="dark">{soft ? assetDemo.identity.version : assetDemo.media.color}</GlassTag>
         </div>
         <div className="absolute inset-x-0 bottom-0 grid gap-3 p-4 text-white sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
             <div className="mb-3 flex flex-wrap gap-2">
-              <GlassTag>{soft ? "crop-safe" : "full bleed"}</GlassTag>
-              <GlassTag>{soft ? "edge meta" : "vignette"}</GlassTag>
+              <GlassTag className={transparentTagClass} tone="dark">{soft ? "crop-safe" : "full bleed"}</GlassTag>
+              <GlassTag className={transparentTagClass} tone="dark">{soft ? "edge meta" : "vignette"}</GlassTag>
             </div>
             <h3 className="text-[22px] font-semibold leading-7">{frameTitle}</h3>
             <p className="mt-2 max-w-md text-[13px] leading-5 text-white/70">{caption}</p>
           </div>
           <div className="flex flex-wrap gap-2 sm:max-w-[280px] sm:justify-end">
-            <GlassTag>mode: {assetDemo.media.trim}</GlassTag>
-            <GlassTag>scope: {assetDemo.identity.market}</GlassTag>
-            <GlassTag>latency: {assetDemo.metrics.latencyMs}ms</GlassTag>
+            <GlassTag className={transparentTagClass} tone="dark">mode: {assetDemo.media.trim}</GlassTag>
+            <GlassTag className={transparentTagClass} tone="dark">scope: {assetDemo.identity.market}</GlassTag>
+            <GlassTag className={transparentTagClass} tone="dark">latency: {assetDemo.metrics.latencyMs}ms</GlassTag>
           </div>
         </div>
       </div>
