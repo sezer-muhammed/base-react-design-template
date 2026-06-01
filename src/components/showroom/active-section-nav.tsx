@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Surface } from "@/components/ui/surface";
 import { cn } from "@/lib/cn";
 
@@ -15,6 +15,7 @@ export function ActiveSectionNav({ items }: { items: readonly SectionNavItem[] }
     [items],
   );
   const [activeId, setActiveId] = useState(sectionIds[0]);
+  const itemRefs = useRef(new Map<string, HTMLAnchorElement>());
 
   useEffect(() => {
     const sections = sectionIds
@@ -56,6 +57,13 @@ export function ActiveSectionNav({ items }: { items: readonly SectionNavItem[] }
     };
   }, [sectionIds]);
 
+  useEffect(() => {
+    itemRefs.current.get(activeId)?.scrollIntoView({
+      block: "nearest",
+      inline: "center",
+    });
+  }, [activeId]);
+
   return (
     <Surface className="sticky top-[76px] z-10 overflow-hidden" tone="flat">
       <nav
@@ -77,6 +85,13 @@ export function ActiveSectionNav({ items }: { items: readonly SectionNavItem[] }
               )}
               href={item.href}
               key={item.href}
+              ref={(node) => {
+                if (node) {
+                  itemRefs.current.set(id, node);
+                } else {
+                  itemRefs.current.delete(id);
+                }
+              }}
             >
               <span
                 className={cn(

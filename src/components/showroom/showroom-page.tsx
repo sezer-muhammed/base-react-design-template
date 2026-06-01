@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ActiveSectionNav } from "@/components/showroom/active-section-nav";
 import { ActionShowcase } from "@/components/showroom/action-showcase";
 import { ChartShowcase } from "@/components/showroom/chart-showcase";
+import { FileUploadShowcase } from "@/components/showroom/file-upload-showcase";
 import {
   NestedHierarchyTable,
   OperationTable,
@@ -186,8 +187,18 @@ export function ShowroomPage() {
 
             <ShowcaseSection
               componentId="S-07"
+              id="uploads"
+              kicker="07 / Uploads"
+              title="File upload"
+              summary="A compact dropzone, queue, and import summary for personal dashboards and website admin flows."
+            >
+              <FileUploadShowcase />
+            </ShowcaseSection>
+
+            <ShowcaseSection
+              componentId="S-08"
               id="menus"
-              kicker="07 / Menus"
+              kicker="08 / Menus"
               title="Recursive menu and lists"
               summary="The same data shape for sidebars, content trees, and nested information structures."
             >
@@ -237,9 +248,9 @@ export function ShowroomPage() {
             </ShowcaseSection>
 
             <ShowcaseSection
-              componentId="S-08"
+              componentId="S-09"
               id="command"
-              kicker="08 / Command"
+              kicker="09 / Command"
               title="Command menu"
               summary="A searchable command layer for navigation, runtime records, and global actions."
             >
@@ -247,9 +258,9 @@ export function ShowroomPage() {
             </ShowcaseSection>
 
             <ShowcaseSection
-              componentId="S-09"
+              componentId="S-10"
               id="states"
-              kicker="09 / States"
+              kicker="10 / States"
               title="Empty, loading and error"
               summary="Neutral state surfaces with small signal dots instead of colored panels."
             >
@@ -257,9 +268,9 @@ export function ShowroomPage() {
             </ShowcaseSection>
 
             <ShowcaseSection
-              componentId="S-10"
+              componentId="S-11"
               id="auth"
-              kicker="10 / Auth"
+              kicker="11 / Auth"
               title="Auth shell"
               summary="A compact authentication and permission surface that can become sign-in, invite, or role review."
             >
@@ -267,9 +278,9 @@ export function ShowroomPage() {
             </ShowcaseSection>
 
             <ShowcaseSection
-              componentId="S-13"
+              componentId="S-12"
               id="jobs"
-              kicker="13 / Job monitor"
+              kicker="12 / Job monitor"
               title="Pull and worker jobs"
               summary="A future-ready shelf for scheduled sync, queues, retry windows, and manual triggers."
             >
@@ -277,9 +288,9 @@ export function ShowroomPage() {
             </ShowcaseSection>
 
             <ShowcaseSection
-              componentId="S-14"
+              componentId="S-13"
               id="realtime"
-              kicker="14 / Realtime"
+              kicker="13 / Realtime"
               title="Realtime stream"
               summary="A feed pattern for SSE, WebSocket, broadcast channels, and local event previews."
             >
@@ -287,9 +298,9 @@ export function ShowroomPage() {
             </ShowcaseSection>
 
             <ShowcaseSection
-              componentId="S-15"
+              componentId="S-14"
               id="settings"
-              kicker="15 / Settings"
+              kicker="14 / Settings"
               title="Settings and config"
               summary="Toggle rows, summary cards, and environment-aware config slots."
             >
@@ -297,9 +308,9 @@ export function ShowroomPage() {
             </ShowcaseSection>
 
             <ShowcaseSection
-              componentId="S-16"
+              componentId="S-15"
               id="blueprint"
-              kicker="16 / Blueprint"
+              kicker="15 / Blueprint"
               title="Extensible runtime blueprint"
               summary="Adapter slots for API, push, pull, triggers, realtime, and future TCP / UDP transport support."
             >
@@ -345,6 +356,13 @@ const listAccentColors = [
   "var(--ds-amber-700)",
   "var(--ds-red-700)",
   "var(--ds-teal-700)",
+  "var(--ds-purple-700)",
+] as const;
+
+const assetChannelColors = [
+  "var(--ds-blue-700)",
+  "var(--ds-teal-700)",
+  "var(--ds-amber-700)",
   "var(--ds-purple-700)",
 ] as const;
 
@@ -441,7 +459,7 @@ function AssetSpecCard() {
       id="card-01-asset-data"
       tone="default"
     >
-      <div className="grid gap-4 lg:grid-cols-[1fr_280px]">
+      <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
         <div>
           <CardHeader
             className="flex-col items-start"
@@ -463,13 +481,22 @@ function AssetSpecCard() {
             <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
               Flag-heavy data card
             </p>
-            <CardTitle className="mt-3 text-[22px] leading-7">
+            <CardTitle className="mt-3 text-[26px] leading-8">
               {assetDemo.identity.name} · {assetDemo.identity.label}
             </CardTitle>
             <CardDescription>
               A domain-neutral record card with flag space, a mini table, and a
               note area for operational metrics, channels, and runtime context.
             </CardDescription>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <DotLabel color="var(--ds-purple-700)">
+                {assetDemo.identity.label}
+              </DotLabel>
+              <DotLabel color="var(--ds-green-700)">healthy</DotLabel>
+              <span className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
+                Updated 2026.05
+              </span>
+            </div>
           </CardHeader>
 
           <div className="grid gap-2 sm:grid-cols-3">
@@ -486,7 +513,7 @@ function AssetSpecCard() {
               ["Transport", "HTTP / TCP / UDP adapters"],
             ].map(([label, value]) => (
               <div
-                className="rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-3"
+                className="rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] px-3 py-2.5"
                 key={label}
               >
                 <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
@@ -498,19 +525,25 @@ function AssetSpecCard() {
           </div>
         </div>
 
-        <div className="rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)]">
-          <div className="border-b border-[var(--ds-gray-alpha-300)] px-3 py-2">
+        <div className="overflow-hidden rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)]">
+          <div className="border-b border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-100)] px-3 py-3">
             <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
-              Placeholder budget
+              Runtime budget
             </p>
-            <p className="mt-1 text-[20px] font-semibold">
+            <p className="mt-2 text-[24px] font-semibold leading-7">
               {formatUsd(assetDemo.notes.budget)}
+            </p>
+            <p className="mt-1 text-[12px] leading-5 text-[var(--ds-gray-800)]">
+              Monthly placeholder for transport, event volume, and automation cost.
             </p>
           </div>
           <div className="divide-y divide-[var(--ds-gray-alpha-300)]">
-            {channels.map((channel) => (
-              <div className="flex h-9 items-center justify-between px-3" key={channel.name}>
-                <span className="text-[13px] font-medium">{channel.name}</span>
+            {channels.map((channel, index) => (
+              <div className="flex h-10 items-center justify-between px-3" key={channel.name}>
+                <span className="flex items-center gap-2 text-[13px] font-medium">
+                  <StatusDot color={assetChannelColors[index % assetChannelColors.length]} />
+                  {channel.name}
+                </span>
                 <span className="font-mono text-[12px] text-[var(--ds-gray-900)]">
                   {channel.monthlyVolume.toLocaleString("en-US")}
                 </span>
@@ -566,10 +599,10 @@ function AssetWideVisualCard() {
               <Badge tone="blue">{assetDemo.identity.version}</Badge>
               <Badge tone="amber">{assetDemo.identity.category}</Badge>
             </div>
-            <h3 className="mt-4 text-[26px] font-semibold leading-8">
+            <h3 className="mt-4 text-[26px] font-semibold leading-8 text-[var(--ds-gray-1000)]">
               Wide media record card
             </h3>
-            <p className="mt-2 max-w-2xl text-[14px] leading-6 text-[var(--ds-gray-900)]">
+            <p className="mt-2 max-w-2xl text-[14px] leading-6 text-[var(--ds-gray-1000)]">
               For records that need to feel more premium in a list: strong visual
               presence, short copy, metrics, and reusable flag space.
             </p>
@@ -582,7 +615,7 @@ function AssetWideVisualCard() {
               ["Mode", assetDemo.metrics.transport],
             ].map(([label, value]) => (
               <div
-                className="rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-3"
+                className="rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-3 text-[var(--ds-gray-1000)]"
                 key={label}
               >
                 <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
@@ -670,7 +703,7 @@ function ImageFrame({
   const soft = mode === "soft";
   const frameTitle = soft ? "Soft metadata surface" : title;
   const transparentTagClass =
-    "border-white/18 bg-white/[0.20] text-[var(--ds-gray-1000)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.38),0_10px_24px_-18px_rgb(0_0_0_/_0.72)] before:bg-white/30 after:bg-white/[0.04]";
+    "border-white/28 bg-white/[0.34] text-[var(--ds-gray-1000)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.48),0_10px_24px_-18px_rgb(0_0_0_/_0.72)] before:bg-white/45 after:bg-white/[0.06]";
 
   return (
     <Surface

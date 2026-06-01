@@ -7,6 +7,7 @@ export const showroomNav = [
   { href: "#cards", label: "Cards" },
   { href: "#media", label: "Media" },
   { href: "#tables", label: "Tables" },
+  { href: "#uploads", label: "Uploads" },
   { href: "#menus", label: "Menus" },
   { href: "#command", label: "Command" },
   { href: "#states", label: "States" },

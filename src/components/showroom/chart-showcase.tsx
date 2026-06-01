@@ -73,94 +73,181 @@ const barColors = [
 export function ChartShowcase() {
   return (
     <div className="grid gap-3 xl:grid-cols-[1fr_380px]">
-      <Surface
-        className="overflow-hidden"
-        data-component-id="CHART-01"
-        id="chart-01-composed-signal"
-        tone="flat"
-      >
-        <SectionHeader
-          action={
-            <>
-              <ComponentIdBadge id="CHART-01" />
-              <SignalPill color="var(--ds-blue-700)">Recharts primary</SignalPill>
-            </>
-          }
-          eyebrow="Charts"
-          summary="SVG charts with soft gridlines, neutral surfaces, custom tooltip, and status color as signal only."
-          title="Operational signal chart"
-        />
-        <div className="h-[310px] p-4">
-          <ResponsiveContainer
-            height="100%"
-            initialDimension={{ height: 310, width: 760 }}
-            width="100%"
-          >
-            <AreaChart
-              accessibilityLayer
-              data={signalData}
-              margin={{ bottom: 0, left: -18, right: 10, top: 12 }}
+      <div className="grid gap-3">
+        <Surface
+          className="overflow-hidden"
+          data-component-id="CHART-01"
+          id="chart-01-composed-signal"
+          tone="flat"
+        >
+          <SectionHeader
+            action={
+              <>
+                <ComponentIdBadge id="CHART-01" />
+                <SignalPill color="var(--ds-blue-700)">Recharts primary</SignalPill>
+              </>
+            }
+            eyebrow="Charts"
+            summary="SVG charts with soft gridlines, neutral surfaces, custom tooltip, and status color as signal only."
+            title="Operational signal chart"
+          />
+          <div className="h-[310px] p-4">
+            <ResponsiveContainer
+              height="100%"
+              initialDimension={{ height: 310, width: 760 }}
+              width="100%"
             >
-              <defs>
-                <linearGradient id="inboundFill" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="5%" stopColor="var(--ds-blue-700)" stopOpacity={0.18} />
-                  <stop offset="95%" stopColor="var(--ds-blue-700)" stopOpacity={0.01} />
-                </linearGradient>
-                <linearGradient id="resolvedFill" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="5%" stopColor="var(--ds-teal-700)" stopOpacity={0.14} />
-                  <stop offset="95%" stopColor="var(--ds-teal-700)" stopOpacity={0.01} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid
-                stroke="var(--ds-gray-alpha-300)"
-                strokeDasharray="3 6"
-                vertical={false}
-              />
-              <XAxis
-                axisLine={false}
-                dataKey="label"
-                fontSize={12}
-                stroke="var(--ds-gray-700)"
-                tickLine={false}
-                tickMargin={12}
-              />
-              <YAxis
-                axisLine={false}
-                fontSize={12}
-                stroke="var(--ds-gray-700)"
-                tickLine={false}
-                width={42}
-              />
-              <Tooltip content={<ChartTooltip />} cursor={{ stroke: "var(--ds-gray-alpha-500)" }} />
-              <Area
-                dataKey="inbound"
-                fill="url(#inboundFill)"
-                name="Inbound"
-                stroke="var(--ds-blue-700)"
-                strokeWidth={2}
-                type="monotone"
-              />
-              <Area
-                dataKey="resolved"
-                fill="url(#resolvedFill)"
-                name="Resolved"
-                stroke="var(--ds-teal-700)"
-                strokeWidth={2}
-                type="monotone"
-              />
-              <Line
-                dataKey="queued"
-                dot={false}
-                name="Queued"
-                stroke="var(--ds-gray-1000)"
-                strokeDasharray="4 5"
-                strokeWidth={1.8}
-                type="monotone"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </Surface>
+              <AreaChart
+                accessibilityLayer
+                data={signalData}
+                margin={{ bottom: 0, left: -18, right: 10, top: 12 }}
+              >
+                <defs>
+                  <linearGradient id="inboundFill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="5%" stopColor="var(--ds-blue-700)" stopOpacity={0.18} />
+                    <stop offset="95%" stopColor="var(--ds-blue-700)" stopOpacity={0.01} />
+                  </linearGradient>
+                  <linearGradient id="resolvedFill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="5%" stopColor="var(--ds-teal-700)" stopOpacity={0.14} />
+                    <stop offset="95%" stopColor="var(--ds-teal-700)" stopOpacity={0.01} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid
+                  stroke="var(--ds-gray-alpha-300)"
+                  strokeDasharray="3 6"
+                  vertical={false}
+                />
+                <XAxis
+                  axisLine={false}
+                  dataKey="label"
+                  fontSize={12}
+                  stroke="var(--ds-gray-700)"
+                  tickLine={false}
+                  tickMargin={12}
+                />
+                <YAxis
+                  axisLine={false}
+                  fontSize={12}
+                  stroke="var(--ds-gray-700)"
+                  tickLine={false}
+                  width={42}
+                />
+                <Tooltip content={<ChartTooltip />} cursor={{ stroke: "var(--ds-gray-alpha-500)" }} />
+                <Area
+                  dataKey="inbound"
+                  fill="url(#inboundFill)"
+                  name="Inbound"
+                  stroke="var(--ds-blue-700)"
+                  strokeWidth={2}
+                  type="monotone"
+                />
+                <Area
+                  dataKey="resolved"
+                  fill="url(#resolvedFill)"
+                  name="Resolved"
+                  stroke="var(--ds-teal-700)"
+                  strokeWidth={2}
+                  type="monotone"
+                />
+                <Line
+                  dataKey="queued"
+                  dot={false}
+                  name="Queued"
+                  stroke="var(--ds-gray-1000)"
+                  strokeDasharray="4 5"
+                  strokeWidth={1.8}
+                  type="monotone"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </Surface>
+
+        <Surface
+          className="overflow-hidden"
+          data-component-id="CHART-03"
+          id="chart-03-bar-matrix"
+          tone="flat"
+        >
+          <div className="grid gap-4 p-4 lg:grid-cols-[300px_1fr] lg:items-center">
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <ComponentIdBadge id="CHART-03" />
+                <SignalPill color="var(--ds-purple-700)">bar matrix</SignalPill>
+              </div>
+              <h3 className="mt-4 text-[18px] font-semibold">Bar graph direction</h3>
+              <p className="mt-1 max-w-md text-[13px] leading-5 text-[var(--ds-gray-900)]">
+                Bars should feel like measured instrumentation, not black blocks.
+                Use neutral rails, one primary signal, and a softer comparison series.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <SignalPill color="var(--ds-green-700)">live</SignalPill>
+                <SignalPill color="var(--ds-blue-700)">planned</SignalPill>
+                <SignalPill color="var(--ds-green-700)">accessible SVG</SignalPill>
+              </div>
+            </div>
+            <div className="h-[220px] min-w-0">
+              <ResponsiveContainer
+                height="100%"
+                initialDimension={{ height: 220, width: 560 }}
+                width="100%"
+              >
+                <BarChart
+                  accessibilityLayer
+                  barCategoryGap="24%"
+                  data={barData}
+                  margin={{ bottom: 0, left: -22, right: 8, top: 8 }}
+                >
+                  <CartesianGrid
+                    stroke="var(--ds-gray-alpha-300)"
+                    strokeDasharray="3 6"
+                    vertical={false}
+                  />
+                  <XAxis
+                    axisLine={false}
+                    dataKey="label"
+                    fontSize={12}
+                    stroke="var(--ds-gray-700)"
+                    tickLine={false}
+                    tickMargin={10}
+                  />
+                  <YAxis
+                    axisLine={false}
+                    fontSize={12}
+                    stroke="var(--ds-gray-700)"
+                    tickLine={false}
+                  />
+                  <Tooltip content={<ChartTooltip />} cursor={{ fill: "var(--ds-gray-alpha-100)" }} />
+                  <Bar
+                    dataKey="planned"
+                    fill="var(--ds-blue-700)"
+                    name="Planned"
+                    radius={[6, 6, 2, 2]}
+                    stroke="var(--ds-gray-1000)"
+                    strokeWidth={1}
+                  >
+                    {barData.map((entry, index) => (
+                      <Cell fill={barColors[index % barColors.length]} key={`planned-${entry.label}`} />
+                    ))}
+                  </Bar>
+                  <Bar
+                    dataKey="live"
+                    fill="var(--ds-green-700)"
+                    name="Live"
+                    radius={[6, 6, 2, 2]}
+                    stroke="var(--ds-gray-1000)"
+                    strokeWidth={1}
+                  >
+                    {barData.map((entry, index) => (
+                      <Cell fill={barColors[(index + 1) % barColors.length]} key={`live-${entry.label}`} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </Surface>
+      </div>
 
       <div className="grid gap-3">
         <ChartDecisionCard />
@@ -221,91 +308,6 @@ export function ChartShowcase() {
           </div>
         </Card>
       </div>
-
-      <Surface
-        className="overflow-hidden xl:col-span-2"
-        data-component-id="CHART-03"
-        id="chart-03-bar-matrix"
-        tone="flat"
-      >
-        <div className="grid gap-4 p-4 lg:grid-cols-[360px_1fr] lg:items-center">
-          <div>
-            <div className="flex flex-wrap items-center gap-2">
-              <ComponentIdBadge id="CHART-03" />
-              <SignalPill color="var(--ds-purple-700)">bar matrix</SignalPill>
-            </div>
-            <h3 className="mt-4 text-[18px] font-semibold">Bar graph direction</h3>
-            <p className="mt-1 max-w-md text-[13px] leading-5 text-[var(--ds-gray-900)]">
-              Bars should feel like measured instrumentation, not black blocks.
-              Use neutral rails, one primary signal, and a softer comparison series.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <SignalPill color="var(--ds-green-700)">live</SignalPill>
-              <SignalPill color="var(--ds-blue-700)">planned</SignalPill>
-              <SignalPill color="var(--ds-green-700)">accessible SVG</SignalPill>
-            </div>
-          </div>
-          <div className="h-[240px] min-w-0">
-            <ResponsiveContainer
-              height="100%"
-              initialDimension={{ height: 240, width: 760 }}
-              width="100%"
-            >
-              <BarChart
-                accessibilityLayer
-                barCategoryGap="24%"
-                data={barData}
-                margin={{ bottom: 0, left: -22, right: 8, top: 8 }}
-              >
-                <CartesianGrid
-                  stroke="var(--ds-gray-alpha-300)"
-                  strokeDasharray="3 6"
-                  vertical={false}
-                />
-                <XAxis
-                  axisLine={false}
-                  dataKey="label"
-                  fontSize={12}
-                  stroke="var(--ds-gray-700)"
-                  tickLine={false}
-                  tickMargin={10}
-                />
-                <YAxis
-                  axisLine={false}
-                  fontSize={12}
-                  stroke="var(--ds-gray-700)"
-                  tickLine={false}
-                />
-                <Tooltip content={<ChartTooltip />} cursor={{ fill: "var(--ds-gray-alpha-100)" }} />
-                <Bar
-                  dataKey="planned"
-                  fill="var(--ds-blue-700)"
-                  name="Planned"
-                  radius={[6, 6, 2, 2]}
-                  stroke="var(--ds-gray-1000)"
-                  strokeWidth={1}
-                >
-                  {barData.map((entry, index) => (
-                    <Cell fill={barColors[index % barColors.length]} key={`planned-${entry.label}`} />
-                  ))}
-                </Bar>
-                <Bar
-                  dataKey="live"
-                  fill="var(--ds-green-700)"
-                  name="Live"
-                  radius={[6, 6, 2, 2]}
-                  stroke="var(--ds-gray-1000)"
-                  strokeWidth={1}
-                >
-                  {barData.map((entry, index) => (
-                    <Cell fill={barColors[(index + 1) % barColors.length]} key={`live-${entry.label}`} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </Surface>
     </div>
   );
 }

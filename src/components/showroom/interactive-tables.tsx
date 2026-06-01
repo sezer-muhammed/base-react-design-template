@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { ArrowDown, ArrowUp, ChevronDown, ChevronRight, ChevronsUpDown } from "lucide-react";
 import { ProgressCell } from "@/components/ui/progress-cell";
 import { FilterButton, SearchFilterHeader } from "@/components/ui/search-filter-header";
+import { RecordTable, type RecordTableColumn } from "@/components/ui/record-table";
 import { StatusSignal } from "@/components/ui/status-signal";
 import { cn } from "@/lib/cn";
 import { componentRows, type ComponentRow } from "@/data/showroom";
@@ -295,6 +296,87 @@ export function NestedHierarchyTable() {
     });
   }
 
+  const columns = useMemo<RecordTableColumn<HierarchyRow>[]>(
+    () => [
+      {
+        header: "Node",
+        key: "node",
+        render: (row) => {
+          const isOpen = expanded.has(row.id);
+
+          return (
+            <div
+              className="flex min-w-0 items-center gap-2"
+              style={{ paddingLeft: row.depth * 22 }}
+            >
+              {row.hasChildren ? (
+                <button
+                  className="grid h-7 w-7 shrink-0 place-items-center rounded-[6px] border border-[var(--ds-gray-alpha-300)] hover:bg-[var(--ds-background-200)]"
+                  onClick={() => toggle(row)}
+                  type="button"
+                >
+                  {isOpen ? (
+                    <ChevronDown aria-hidden="true" className="h-4 w-4" />
+                  ) : (
+                    <ChevronRight aria-hidden="true" className="h-4 w-4" />
+                  )}
+                </button>
+              ) : (
+                <span className="grid h-7 w-7 shrink-0 place-items-center font-mono text-[10px] uppercase text-[var(--ds-gray-700)]">
+                  ep
+                </span>
+              )}
+              <button
+                className="min-w-0 truncate text-left font-medium"
+                onClick={() => toggle(row)}
+                type="button"
+              >
+                {row.label}
+              </button>
+            </div>
+          );
+        },
+      },
+      {
+        className: "w-[132px]",
+        header: "Rank",
+        key: "rank",
+        render: (row) => (
+          <StatusSignal color={hierarchyRankColor[row.rank]} variant="pill">
+            {row.rank}
+          </StatusSignal>
+        ),
+      },
+      {
+        className: "w-[160px]",
+        header: "Parent",
+        key: "parent",
+        render: (row) => <span className="text-[var(--ds-gray-700)]">{row.parent}</span>,
+      },
+      {
+        className: "w-[132px]",
+        header: "State",
+        key: "state",
+        render: (row) => (
+          <StatusSignal
+            color={row.status === "Ready" ? "var(--ds-green-700)" : row.status === "Review" ? "var(--ds-amber-700)" : "var(--ds-blue-700)"}
+            variant="cell"
+          >
+            {row.status}
+          </StatusSignal>
+        ),
+      },
+      {
+        align: "right",
+        className: "w-[96px]",
+        header: "Leafs",
+        key: "leafs",
+        render: (row) => <span>{row.childCount || "-"}</span>,
+      },
+    ],
+    [expanded],
+  );
+
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--ds-gray-alpha-300)] px-3 py-2">
@@ -314,71 +396,12 @@ export function NestedHierarchyTable() {
         </span>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[780px] border-collapse text-left text-[13px]">
-          <thead>
-            <tr className="border-b border-[var(--ds-gray-alpha-400)] bg-[var(--ds-gray-100)]">
-              <th className="h-9 px-3 font-mono text-[11px] font-medium uppercase text-[var(--ds-gray-700)]">Node</th>
-              <th className="h-9 px-3 font-mono text-[11px] font-medium uppercase text-[var(--ds-gray-700)]">Rank</th>
-              <th className="h-9 px-3 font-mono text-[11px] font-medium uppercase text-[var(--ds-gray-700)]">Parent</th>
-              <th className="h-9 px-3 font-mono text-[11px] font-medium uppercase text-[var(--ds-gray-700)]">State</th>
-              <th className="h-9 px-3 text-right font-mono text-[11px] font-medium uppercase text-[var(--ds-gray-700)]">Leafs</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => {
-              const isOpen = expanded.has(row.id);
-
-              return (
-                <tr
-                  className="border-b border-[var(--ds-gray-alpha-300)] last:border-b-0 hover:bg-[var(--ds-gray-100)]"
-                  key={row.id}
-                >
-                  <td className="h-10 px-3 text-[var(--ds-gray-1000)]">
-                    <div className="flex min-w-0 items-center gap-2" style={{ paddingLeft: row.depth * 22 }}>
-                      {row.hasChildren ? (
-                        <button
-                          className="grid h-7 w-7 shrink-0 place-items-center rounded-[6px] border border-[var(--ds-gray-alpha-300)] hover:bg-[var(--ds-background-200)]"
-                          onClick={() => toggle(row)}
-                          type="button"
-                        >
-                          {isOpen ? <ChevronDown aria-hidden="true" className="h-4 w-4" /> : <ChevronRight aria-hidden="true" className="h-4 w-4" />}
-                        </button>
-                      ) : (
-                        <span className="grid h-7 w-7 shrink-0 place-items-center font-mono text-[10px] uppercase text-[var(--ds-gray-700)]">
-                          ep
-                        </span>
-                      )}
-                      <button
-                        className="min-w-0 truncate text-left font-medium"
-                        onClick={() => toggle(row)}
-                        type="button"
-                      >
-                        {row.label}
-                      </button>
-                    </div>
-                  </td>
-                  <td className="h-10 px-3">
-                    <StatusSignal color={hierarchyRankColor[row.rank]} variant="pill">
-                      {row.rank}
-                    </StatusSignal>
-                  </td>
-                  <td className="h-10 px-3 text-[var(--ds-gray-700)]">{row.parent}</td>
-                  <td className="h-10 px-3">
-                    <StatusSignal
-                      color={row.status === "Ready" ? "var(--ds-green-700)" : row.status === "Review" ? "var(--ds-amber-700)" : "var(--ds-blue-700)"}
-                      variant="cell"
-                    >
-                      {row.status}
-                    </StatusSignal>
-                  </td>
-                  <td className="h-10 px-3 text-right tabular-nums">{row.childCount || "-"}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <RecordTable
+        columns={columns}
+        getRowId={(row) => row.id}
+        minWidth={780}
+        rows={rows}
+      />
     </div>
   );
 }

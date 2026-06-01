@@ -655,6 +655,10 @@ export function AuthShellShelf() {
             </Button>
             <SignalPill color="var(--ds-blue-700)">2FA slot</SignalPill>
           </div>
+          <div className="mt-4 grid gap-2 sm:grid-cols-2">
+            <SocialAuthButton icon={<GoogleLogo />} provider="Google" />
+            <SocialAuthButton icon={<AppleLogo />} provider="Apple" />
+          </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
             <MetricTile color="var(--ds-green-700)" icon={<ShieldCheck />} label="Trust" value="98%" />
             <MetricTile color="var(--ds-blue-700)" icon={<UserRound />} label="Users" value="24" />
@@ -663,6 +667,60 @@ export function AuthShellShelf() {
         </div>
       </div>
     </Surface>
+  );
+}
+
+function SocialAuthButton({
+  icon,
+  provider,
+}: {
+  icon: ReactNode;
+  provider: "Apple" | "Google";
+}) {
+  return (
+    <button
+      className="inline-flex h-10 items-center justify-center gap-2 rounded-[7px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-3 text-[13px] font-medium text-[var(--ds-gray-1000)] outline-none transition hover:border-[var(--ds-gray-alpha-500)] hover:bg-[var(--ds-gray-100)] focus-visible:shadow-[var(--ds-focus-ring)]"
+      type="button"
+    >
+      <span className="grid h-5 w-5 place-items-center [&_svg]:h-5 [&_svg]:w-5">
+        {icon}
+      </span>
+      Sign in with {provider}
+    </button>
+  );
+}
+
+function GoogleLogo() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path
+        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09Z"
+        fill="#4285F4"
+      />
+      <path
+        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23Z"
+        fill="#34A853"
+      />
+      <path
+        d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84Z"
+        fill="#FBBC05"
+      />
+      <path
+        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06L5.84 9.9C6.71 7.31 9.14 5.38 12 5.38Z"
+        fill="#EA4335"
+      />
+    </svg>
+  );
+}
+
+function AppleLogo() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path
+        d="M17.05 12.02c-.02-2.2 1.8-3.25 1.88-3.3-1.03-1.5-2.62-1.7-3.18-1.72-1.35-.14-2.64.79-3.32.79-.69 0-1.75-.77-2.88-.75-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.62 1.1 8.79.73 1.06 1.6 2.25 2.75 2.21 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.7.71 2.86.69 1.18-.02 1.93-1.08 2.65-2.15.84-1.23 1.18-2.42 1.2-2.48-.03-.01-2.28-.87-2.3-3.56ZM14.86 5.58c.6-.73 1.01-1.75.9-2.76-.87.04-1.93.58-2.56 1.31-.56.65-1.06 1.69-.92 2.68.97.08 1.97-.49 2.58-1.23Z"
+        fill="currentColor"
+      />
+    </svg>
   );
 }
 

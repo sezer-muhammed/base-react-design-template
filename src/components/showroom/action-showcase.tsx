@@ -22,6 +22,7 @@ import { GlassTag } from "@/components/ui/glass-tag";
 import { DefaultDialogFooter, DialogFrame } from "@/components/ui/overlay-frame";
 import { ProgressCell } from "@/components/ui/progress-cell";
 import { RecordTable, type RecordTableColumn } from "@/components/ui/record-table";
+import { InfoTooltip } from "@/components/ui/info-tooltip";
 import { StatusSignal } from "@/components/ui/status-signal";
 import { Surface } from "@/components/ui/surface";
 
@@ -32,10 +33,38 @@ const alertRows = [
 ] as const;
 
 const graphRows = [
-  { color: "var(--ds-blue-700)", id: "graph-vision", label: "Vision", stage: "Baseline", value: 72 },
-  { color: "var(--ds-teal-700)", id: "graph-empathy", label: "Empathy", stage: "Live", value: 88 },
-  { color: "var(--ds-amber-700)", id: "graph-risk", label: "Risk", stage: "Review", value: 54 },
-  { color: "var(--ds-purple-700)", id: "graph-trust", label: "Trust", stage: "Ready", value: 67 },
+  {
+    color: "var(--ds-blue-700)",
+    description: "Baseline product direction signal. Use it when a row needs calm but visible priority context.",
+    id: "graph-vision",
+    label: "Vision",
+    stage: "Baseline",
+    value: 72,
+  },
+  {
+    color: "var(--ds-teal-700)",
+    description: "Live customer or user-experience signal. Good for records that need empathy and feedback context.",
+    id: "graph-empathy",
+    label: "Empathy",
+    stage: "Live",
+    value: 88,
+  },
+  {
+    color: "var(--ds-amber-700)",
+    description: "Review-needed signal. It marks attention without turning the whole row into a warning block.",
+    id: "graph-risk",
+    label: "Risk",
+    stage: "Review",
+    value: 54,
+  },
+  {
+    color: "var(--ds-purple-700)",
+    description: "Judgment or confidence signal for decisions that need human review before shipping.",
+    id: "graph-trust",
+    label: "Trust",
+    stage: "Ready",
+    value: 67,
+  },
 ] as const;
 
 const graphColumns: RecordTableColumn<(typeof graphRows)[number]>[] = [
@@ -43,10 +72,11 @@ const graphColumns: RecordTableColumn<(typeof graphRows)[number]>[] = [
     header: "Signal",
     key: "signal",
     render: (row) => (
-      <span className="flex min-w-0 items-center gap-2 font-semibold">
-        <StatusSignal color={row.color} variant="dot" />
-        <span className="truncate">{row.label}</span>
-      </span>
+      <InfoTooltip
+        color={row.color}
+        description={row.description}
+        label={row.label}
+      />
     ),
   },
   {
