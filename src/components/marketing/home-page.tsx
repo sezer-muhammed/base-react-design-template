@@ -157,7 +157,7 @@ const componentCards = [
 export function HomePage() {
   return (
     <SiteShell>
-      <div className="mx-auto w-full max-w-[1360px] space-y-8 py-4">
+      <div className="mx-auto w-full max-w-[var(--layout-max-w)] space-y-8 py-4">
         <Hero />
         <PlatformSection />
         <ComponentsSection />

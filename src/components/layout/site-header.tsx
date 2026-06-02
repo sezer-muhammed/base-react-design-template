@@ -18,7 +18,7 @@ const navItems = [
 
 export function SiteHeader() {
   return (
-    <header className="depth-surface sticky top-3 z-30 mx-auto grid min-h-14 w-full max-w-[1360px] grid-cols-[1fr_auto] items-center gap-3 rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-3">
+    <header className="depth-surface sticky top-3 z-30 mx-auto grid min-h-14 w-full max-w-[var(--layout-max-w)] grid-cols-[1fr_auto] items-center gap-3 rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-3">
       <Link className="flex min-w-0 items-center gap-3" href="/">
         <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[7px] border border-[var(--ds-gray-1000)] bg-[var(--ds-gray-1000)] font-mono text-[12px] font-semibold text-[var(--ds-background-100)]">
           {siteConfig.shortName}

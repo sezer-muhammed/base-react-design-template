@@ -156,6 +156,9 @@
   --ds-focus-ring: 0 0 0 2px var(--ds-background-100),
     0 0 0 4px var(--ds-focus-color);
 
+  /* Layout */
+  --layout-max-w: 1360px;   /* shared container cap — site-header, site-footer, home-page, showroom */
+
   /* Showroom sticky nav layout — change topbar dimensions here, subnav + scroll-mt follow automatically */
   --showroom-topbar-top: 0.75rem;   /* top-3 */
   --showroom-topbar-h: 3.5rem;      /* min-h-14 */

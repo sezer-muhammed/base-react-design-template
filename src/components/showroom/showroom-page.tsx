@@ -44,7 +44,7 @@ import { capabilityAreas } from "@/data/operations";
 export function ShowroomPage() {
   return (
     <main className="min-h-screen text-[var(--ds-gray-1000)]">
-      <div className="mx-auto flex w-full max-w-[1360px] flex-col gap-4 px-3 py-3">
+      <div className="mx-auto flex w-full max-w-[var(--layout-max-w)] flex-col gap-4 px-3 py-3">
         <TopBar />
         <ActiveSectionNav items={showroomNav} />
 
