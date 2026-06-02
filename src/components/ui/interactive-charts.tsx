@@ -127,6 +127,7 @@ export function InteractiveLineChart<T extends ChartDatum>({
   hideYAxis = false,
   margin,
   maxValue,
+  minValue = 0,
   series,
   showLegend = false,
   valueFormatter = defaultValueFormatter,
@@ -137,6 +138,7 @@ export function InteractiveLineChart<T extends ChartDatum>({
   hideYAxis?: boolean;
   margin?: ChartMargin;
   maxValue?: number;
+  minValue?: number | "auto" | "dataMin";
   series: ChartSeries<T>[];
   showLegend?: boolean;
   valueFormatter?: ValueFormatter;
@@ -166,7 +168,7 @@ export function InteractiveLineChart<T extends ChartDatum>({
           />
           <YAxis
             axisLine={false}
-            domain={[0, maxValue ?? "auto"]}
+            domain={[minValue, maxValue ?? "auto"]}
             hide={hideYAxis}
             tick={axisStyle}
             tickFormatter={valueFormatter}

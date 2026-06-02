@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { Activity, Layers3 } from "lucide-react";
 import {
   Card,
@@ -18,15 +18,64 @@ import {
   chartPalette,
 } from "@/components/ui/interactive-charts";
 
-const signalData = [
-  { label: "Jan", inbound: 42, resolved: 28, queued: 14 },
-  { label: "Feb", inbound: 58, resolved: 44, queued: 18 },
-  { label: "Mar", inbound: 64, resolved: 52, queued: 16 },
-  { label: "Apr", inbound: 51, resolved: 49, queued: 11 },
-  { label: "May", inbound: 78, resolved: 61, queued: 22 },
-  { label: "Jun", inbound: 83, resolved: 72, queued: 19 },
-  { label: "Jul", inbound: 74, resolved: 68, queued: 13 },
+type SignalKey = "inbound" | "queued" | "resolved";
+
+type SignalDatum = {
+  inbound: number;
+  label: string;
+  queued: number;
+  resolved: number;
+  [key: string]: number | string;
+};
+
+type SignalRange = "30d" | "90d" | "12m";
+
+const signalDataByRange: Record<SignalRange, SignalDatum[]> = {
+  "30d": [
+    { label: "W1", inbound: 48, resolved: 41, queued: 16 },
+    { label: "W2", inbound: 55, resolved: 49, queued: 14 },
+    { label: "W3", inbound: 62, resolved: 54, queued: 19 },
+    { label: "W4", inbound: 68, resolved: 61, queued: 13 },
+  ],
+  "90d": [
+    { label: "Apr", inbound: 51, resolved: 49, queued: 11 },
+    { label: "May", inbound: 78, resolved: 61, queued: 22 },
+    { label: "Jun", inbound: 83, resolved: 72, queued: 19 },
+    { label: "Jul", inbound: 74, resolved: 68, queued: 13 },
+  ],
+  "12m": [
+    { label: "Jan", inbound: 42, resolved: 28, queued: 14 },
+    { label: "Feb", inbound: 58, resolved: 44, queued: 18 },
+    { label: "Mar", inbound: 64, resolved: 52, queued: 16 },
+    { label: "Apr", inbound: 51, resolved: 49, queued: 11 },
+    { label: "May", inbound: 78, resolved: 61, queued: 22 },
+    { label: "Jun", inbound: 83, resolved: 72, queued: 19 },
+    { label: "Jul", inbound: 74, resolved: 68, queued: 13 },
+    { label: "Aug", inbound: 82, resolved: 75, queued: 17 },
+    { label: "Sep", inbound: 88, resolved: 79, queued: 15 },
+    { label: "Oct", inbound: 81, resolved: 77, queued: 12 },
+    { label: "Nov", inbound: 91, resolved: 84, queued: 14 },
+    { label: "Dec", inbound: 86, resolved: 82, queued: 10 },
+  ],
+};
+
+const signalRangeOptions: Array<{ label: string; value: SignalRange }> = [
+  { label: "30D", value: "30d" },
+  { label: "90D", value: "90d" },
+  { label: "12M", value: "12m" },
 ];
+
+const signalSeries = [
+  { area: true, color: chartPalette.blue, key: "inbound", label: "Inbound" },
+  { area: true, color: chartPalette.teal, key: "resolved", label: "Resolved" },
+  { color: chartPalette.gray, dash: "5 6", key: "queued", label: "Queued" },
+] satisfies Array<{
+  area?: boolean;
+  color: string;
+  dash?: string;
+  key: SignalKey;
+  label: string;
+}>;
 
 const barData = [
   { label: "API", planned: 34, live: 25 },
@@ -69,6 +118,31 @@ const confusionMatrix = [
 ];
 
 export function ChartShowcase() {
+  const [signalRange, setSignalRange] = useState<SignalRange>("12m");
+  const [visibleSignals, setVisibleSignals] = useState<SignalKey[]>([
+    "inbound",
+    "resolved",
+    "queued",
+  ]);
+  const activeSignalData = signalDataByRange[signalRange];
+  const activeSignalSeries = useMemo(
+    () => signalSeries.filter((item) => visibleSignals.includes(item.key)),
+    [visibleSignals],
+  );
+  const signalDomain = useMemo(
+    () => getSignalDomain(activeSignalData, activeSignalSeries),
+    [activeSignalData, activeSignalSeries],
+  );
+  const toggleSignal = (key: SignalKey) => {
+    setVisibleSignals((current) => {
+      if (current.includes(key)) {
+        return current.length === 1 ? current : current.filter((item) => item !== key);
+      }
+
+      return [...current, key];
+    });
+  };
+
   return (
     <div className="grid gap-3 xl:grid-cols-[1fr_380px]">
       <Surface
@@ -88,18 +162,56 @@ export function ChartShowcase() {
           summary="Responsive Recharts primitives with soft gridlines, neutral surfaces, custom tooltip, and status color as signal only."
           title="Operational signal chart"
         />
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--ds-gray-alpha-300)] px-4 py-2">
+          <div className="flex items-center gap-1 rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-1">
+            {signalRangeOptions.map((option) => (
+              <button
+                aria-pressed={signalRange === option.value}
+                className={`h-7 rounded-[5px] px-2.5 font-mono text-[11px] font-medium transition ${
+                  signalRange === option.value
+                    ? "bg-[var(--ds-gray-1000)] text-[var(--ds-background-100)]"
+                    : "text-[var(--ds-gray-700)] hover:bg-[var(--ds-gray-100)] hover:text-[var(--ds-gray-1000)]"
+                }`}
+                key={option.value}
+                onClick={() => setSignalRange(option.value)}
+                type="button"
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {signalSeries.map((item) => {
+              const isActive = visibleSignals.includes(item.key);
+
+              return (
+                <button
+                  aria-pressed={isActive}
+                  className={`inline-flex h-7 items-center gap-1.5 rounded-[6px] border px-2 font-mono text-[11px] transition ${
+                    isActive
+                      ? "border-[var(--ds-gray-alpha-500)] bg-[var(--ds-background-100)] text-[var(--ds-gray-1000)]"
+                      : "border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] text-[var(--ds-gray-600)] opacity-70"
+                  }`}
+                  key={item.key}
+                  onClick={() => toggleSignal(item.key)}
+                  type="button"
+                >
+                  <StatusDot color={item.color} />
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
         <div className="p-4">
-          <div className="h-[310px] min-w-0 overflow-hidden">
+          <div className="h-[390px] min-w-0 overflow-hidden">
             <InteractiveLineChart
               ariaLabel="Operational signal chart"
-              data={signalData}
-              height={310}
-              maxValue={90}
-              series={[
-                { area: true, color: chartPalette.blue, key: "inbound", label: "Inbound" },
-                { area: true, color: chartPalette.teal, key: "resolved", label: "Resolved" },
-                { color: chartPalette.gray, dash: "5 6", key: "queued", label: "Queued" },
-              ]}
+              data={activeSignalData}
+              height={390}
+              maxValue={signalDomain[1]}
+              minValue={signalDomain[0]}
+              series={activeSignalSeries}
               showLegend
             />
           </div>
@@ -236,6 +348,21 @@ export function ChartShowcase() {
       </div>
     </div>
   );
+}
+
+function getSignalDomain(
+  data: SignalDatum[],
+  series: typeof signalSeries,
+): [number, number] {
+  const values = data.flatMap((row) => series.map((item) => Number(row[item.key])));
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const padding = Math.max(4, (max - min) * 0.1);
+
+  return [
+    Math.max(0, Math.floor(min - padding)),
+    Math.ceil(max + padding),
+  ];
 }
 
 function ChartDecisionCard() {
