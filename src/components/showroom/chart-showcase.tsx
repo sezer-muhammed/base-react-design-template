@@ -1,20 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import { Activity, Layers3 } from "lucide-react";
 import {
   Card,
@@ -24,6 +10,13 @@ import {
 } from "@/components/ui/card";
 import { SectionHeader, Surface } from "@/components/ui/surface";
 import { StatusSignal } from "@/components/ui/status-signal";
+import {
+  InteractiveConfusionMatrix,
+  InteractiveGroupedBarChart,
+  InteractiveLineChart,
+  InteractiveScatterChart,
+  chartPalette,
+} from "@/components/ui/interactive-charts";
 
 const signalData = [
   { label: "Jan", inbound: 42, resolved: 28, queued: 14 },
@@ -52,13 +45,28 @@ const latencyData = [
   { label: "20", p50: 104, p95: 226 },
 ];
 
-const barColors = [
-  "var(--ds-blue-700)",
-  "var(--ds-green-700)",
-  "var(--ds-teal-700)",
-  "var(--ds-amber-700)",
-  "var(--ds-purple-700)",
-] as const;
+const scatterData = [
+  { actual: -4, name: "case-001.nii", predicted: -2 },
+  { actual: 6, name: "case-014.nii", predicted: 9 },
+  { actual: 18, name: "case-021.nii", predicted: 16 },
+  { actual: 24, name: "case-034.nii", predicted: 31 },
+  { actual: 39, name: "case-052.nii", predicted: 35 },
+  { actual: 46, name: "case-063.nii", predicted: 56 },
+  { actual: 58, name: "case-077.nii", predicted: 51 },
+  { actual: 73, name: "case-088.nii", predicted: 79 },
+  { actual: 86, name: "case-101.nii", predicted: 91 },
+  { actual: 102, name: "case-117.nii", predicted: 96 },
+  { actual: 116, name: "case-128.nii", predicted: 124 },
+  { actual: 127, name: "case-144.nii", predicted: 119 },
+];
+
+const confusionLabels = ["Low", "Border", "High"];
+
+const confusionMatrix = [
+  [42, 4, 1],
+  [6, 38, 3],
+  [1, 5, 31],
+];
 
 export function ChartShowcase() {
   return (
@@ -72,83 +80,29 @@ export function ChartShowcase() {
         <SectionHeader
           action={
             <>
-              <ComponentIdBadge id="CHART-01" />
-              <SignalPill color="var(--ds-blue-700)">Recharts primary</SignalPill>
+                <ComponentIdBadge id="CHART-01" />
+                <SignalPill color={chartPalette.blue}>Recharts primary</SignalPill>
             </>
           }
           eyebrow="Charts"
-          summary="SVG charts with soft gridlines, neutral surfaces, custom tooltip, and status color as signal only."
+          summary="Responsive Recharts primitives with soft gridlines, neutral surfaces, custom tooltip, and status color as signal only."
           title="Operational signal chart"
         />
-        <div className="h-[310px] p-4">
-          <ResponsiveContainer
-            height="100%"
-            initialDimension={{ height: 310, width: 760 }}
-            width="100%"
-          >
-            <AreaChart
-              accessibilityLayer
+        <div className="p-4">
+          <div className="h-[310px] min-w-0 overflow-hidden">
+            <InteractiveLineChart
+              ariaLabel="Operational signal chart"
               data={signalData}
-              margin={{ bottom: 0, left: -18, right: 10, top: 12 }}
-            >
-              <defs>
-                <linearGradient id="inboundFill" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="5%" stopColor="var(--ds-blue-700)" stopOpacity={0.18} />
-                  <stop offset="95%" stopColor="var(--ds-blue-700)" stopOpacity={0.01} />
-                </linearGradient>
-                <linearGradient id="resolvedFill" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="5%" stopColor="var(--ds-teal-700)" stopOpacity={0.14} />
-                  <stop offset="95%" stopColor="var(--ds-teal-700)" stopOpacity={0.01} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid
-                stroke="var(--ds-gray-alpha-300)"
-                strokeDasharray="3 6"
-                vertical={false}
-              />
-              <XAxis
-                axisLine={false}
-                dataKey="label"
-                fontSize={12}
-                stroke="var(--ds-gray-700)"
-                tickLine={false}
-                tickMargin={12}
-              />
-              <YAxis
-                axisLine={false}
-                fontSize={12}
-                stroke="var(--ds-gray-700)"
-                tickLine={false}
-                width={42}
-              />
-              <Tooltip content={<ChartTooltip />} cursor={{ stroke: "var(--ds-gray-alpha-500)" }} />
-              <Area
-                dataKey="inbound"
-                fill="url(#inboundFill)"
-                name="Inbound"
-                stroke="var(--ds-blue-700)"
-                strokeWidth={2}
-                type="monotone"
-              />
-              <Area
-                dataKey="resolved"
-                fill="url(#resolvedFill)"
-                name="Resolved"
-                stroke="var(--ds-teal-700)"
-                strokeWidth={2}
-                type="monotone"
-              />
-              <Line
-                dataKey="queued"
-                dot={false}
-                name="Queued"
-                stroke="var(--ds-gray-1000)"
-                strokeDasharray="4 5"
-                strokeWidth={1.8}
-                type="monotone"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+              height={310}
+              maxValue={90}
+              series={[
+                { area: true, color: chartPalette.blue, key: "inbound", label: "Inbound" },
+                { area: true, color: chartPalette.teal, key: "resolved", label: "Resolved" },
+                { color: chartPalette.gray, dash: "5 6", key: "queued", label: "Queued" },
+              ]}
+              showLegend
+            />
+          </div>
         </div>
       </Surface>
 
@@ -168,45 +122,19 @@ export function ChartShowcase() {
               Small charts should stay quiet: no loud fills, no oversized legend.
             </CardDescription>
           </CardHeader>
-          <div className="h-[150px]">
-            <ResponsiveContainer
-              height="100%"
-              initialDimension={{ height: 150, width: 340 }}
-              width="100%"
-            >
-              <LineChart
-                accessibilityLayer
-                data={latencyData}
-                margin={{ bottom: 0, left: -24, right: 4, top: 4 }}
-              >
-                <CartesianGrid stroke="var(--ds-gray-alpha-300)" vertical={false} />
-                <XAxis
-                  axisLine={false}
-                  dataKey="label"
-                  fontSize={11}
-                  stroke="var(--ds-gray-700)"
-                  tickLine={false}
-                />
-                <YAxis hide />
-                <Tooltip content={<ChartTooltip />} />
-                <Line
-                  dataKey="p95"
-                  dot={false}
-                  name="p95"
-                  stroke="var(--ds-amber-700)"
-                  strokeWidth={2}
-                  type="monotone"
-                />
-                <Line
-                  dataKey="p50"
-                  dot={false}
-                  name="p50"
-                  stroke="var(--ds-gray-1000)"
-                  strokeWidth={2}
-                  type="monotone"
-                />
-              </LineChart>
-            </ResponsiveContainer>
+          <div className="h-[150px] min-w-0 overflow-hidden">
+            <InteractiveLineChart
+              ariaLabel="Compact latency line chart"
+              data={latencyData}
+              height={150}
+              maxValue={300}
+              series={[
+                { color: chartPalette.amber, key: "p95", label: "p95" },
+                { color: chartPalette.gray, key: "p50", label: "p50" },
+              ]}
+              hideYAxis
+              valueFormatter={(value) => `${value} ms`}
+            />
           </div>
         </Card>
       </div>
@@ -221,7 +149,7 @@ export function ChartShowcase() {
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <ComponentIdBadge id="CHART-03" />
-              <SignalPill color="var(--ds-purple-700)">bar matrix</SignalPill>
+              <SignalPill color={chartPalette.purple}>bar matrix</SignalPill>
             </div>
             <h3 className="mt-4 text-[18px] font-semibold">Bar graph direction</h3>
             <p className="mt-1 max-w-md text-[13px] leading-5 text-[var(--ds-gray-900)]">
@@ -229,81 +157,92 @@ export function ChartShowcase() {
               Use neutral rails, one primary signal, and a softer comparison series.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <SignalPill color="var(--ds-green-700)">live</SignalPill>
-              <SignalPill color="var(--ds-blue-700)">planned</SignalPill>
-              <SignalPill color="var(--ds-green-700)">accessible SVG</SignalPill>
+              <SignalPill color={chartPalette.green}>live</SignalPill>
+              <SignalPill color={chartPalette.blue}>planned</SignalPill>
+              <SignalPill color={chartPalette.green}>interactive</SignalPill>
             </div>
           </div>
-          <div className="h-[240px] min-w-0">
-            <ResponsiveContainer
-              height="100%"
-              initialDimension={{ height: 240, width: 760 }}
-              width="100%"
-            >
-              <BarChart
-                accessibilityLayer
-                barCategoryGap="24%"
-                data={barData}
-                margin={{ bottom: 0, left: -22, right: 8, top: 8 }}
-              >
-                <CartesianGrid
-                  stroke="var(--ds-gray-alpha-300)"
-                  strokeDasharray="3 6"
-                  vertical={false}
-                />
-                <XAxis
-                  axisLine={false}
-                  dataKey="label"
-                  fontSize={12}
-                  stroke="var(--ds-gray-700)"
-                  tickLine={false}
-                  tickMargin={10}
-                />
-                <YAxis
-                  axisLine={false}
-                  fontSize={12}
-                  stroke="var(--ds-gray-700)"
-                  tickLine={false}
-                />
-                <Tooltip content={<ChartTooltip />} cursor={{ fill: "var(--ds-gray-alpha-100)" }} />
-                <Bar
-                  dataKey="planned"
-                  fill="var(--ds-blue-700)"
-                  name="Planned"
-                  radius={[6, 6, 2, 2]}
-                  stroke="var(--ds-gray-1000)"
-                  strokeWidth={1}
-                >
-                  {barData.map((entry, index) => (
-                    <Cell fill={barColors[index % barColors.length]} key={`planned-${entry.label}`} />
-                  ))}
-                </Bar>
-                <Bar
-                  dataKey="live"
-                  fill="var(--ds-green-700)"
-                  name="Live"
-                  radius={[6, 6, 2, 2]}
-                  stroke="var(--ds-gray-1000)"
-                  strokeWidth={1}
-                >
-                  {barData.map((entry, index) => (
-                    <Cell fill={barColors[(index + 1) % barColors.length]} key={`live-${entry.label}`} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="h-[240px] min-w-0 overflow-hidden">
+            <InteractiveGroupedBarChart
+              ariaLabel="Planned versus live bar chart"
+              data={barData}
+              height={240}
+              maxValue={38}
+              series={[
+                { color: chartPalette.blue, key: "planned", label: "Planned" },
+                { color: chartPalette.green, key: "live", label: "Live" },
+              ]}
+            />
           </div>
         </div>
       </Surface>
+
+      <div className="grid gap-3 xl:col-span-2 xl:grid-cols-2">
+        <Surface
+          className="overflow-hidden"
+          data-component-id="CHART-05"
+          id="chart-05-scatter"
+          tone="flat"
+        >
+          <SectionHeader
+            action={
+              <>
+                <ComponentIdBadge id="CHART-05" />
+                <SignalPill color={chartPalette.green}>scatter</SignalPill>
+              </>
+            }
+            eyebrow="Model diagnostics"
+            summary="Recharts scatter with custom point coloring, reference line, and hover tooltip."
+            title="Predicted vs actual"
+          />
+          <div className="p-4">
+            <InteractiveScatterChart
+              ariaLabel="Predicted versus actual scatter chart"
+              data={scatterData}
+              domain={[-20, 130]}
+              height={300}
+              valueFormatter={(value) =>
+                typeof value === "number" ? `${value.toFixed(1)} CL` : value
+              }
+            />
+          </div>
+        </Surface>
+
+        <Surface
+          className="overflow-hidden"
+          data-component-id="CHART-06"
+          id="chart-06-confusion-matrix"
+          tone="flat"
+        >
+          <SectionHeader
+            action={
+              <>
+                <ComponentIdBadge id="CHART-06" />
+                <SignalPill color={chartPalette.amber}>matrix</SignalPill>
+              </>
+            }
+            eyebrow="Classification"
+            summary="Confusion matrix heatmap using the MRI analysis grid pattern for dense class comparison."
+            title="Confusion matrix"
+          />
+          <div className="overflow-x-auto p-6">
+            <InteractiveConfusionMatrix
+              ariaLabel="Classification confusion matrix"
+              labels={confusionLabels}
+              matrix={confusionMatrix}
+            />
+          </div>
+        </Surface>
+      </div>
     </div>
   );
 }
 
 function ChartDecisionCard() {
   const rows = [
-    ["Primary", "Recharts", "Best fit for this template now.", "var(--ds-green-700)"],
-    ["Bar system", "Geist 700", "Colored bars with black borders.", "var(--ds-blue-700)"],
-    ["Custom viz", "Local SVG", "Use when charts become product logic.", "var(--ds-purple-700)"],
+    ["Primary", "Recharts", "Best fit for this template now.", chartPalette.green],
+    ["Bar system", "Geist 700", "Colored bars with black borders.", chartPalette.blue],
+    ["Matrix heatmap", "Recharts", "Use custom scatter cells for dense class comparison.", chartPalette.purple],
   ] as const;
 
   return (
@@ -342,41 +281,6 @@ function ChartDecisionCard() {
         ))}
       </div>
     </Card>
-  );
-}
-
-function ChartTooltip({
-  active,
-  label,
-  payload,
-}: {
-  active?: boolean;
-  label?: string;
-  payload?: Array<{ color?: string; name?: string; value?: number | string }>;
-}) {
-  if (!active || !payload?.length) {
-    return null;
-  }
-
-  return (
-    <div className="depth-surface rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] p-2.5 text-[12px]">
-      <p className="mb-1 font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
-        {label}
-      </p>
-      <div className="grid gap-1">
-        {payload.map((item) => (
-          <div className="flex min-w-36 items-center justify-between gap-4" key={item.name}>
-            <span className="flex items-center gap-2 text-[var(--ds-gray-900)]">
-              <StatusDot color={item.color ?? "var(--ds-gray-1000)"} />
-              {item.name}
-            </span>
-            <span className="font-mono font-medium text-[var(--ds-gray-1000)]">
-              {item.value}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
 

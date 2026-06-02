@@ -26,15 +26,6 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,15 +35,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { InteractiveSingleBarChart, chartPalette } from "@/components/ui/interactive-charts";
 import { SectionHeader, Surface } from "@/components/ui/surface";
 import { cn } from "@/lib/cn";
 
 const graphData = [
-  { color: "var(--ds-blue-700)", label: "Vision", value: 72 },
-  { color: "var(--ds-green-700)", label: "Empathy", value: 88 },
-  { color: "var(--ds-teal-700)", label: "Risk", value: 54 },
-  { color: "var(--ds-amber-700)", label: "AI", value: 91 },
-  { color: "var(--ds-purple-700)", label: "Trust", value: 67 },
+  { color: chartPalette.blue, label: "Vision", value: 72 },
+  { color: chartPalette.green, label: "Empathy", value: 88 },
+  { color: chartPalette.teal, label: "Risk", value: 54 },
+  { color: chartPalette.amber, label: "AI", value: 91 },
+  { color: chartPalette.purple, label: "Trust", value: 67 },
 ];
 
 const listItems = [
@@ -639,43 +631,14 @@ function GraphCard() {
         summary="Recharts ile data visualization tonu."
         title="Capability scores"
       />
-      <div className="overflow-x-auto p-4">
-        <BarChart
+      <div className="p-4">
+        <InteractiveSingleBarChart
+          ariaLabel="Capability score bar chart"
           data={graphData}
           height={230}
-          margin={{ bottom: 0, left: -24, right: 8, top: 8 }}
-          width={560}
-        >
-          <CartesianGrid stroke="var(--ds-gray-alpha-300)" vertical={false} />
-          <XAxis
-            axisLine={false}
-            dataKey="label"
-            fontSize={12}
-            tickLine={false}
-            tickMargin={10}
-          />
-          <YAxis axisLine={false} fontSize={12} tickLine={false} />
-          <Tooltip
-            contentStyle={{
-              background: "var(--ds-background-100)",
-              border: "1px solid var(--ds-gray-alpha-400)",
-              borderRadius: 8,
-              color: "var(--ds-gray-1000)",
-              fontSize: 12,
-            }}
-          />
-          <Bar
-            dataKey="value"
-            fill="var(--ds-blue-700)"
-            radius={[6, 6, 0, 0]}
-            stroke="var(--ds-gray-1000)"
-            strokeWidth={1}
-          >
-            {graphData.map((entry) => (
-              <Cell fill={entry.color} key={entry.label} />
-            ))}
-          </Bar>
-        </BarChart>
+          maxValue={100}
+          valueFormatter={(value) => `${value}%`}
+        />
       </div>
     </Surface>
   );
