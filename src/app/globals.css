@@ -156,6 +156,14 @@
   --ds-focus-ring: 0 0 0 2px var(--ds-background-100),
     0 0 0 4px var(--ds-focus-color);
 
+  /* Showroom sticky nav layout — change topbar dimensions here, subnav + scroll-mt follow automatically */
+  --showroom-topbar-top: 0.75rem;   /* top-3 */
+  --showroom-topbar-h: 3.5rem;      /* min-h-14 */
+  --showroom-subnav-gap: 0.5rem;    /* gap between topbar and subnav */
+  --showroom-subnav-h: 3rem;        /* p-2 (×2) + h-8 */
+  --showroom-subnav-top: calc(var(--showroom-topbar-top) + var(--showroom-topbar-h) + var(--showroom-subnav-gap));
+  --showroom-scroll-mt: calc(var(--showroom-subnav-top) + var(--showroom-subnav-h) + 1.25rem);
+
   /* Type scale */
   --text-display: 58px;
   --text-hero: 42px;

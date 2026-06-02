@@ -908,7 +908,7 @@ function ShowcaseSection({
 }) {
   return (
     <section
-      className={cn("scroll-mt-36 reveal", className)}
+      className={cn("scroll-mt-[var(--showroom-scroll-mt)] reveal", className)}
       data-component-id={componentId}
       id={id}
     >
