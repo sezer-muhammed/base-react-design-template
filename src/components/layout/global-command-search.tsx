@@ -3,7 +3,7 @@
 import { Command, Search } from "lucide-react";
 import { commandPaletteOpenEvent } from "@/config/events";
 
-export function ShowroomCommandSearch() {
+export function GlobalCommandSearch() {
   return (
     <section className="px-3 sm:px-8 lg:px-12 2xl:px-20">
       <button

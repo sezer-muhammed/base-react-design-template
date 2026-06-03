@@ -3,7 +3,6 @@ import { SiteShell } from "@/components/layout/site-shell";
 import { ActionShowcase } from "@/components/showroom/action-showcase";
 import { ChartShowcase } from "@/components/showroom/chart-showcase";
 import { FileUploadShowcase } from "@/components/showroom/file-upload-showcase";
-import { ShowroomCommandSearch } from "@/components/showroom/showroom-command-search";
 import {
   NestedHierarchyTable,
   OperationTable,
@@ -43,9 +42,7 @@ export function ShowroomPage() {
   return (
     <SiteShell>
       <div className="flex w-full flex-col gap-4 py-3">
-        <ShowroomCommandSearch />
-
-          <div className="min-w-0 space-y-8">
+        <div className="min-w-0 space-y-8">
             <IntroPanel />
 
             <ShowcaseSection
@@ -318,7 +315,7 @@ export function ShowroomPage() {
               <p>© 2026 {siteConfig.name} · Extensible Next.js starter</p>
               <p className="font-mono">Geist tokens / Tailwind / CVA / Radix / runtime contracts</p>
             </footer>
-          </div>
+        </div>
       </div>
     </SiteShell>
   );
