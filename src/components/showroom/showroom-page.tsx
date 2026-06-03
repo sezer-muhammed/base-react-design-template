@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { SiteShell } from "@/components/layout/site-shell";
-import { ActiveSectionNav } from "@/components/showroom/active-section-nav";
 import { ActionShowcase } from "@/components/showroom/action-showcase";
 import { ChartShowcase } from "@/components/showroom/chart-showcase";
 import { FileUploadShowcase } from "@/components/showroom/file-upload-showcase";
+import { ShowroomCommandSearch } from "@/components/showroom/showroom-command-search";
 import {
   NestedHierarchyTable,
   OperationTable,
@@ -32,7 +32,6 @@ import { SectionHeader, Surface } from "@/components/ui/surface";
 import { cn } from "@/lib/cn";
 import {
   menuShowcase,
-  showroomNav,
   tokenRows,
   cardSamples,
   assetDemo,
@@ -44,7 +43,7 @@ export function ShowroomPage() {
   return (
     <SiteShell>
       <div className="flex w-full flex-col gap-4 py-3">
-        <ActiveSectionNav items={showroomNav} />
+        <ShowroomCommandSearch />
 
           <div className="min-w-0 space-y-8">
             <IntroPanel />
@@ -831,7 +830,7 @@ function IntroPanel() {
       <Surface className="overflow-hidden" tone="flat">
         <div className="grid grid-cols-3 divide-x divide-[var(--ds-gray-alpha-300)]">
           {[
-            ["Sections", "14"],
+            ["Sections", "15"],
             ["Runtime", "6"],
             ["Tokens", "Geist"],
           ].map(([label, value]) => (

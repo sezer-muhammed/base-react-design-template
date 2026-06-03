@@ -1,23 +1,5 @@
 import type { RecursiveMenuItem } from "@/components/ui/recursive-menu";
 
-export const showroomNav = [
-  { href: "#foundation", label: "Foundation" },
-  { href: "#actions", label: "Actions" },
-  { href: "#charts", label: "Charts" },
-  { href: "#cards", label: "Cards" },
-  { href: "#media", label: "Media" },
-  { href: "#tables", label: "Tables" },
-  { href: "#uploads", label: "Uploads" },
-  { href: "#menus", label: "Menus" },
-  { href: "#command", label: "Command" },
-  { href: "#states", label: "States" },
-  { href: "#auth", label: "Auth" },
-  { href: "#jobs", label: "Jobs" },
-  { href: "#realtime", label: "Realtime" },
-  { href: "#settings", label: "Settings" },
-  { href: "#blueprint", label: "Blueprint" },
-] as const;
-
 export const tokenRows = [
   {
     family: "Neutral",

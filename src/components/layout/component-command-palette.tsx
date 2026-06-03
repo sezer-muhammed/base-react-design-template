@@ -15,6 +15,7 @@ import {
   componentRegistry,
   type ComponentRegistryItem,
 } from "@/data/component-registry";
+import { commandPaletteOpenEvent } from "@/config/events";
 import { cn } from "@/lib/cn";
 
 const MAX_RESULTS = 12;
@@ -37,6 +38,10 @@ export function ComponentCommandPalette() {
   const selectedItem = results[activeIndex] ?? results[0];
 
   useEffect(() => {
+    function onOpenCommandPalette() {
+      setOpen(true);
+    }
+
     function onKeyDown(event: globalThis.KeyboardEvent) {
       const key = event.key.toLowerCase();
 
@@ -46,9 +51,13 @@ export function ComponentCommandPalette() {
       }
     }
 
+    window.addEventListener(commandPaletteOpenEvent, onOpenCommandPalette);
     window.addEventListener("keydown", onKeyDown);
 
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener(commandPaletteOpenEvent, onOpenCommandPalette);
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, []);
 
   useEffect(() => {
