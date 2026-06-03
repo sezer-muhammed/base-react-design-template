@@ -157,7 +157,7 @@ const componentCards = [
 export function HomePage() {
   return (
     <SiteShell>
-      <div className="mx-auto w-full max-w-[var(--layout-max-w)] space-y-8 py-4">
+      <div className="w-full space-y-8 py-3">
         <Hero />
         <PlatformSection />
         <ComponentsSection />
@@ -172,8 +172,8 @@ export function HomePage() {
 
 function Hero() {
   return (
-    <section className="grid min-h-[calc(100svh-104px)] gap-4 py-4 xl:grid-cols-[1fr_520px] xl:items-center">
-      <div className="max-w-3xl">
+    <section className="grid min-h-[calc(100svh-104px)] gap-4 py-4 xl:grid-cols-[minmax(0,1fr)_minmax(420px,620px)] xl:items-center min-[1800px]:grid-cols-[minmax(0,1fr)_minmax(560px,760px)]">
+      <div className="max-w-3xl min-[1800px]:max-w-5xl">
         <p className="font-mono text-[12px] uppercase text-[var(--ds-gray-700)]">
           Production base / design system / runtime slots
         </p>
@@ -205,13 +205,13 @@ function Hero() {
         </div>
       </div>
 
-      <div className="relative min-h-[520px] overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-gray-1000)] shadow-[0_18px_38px_-28px_rgb(0_0_0_/_0.82)]">
+      <div className="relative min-h-[520px] overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-gray-1000)] shadow-[0_18px_38px_-28px_rgb(0_0_0_/_0.82)] min-[1800px]:min-h-[620px]">
         <Image
           alt="Template visual preview"
           className="object-cover object-center opacity-90"
           fill
           priority
-          sizes="(min-width: 1280px) 520px, 100vw"
+          sizes="(min-width: 1800px) 760px, (min-width: 1280px) 620px, 100vw"
           src={assetDemo.media.image02}
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_36%,transparent_32%,rgb(0_0_0_/_0.20)_66%,rgb(0_0_0_/_0.62)_100%)]" />
@@ -299,7 +299,7 @@ function ComponentsSection() {
 function RuntimeSection() {
   return (
     <section className="scroll-mt-24 reveal" id="runtime">
-      <div className="grid gap-3 xl:grid-cols-[1fr_380px]">
+      <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_minmax(340px,420px)] min-[1800px]:grid-cols-[minmax(0,1fr)_minmax(420px,520px)]">
         <DataPanel
           action={<StatusSignal color="var(--ds-green-700)" variant="pill">runtime map</StatusSignal>}
           eyebrow="Runtime"

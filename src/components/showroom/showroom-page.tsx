@@ -1,5 +1,5 @@
-import { Menu } from "lucide-react";
 import Image from "next/image";
+import { SiteShell } from "@/components/layout/site-shell";
 import { ActiveSectionNav } from "@/components/showroom/active-section-nav";
 import { ActionShowcase } from "@/components/showroom/action-showcase";
 import { ChartShowcase } from "@/components/showroom/chart-showcase";
@@ -16,10 +16,8 @@ import {
   SettingsShelf,
   StateShelf,
 } from "@/components/showroom/runtime-shelves";
-import { frameworkBadges, siteConfig } from "@/config/site";
 import { platformCapabilities } from "@/config/capabilities";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardDescription,
@@ -40,12 +38,12 @@ import {
   assetDemo,
 } from "@/data/showroom";
 import { capabilityAreas } from "@/data/operations";
+import { siteConfig } from "@/config/site";
 
 export function ShowroomPage() {
   return (
-    <main className="min-h-screen text-[var(--ds-gray-1000)]">
-      <div className="mx-auto flex w-full max-w-[var(--layout-max-w)] flex-col gap-4 px-3 py-3">
-        <TopBar />
+    <SiteShell>
+      <div className="flex w-full flex-col gap-4 py-3">
         <ActiveSectionNav items={showroomNav} />
 
           <div className="min-w-0 space-y-8">
@@ -323,7 +321,7 @@ export function ShowroomPage() {
             </footer>
           </div>
       </div>
-    </main>
+    </SiteShell>
   );
 }
 
@@ -815,41 +813,9 @@ function SystemBlueprint() {
   );
 }
 
-function TopBar() {
-  return (
-    <header className="depth-surface sticky top-3 z-20 grid min-h-14 grid-cols-[1fr_auto] items-center gap-3 rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-3">
-      <div className="flex min-w-0 items-center gap-3">
-        <div className="grid h-9 w-9 shrink-0 place-items-center rounded-[7px] border border-[var(--ds-gray-1000)] bg-[var(--ds-gray-1000)] font-mono text-[12px] font-semibold text-[var(--ds-background-100)]">
-          {siteConfig.shortName}
-        </div>
-        <div className="min-w-0">
-          <p className="truncate text-[14px] font-semibold leading-5">
-            {siteConfig.name}
-          </p>
-          <p className="truncate font-mono text-[11px] text-[var(--ds-gray-700)]">
-            {siteConfig.tagline}
-          </p>
-        </div>
-      </div>
-      <div className="hidden items-center gap-2 md:flex">
-        {frameworkBadges.map((badge) => (
-          <DotLabel color={badge.color} key={badge.label}>
-            {badge.label}
-          </DotLabel>
-        ))}
-      </div>
-      <div className="flex items-center gap-2 md:hidden">
-        <Button icon={Menu} size="sm" variant="secondary">
-          Menu
-        </Button>
-      </div>
-    </header>
-  );
-}
-
 function IntroPanel() {
   return (
-    <section className="reveal grid gap-3 xl:grid-cols-[1fr_360px]">
+    <section className="reveal grid gap-3 xl:grid-cols-[minmax(0,1fr)_minmax(320px,420px)] min-[1800px]:grid-cols-[minmax(0,1fr)_minmax(420px,520px)]">
       <div className="py-4">
         <p className="font-mono text-[12px] uppercase tracking-normal text-[var(--ds-gray-700)]">
           Template showroom
