@@ -40,7 +40,7 @@ import { capabilityAreas } from "@/data/operations";
 export function ShowroomPage() {
   return (
     <SiteShell>
-      <div className="mx-auto flex w-full max-w-[1640px] flex-col gap-4 py-4">
+      <div className="flex w-full flex-col gap-4 py-3">
         <ActiveSectionNav items={showroomNav} />
 
         <div className="min-w-0 space-y-8">
@@ -758,7 +758,7 @@ function SystemBlueprint() {
 
 function IntroPanel() {
   return (
-    <section className="grid gap-3 xl:grid-cols-[1fr_360px]">
+    <section className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_minmax(320px,420px)] min-[1800px]:grid-cols-[minmax(0,1fr)_minmax(420px,520px)]">
       <div className="py-4">
         <p className="font-mono text-[12px] uppercase tracking-normal text-[var(--ds-gray-700)]">
           Template showroom
@@ -829,7 +829,7 @@ function ShowcaseSection({
           </p>
           <h2 className="mt-1 text-[24px] font-semibold leading-7">{title}</h2>
         </div>
-        <p className="max-w-xl text-[13px] leading-5 text-[var(--ds-gray-900)]">
+        <p className="max-w-2xl text-[13px] leading-5 text-[var(--ds-gray-900)]">
           {summary}
         </p>
       </div>

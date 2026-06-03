@@ -111,10 +111,10 @@ const defaultChartMargin: ChartMargin = {
 };
 
 const matrixMargin: ChartMargin = {
-  bottom: 30,
-  left: 12,
-  right: 20,
-  top: 16,
+  bottom: 46,
+  left: 20,
+  right: 24,
+  top: 42,
 };
 
 const defaultValueFormatter: ValueFormatter = (value) =>
@@ -445,7 +445,7 @@ export function InteractiveScatterChart({
 
 export function InteractiveConfusionMatrix({
   ariaLabel = "Confusion matrix",
-  height = 320,
+  height = 360,
   labels,
   matrix,
 }: {
@@ -490,12 +490,12 @@ export function InteractiveConfusionMatrix({
             dataKey="predIndex"
             domain={[-0.5, size - 0.5]}
             interval={0}
-            label={{ value: "Predicted", position: "insideBottom", offset: -16, fontSize: 11 }}
+            label={{ value: "Predicted", position: "insideBottom", offset: -22, fontSize: 11 }}
             name="Predicted"
             tick={axisStyle}
             tickFormatter={(value) => labels[Number(value)] ?? ""}
             tickLine={false}
-            tickMargin={10}
+            tickMargin={12}
             ticks={labels.map((_, index) => index)}
             type="number"
           />
@@ -509,16 +509,17 @@ export function InteractiveConfusionMatrix({
               value: "Actual",
               angle: -90,
               position: "insideLeft",
-              offset: 6,
+              offset: 10,
               fontSize: 11,
             }}
             name="Actual"
             tick={axisStyle}
             tickFormatter={(value) => labels[Number(value)] ?? ""}
             tickLine={false}
+            tickMargin={10}
             ticks={labels.map((_, index) => index)}
             type="number"
-            width={72}
+            width={78}
           />
           <Tooltip content={<MatrixTooltip />} cursor={{ strokeDasharray: "3 3" }} />
           <Scatter
@@ -674,8 +675,8 @@ function MatrixCell({ cx, cy, payload }: MatrixCellProps) {
   }
 
   const lightRatio = Math.max(0, Math.min(1, payload.distance / 2));
-  const width = 96;
-  const height = 58;
+  const width = 92;
+  const height = 54;
 
   return (
     <g>

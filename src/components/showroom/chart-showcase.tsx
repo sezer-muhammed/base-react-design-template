@@ -144,7 +144,7 @@ export function ChartShowcase() {
   };
 
   return (
-    <div className="grid gap-3 xl:grid-cols-[1fr_380px]">
+    <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_minmax(360px,420px)] min-[1800px]:grid-cols-[minmax(0,1fr)_minmax(420px,520px)]">
       <Surface
         className="overflow-hidden"
         data-component-id="CHART-01"
@@ -204,11 +204,11 @@ export function ChartShowcase() {
           </div>
         </div>
         <div className="p-4">
-          <div className="h-[390px] min-w-0 overflow-hidden">
+          <div className="h-[430px] min-w-0 overflow-hidden">
             <InteractiveLineChart
               ariaLabel="Operational signal chart"
               data={activeSignalData}
-              height={390}
+              height={430}
               maxValue={signalDomain[1]}
               minValue={signalDomain[0]}
               series={activeSignalSeries}
@@ -257,7 +257,7 @@ export function ChartShowcase() {
         id="chart-03-bar-matrix"
         tone="flat"
       >
-        <div className="grid gap-4 p-4 lg:grid-cols-[360px_1fr] lg:items-center">
+        <div className="grid gap-4 p-4 lg:grid-cols-[minmax(300px,380px)_minmax(0,1fr)] lg:items-center min-[1800px]:grid-cols-[minmax(380px,460px)_minmax(0,1fr)]">
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <ComponentIdBadge id="CHART-03" />
@@ -337,7 +337,7 @@ export function ChartShowcase() {
             summary="Confusion matrix heatmap using the MRI analysis grid pattern for dense class comparison."
             title="Confusion matrix"
           />
-          <div className="overflow-x-auto p-6">
+          <div className="overflow-x-auto px-4 pb-5 pt-3 sm:p-6">
             <InteractiveConfusionMatrix
               ariaLabel="Classification confusion matrix"
               labels={confusionLabels}

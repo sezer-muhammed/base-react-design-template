@@ -57,10 +57,10 @@ export function ActiveSectionNav({ items }: { items: readonly SectionNavItem[] }
   }, [sectionIds]);
 
   return (
-    <Surface className="sticky top-[76px] z-10 col-span-full w-full overflow-hidden" tone="flat">
+    <Surface className="sticky top-[76px] z-10 col-span-full w-full overflow-hidden xl:top-2" tone="flat">
       <nav
         aria-label="Showroom sections"
-        className="flex flex-wrap gap-1 p-2"
+        className="flex flex-nowrap gap-1 overflow-x-auto p-2 lg:flex-wrap"
       >
         {items.map((item, index) => {
           const id = item.href.replace("#", "");

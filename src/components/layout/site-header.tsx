@@ -15,40 +15,102 @@ const navItems = [
 
 export function SiteHeader() {
   return (
-    <header className="depth-surface sticky top-3 z-30 mx-auto grid min-h-14 w-full max-w-[1640px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-3">
-      <NavigationTreeDropdown />
+    <header className="depth-surface sticky top-2 z-30 grid min-h-14 w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-3 xl:hidden">
+      <NavigationTreeDropdown compact />
 
-      <Link className="flex min-w-0 items-center gap-3" href="/">
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[7px] border border-[var(--ds-gray-1000)] bg-[var(--ds-gray-1000)] font-mono text-[12px] font-semibold text-[var(--ds-background-100)]">
-          {siteConfig.shortName}
-        </span>
-        <span className="min-w-0">
-          <span className="block truncate text-[14px] font-semibold leading-5">
-            {siteConfig.name}
-          </span>
-          <span className="block truncate font-mono text-[11px] text-[var(--ds-gray-700)]">
-            {siteConfig.tagline}
-          </span>
-        </span>
-      </Link>
+      <BrandLink />
 
-      <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
-        {navItems.map((item) => (
-          <Link
-            className="rounded-[6px] px-2.5 py-2 text-[13px] font-medium text-[var(--ds-gray-900)] transition hover:bg-[var(--ds-gray-100)] hover:text-[var(--ds-gray-1000)]"
-            href={item.href}
-            key={item.href}
-          >
-            {item.label}
-          </Link>
-        ))}
+      <div className="hidden items-center gap-1 md:flex">
+        <PrimaryNav orientation="horizontal" />
         <StatusSignal color="var(--ds-green-700)" variant="pill">
           template
         </StatusSignal>
-      </nav>
+      </div>
 
       <div className="md:hidden" />
     </header>
+  );
+}
+
+export function SiteSidebar() {
+  return (
+    <aside
+      aria-label="Site navigation"
+      className="hidden h-screen min-h-screen min-w-0 flex-col border-r border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-100)] xl:sticky xl:top-0 xl:flex"
+    >
+      <div className="border-b border-[var(--ds-gray-alpha-300)] p-3">
+        <BrandLink />
+      </div>
+
+      <div className="border-b border-[var(--ds-gray-alpha-300)] p-2">
+        <PrimaryNav orientation="vertical" />
+      </div>
+
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <NavigationTreePanel />
+      </div>
+
+      <div className="border-t border-[var(--ds-gray-alpha-300)] p-3">
+        <StatusSignal color="var(--ds-green-700)" variant="pill">
+          template
+        </StatusSignal>
+        <p className="mt-2 text-[12px] leading-5 text-[var(--ds-gray-700)]">
+          Open navigation stays visible on dashboard-width screens.
+        </p>
+      </div>
+    </aside>
+  );
+}
+
+function BrandLink() {
+  return (
+    <Link
+      className="flex min-w-0 items-center gap-3 rounded-[7px] px-1 py-1 transition hover:bg-[var(--ds-gray-100)]"
+      href="/"
+    >
+      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[7px] border border-[var(--ds-gray-1000)] bg-[var(--ds-gray-1000)] font-mono text-[12px] font-semibold text-[var(--ds-background-100)]">
+        {siteConfig.shortName}
+      </span>
+      <span className="min-w-0">
+        <span className="block truncate text-[14px] font-semibold leading-5">
+          {siteConfig.name}
+        </span>
+        <span className="block truncate font-mono text-[11px] text-[var(--ds-gray-700)]">
+          {siteConfig.tagline}
+        </span>
+      </span>
+    </Link>
+  );
+}
+
+function PrimaryNav({
+  orientation,
+}: {
+  orientation: "horizontal" | "vertical";
+}) {
+  return (
+    <nav
+      aria-label="Primary"
+      className={
+        orientation === "vertical"
+          ? "grid gap-1"
+          : "flex items-center gap-1"
+      }
+    >
+      {navItems.map((item) => (
+        <Link
+          className={
+            orientation === "vertical"
+              ? "rounded-[7px] px-3 py-2 text-[13px] font-medium text-[var(--ds-gray-900)] transition hover:bg-[var(--ds-gray-100)] hover:text-[var(--ds-gray-1000)]"
+              : "rounded-[6px] px-2.5 py-2 text-[13px] font-medium text-[var(--ds-gray-900)] transition hover:bg-[var(--ds-gray-100)] hover:text-[var(--ds-gray-1000)]"
+          }
+          href={item.href}
+          key={item.href}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
   );
 }
 
@@ -64,13 +126,21 @@ function NavigationTreeDropdown({ compact = false }: { compact?: boolean }) {
         />
       </summary>
       <div className="depth-surface absolute left-0 top-[calc(100%+10px)] z-50 w-[min(430px,calc(100vw-24px))] overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)]">
-        <div className="border-b border-[var(--ds-gray-alpha-300)] px-3 py-2">
-          <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
-            Site navigation
-          </p>
-        </div>
-        <RecursiveMenu items={siteNavigationTree} />
+        <NavigationTreePanel />
       </div>
     </details>
+  );
+}
+
+function NavigationTreePanel() {
+  return (
+    <>
+      <div className="border-b border-[var(--ds-gray-alpha-300)] px-3 py-2">
+        <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
+          Site navigation
+        </p>
+      </div>
+      <RecursiveMenu items={siteNavigationTree} />
+    </>
   );
 }
