@@ -169,7 +169,12 @@ export function ShowroomPage() {
               summary="The same data shape for sidebars, content trees, and nested information structures."
             >
               <div className="grid gap-3 xl:grid-cols-[420px_1fr]">
-                <Surface className="overflow-hidden" tone="flat">
+                <Surface
+                  className="overflow-hidden"
+                  data-component-id="MENU-01"
+                  id="menu-01-recursive-navigation"
+                  tone="flat"
+                >
                   <SectionHeader
                     eyebrow="Recursive"
                     summary="A tree menu example with unlimited depth."

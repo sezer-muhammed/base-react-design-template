@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ComponentCommandPalette } from "@/components/layout/component-command-palette";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader, SiteSidebar } from "@/components/layout/site-header";
 
@@ -17,6 +18,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           </div>
         </div>
       </div>
+      <ComponentCommandPalette />
     </main>
   );
 }
