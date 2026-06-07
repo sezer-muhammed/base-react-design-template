@@ -70,17 +70,11 @@ export function ShowroomPage({
   sections?: readonly CatalogSectionKey[];
 }) {
   const visibleSections = new Set<CatalogSectionKey>(sections);
-  const overview = intro && sections.length > 1;
 
   return (
     <SiteShell>
       <div className="catalog-page flex w-full flex-col gap-4 py-3">
-        <div
-          className={cn(
-            "min-w-0",
-            overview ? "catalog-overview-grid" : "space-y-8",
-          )}
-        >
+        <div className="min-w-0 space-y-8">
             {intro ? <IntroPanel /> : null}
 
             {visibleSections.has("foundation") ? (
@@ -958,15 +952,9 @@ function ShowcaseSection({
         className,
       )}
       data-component-id={componentId}
-      data-layout={layout}
       id={id}
     >
-      <div
-        className={cn(
-          layoutProfile.bodyClassName,
-          "mb-3 flex flex-col gap-2 border-t border-[var(--ds-gray-alpha-300)] pt-5 sm:flex-row sm:items-end sm:justify-between",
-        )}
-      >
+      <div className="mb-3 flex flex-col gap-2 border-t border-[var(--ds-gray-alpha-300)] pt-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-normal text-[var(--ds-gray-700)]">
             <ComponentIdBadge id={componentId} />
