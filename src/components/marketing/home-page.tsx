@@ -44,7 +44,7 @@ const featureCards = [
   },
   {
     color: "var(--ds-green-700)",
-    description: "Showroom stays available as a living component inventory for future feedback.",
+    description: "Direct component pages stay available as a living inventory for future feedback.",
     icon: Sparkles,
     title: "Inspectable system",
   },
@@ -74,8 +74,8 @@ const structureRows = [
   },
   {
     id: "dir-showroom",
-    layer: "components/showroom",
-    purpose: "Component demos",
+    layer: "components/catalog",
+    purpose: "Component docs",
     status: "Review",
     color: "var(--ds-amber-700)",
   },
@@ -182,12 +182,12 @@ function Hero() {
         </h1>
         <p className="mt-5 max-w-2xl text-[15px] leading-7 text-[var(--ds-gray-900)]">
           {siteConfig.name} is a neutral Next.js template with a real site shell,
-          a living component showroom, and runtime-ready structure for APIs,
+          direct component pages, and runtime-ready structure for APIs,
           jobs, streams, triggers, and future transport adapters.
         </p>
         <ActionBar className="mt-6">
-          <ButtonLink href="/showroom" icon={ArrowRight} variant="primary">
-            Open showroom
+          <ButtonLink href="/buttons" icon={ArrowRight} variant="primary">
+            Open components
           </ButtonLink>
           <ButtonLink href="#structure" icon={GitBranch} variant="secondary">
             View structure
@@ -217,7 +217,7 @@ function Hero() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_36%,transparent_32%,rgb(0_0_0_/_0.20)_66%,rgb(0_0_0_/_0.62)_100%)]" />
         <div className="absolute inset-x-4 top-4 flex flex-wrap gap-2">
           <GlassTag>visual system</GlassTag>
-          <GlassTag>showroom linked</GlassTag>
+          <GlassTag>docs linked</GlassTag>
         </div>
         <div className="absolute inset-x-4 bottom-4 rounded-[10px] border border-white/24 bg-white/[0.40] p-4 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.62),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md">
           <div className="grid gap-4 sm:grid-cols-[1fr_220px] sm:items-end">
@@ -226,7 +226,7 @@ function Hero() {
                 Website shell
               </p>
               <h2 className="mt-2 text-[24px] font-semibold leading-7">
-                Header, navigation, content, and showroom routes now coexist.
+                Header, navigation, content, and component routes now coexist.
               </h2>
             </div>
             <div className="grid gap-2">
@@ -270,10 +270,10 @@ function ComponentsSection() {
   return (
     <section className="scroll-mt-24 reveal" id="components">
       <DataPanel
-        action={<ButtonLink href="/showroom" icon={ArrowRight} size="sm">Showroom</ButtonLink>}
+        action={<ButtonLink href="/buttons" icon={ArrowRight} size="sm">Components</ButtonLink>}
         eyebrow="Components"
         padded
-        summary="The landing page consumes the same primitives that the showroom documents."
+        summary="The landing page consumes the same primitives that the component pages document."
         title="Reusable pieces, already used in the website."
       >
         <div className="stagger grid gap-3 md:grid-cols-2 xl:grid-cols-5">
@@ -322,7 +322,7 @@ function RuntimeSection() {
           <CardHeader action={<Gauge className="h-4 w-4 text-[var(--ds-gray-700)]" />}>
             <CardTitle>Operational readiness</CardTitle>
             <CardDescription>
-              Demo records below are the same data family used in the showroom tables.
+              Demo records below are the same data family used in the tables page.
             </CardDescription>
           </CardHeader>
           <div className="grid gap-3">
@@ -354,7 +354,7 @@ function StructureSection() {
       <DataPanel
         action={<StatusSignal color="var(--ds-gray-1000)" variant="pill">file system</StatusSignal>}
         eyebrow="Structure"
-        summary="The folder layout separates app routes, layout shell, generic primitives, showroom demos, data, and server contracts."
+        summary="The folder layout separates app routes, layout shell, generic primitives, component demos, data, and server contracts."
         title="A project shape that can evolve."
       >
         <RecordTable
@@ -377,11 +377,11 @@ function FinalCta() {
             Ready for iteration
           </p>
           <h2 className="mt-2 text-[26px] font-semibold leading-8">
-            The website is real; the showroom remains the workshop.
+            The website is real; the component pages remain the workshop.
           </h2>
         </div>
         <ActionBar align="right">
-          <ButtonLink href="/showroom" icon={Workflow} variant="primary">
+          <ButtonLink href="/buttons" icon={Workflow} variant="primary">
             Review components
           </ButtonLink>
           <ButtonLink href="#platform" icon={Cable} variant="secondary">

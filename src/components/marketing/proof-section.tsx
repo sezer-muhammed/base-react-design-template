@@ -120,7 +120,7 @@ export function ProofSection() {
       <DataPanel
         action={<StatusSignal color="var(--ds-blue-700)" variant="pill">site proof</StatusSignal>}
         eyebrow="Component proof"
-        summary="Showroom primitives are used here as a real product console: search, filters, toggles, cards, state blocks, modal frame, and table composition."
+        summary="Catalog primitives are used here as a real product console: search, filters, toggles, cards, state blocks, modal frame, and table composition."
         title="The site uses the system it documents."
       >
         <div className="grid gap-3 p-3 xl:grid-cols-[1fr_380px]">
@@ -169,7 +169,7 @@ export function ProofSection() {
                     <Dialog.Portal>
                       <Dialog.Overlay className="fixed inset-0 z-40 bg-black/35" />
                       <DialogFrame
-                        description="This modal uses the same neutral overlay frame from the showroom, now attached to the real website flow."
+                        description="This modal uses the same neutral overlay frame from the component docs, now attached to the real website flow."
                         footer={<DefaultDialogFooter />}
                         title="Runtime action"
                       />

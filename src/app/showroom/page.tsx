@@ -1,5 +1,5 @@
-import { ShowroomPage } from "@/components/showroom/showroom-page";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <ShowroomPage />;
+  redirect("/buttons");
 }

@@ -63,7 +63,7 @@ const hierarchyData = [
       {
         name: "Components",
         modules: [
-          { name: "Showroom", endpoints: ["GET /showroom", "GET /showroom#tables"] },
+          { name: "Catalog pages", endpoints: ["GET /buttons", "GET /tables"] },
           { name: "Navigation", endpoints: ["GET /navigation"] },
         ],
       },

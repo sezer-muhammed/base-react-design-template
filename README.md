@@ -6,9 +6,9 @@ A compact, extensible Next.js starter for dashboards, content systems, and opera
 
 ## Purpose
 
-Most starters give you a blank page or an overwhelming kitchen-sink. This template sits in between: it ships with a fully realised design system and a two-page application (marketing home + component showroom) so you can immediately see every primitive in context, then delete what you don't need and extend from a clean foundation.
+Most starters give you a blank page or an overwhelming kitchen-sink. This template sits in between: it ships with a fully realised design system and direct component catalog pages so you can immediately see every primitive in context, then delete what you don't need and extend from a clean foundation.
 
-The showroom at `/showroom` acts as a living component inventory — it stays in the repo so future contributors can inspect every variant at a glance before reaching for something new.
+The component pages, such as `/buttons`, `/tables`, and `/charts`, act as a living inventory - they stay in the repo so future contributors can inspect every variant at a glance before reaching for something new.
 
 ---
 
@@ -135,7 +135,6 @@ Eyebrow labels (category tags above section titles) always use `font-mono text-[
 | Component | Path | Notes |
 |---|---|---|
 | `RecursiveMenu` | `components/ui/recursive-menu.tsx` | Nested menu tree from a data array |
-| `ActiveSectionNav` | `components/showroom/active-section-nav.tsx` | Sticky horizontal nav that highlights the in-viewport section |
 
 ### Overlays
 
@@ -167,22 +166,20 @@ Eyebrow labels (category tags above section titles) always use `font-mono text-[
 
 Full-page marketing layout showcasing the system to external visitors or stakeholders. Demonstrates every UI primitive in a realistic product context: hero with capabilities grid, feature cards, live data table, record cards, dialogs, progress cells, toggle cells, and a realtime-style state block.
 
-### `/showroom` — Component showroom
+### Component catalog pages
 
 `src/components/showroom/showroom-page.tsx`
 
-An internal design reference. Sections are:
+Internal design references are split into direct pages:
 
-| Section | ID | What it shows |
-|---|---|---|
-| Foundation | `foundation` | Full Geist token shelf (all color ramps, step by step) |
-| Component gallery | `gallery` | Every primitive variant side by side |
-| Actions | `actions` | Button variants, icon buttons, action bars |
-| Tables | `tables` | DataTable, RecordTable, OperationTable with live sorting |
-| Charts | `charts` | Recharts area, bar, and line chart wrappers |
-| Runtime shelves | `runtime` | Auth shell, command menu, job monitor, realtime stream, settings panel |
-
-The showroom's sticky section navigation (`ActiveSectionNav`) uses `IntersectionObserver` to highlight the current section as you scroll.
+| Page | What it shows |
+|---|---|
+| `/foundation` | Full Geist token shelf |
+| `/buttons` | Button variants, icon buttons, badges, action bars |
+| `/tables` | DataTable, RecordTable, OperationTable with live sorting |
+| `/charts` | Recharts area, bar, line, scatter, matrix, and donut examples |
+| `/cards` | Card tones, media cards, and wide data cards |
+| `/auth`, `/jobs`, `/realtime`, `/settings` | Runtime-oriented shelves |
 
 ---
 
@@ -215,8 +212,12 @@ src/
     globals.css         ← Design tokens + global utilities
     layout.tsx          ← Root layout (Geist font, metadata)
     page.tsx            ← Marketing home route
+    (catalog)/
+      buttons/page.tsx  - Direct component category routes
+      tables/page.tsx
+      charts/page.tsx
     showroom/
-      page.tsx          ← Showroom route
+      page.tsx          - Redirects old showroom URL to /buttons
   components/
     layout/             ← SiteShell, SiteHeader, SiteFooter
     marketing/          ← HomePage
@@ -247,7 +248,7 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) for the marketing home.  
-Open [http://localhost:3000/showroom](http://localhost:3000/showroom) for the component reference.
+Open [http://localhost:3000/buttons](http://localhost:3000/buttons), [http://localhost:3000/tables](http://localhost:3000/tables), or [http://localhost:3000/charts](http://localhost:3000/charts) for the component references.
 
 ```bash
 npm run build   # production build
@@ -259,6 +260,6 @@ npm run lint    # ESLint
 ## Extending the template
 
 - **Add a new page** — create a route under `src/app/`, wrap its content in `SiteShell`, and use `Surface` + `SectionHeader` for the content structure.
-- **Add a new primitive** — create it in `src/components/ui/`, keep all color references on `--ds-*` tokens, and add a demo block to the showroom.
+- **Add a new primitive** — create it in `src/components/ui/`, keep all color references on `--ds-*` tokens, and add a demo block to the relevant component page.
 - **Add a server adapter** — implement the relevant contract from `src/server/contracts/runtime.ts` and place the file in the matching `src/server/adapters/<slot>/` directory.
 - **Add a design token** — declare the HSL value tuple in `:root` in `globals.css`, then add the resolved `hsla()` alias below the existing aliases. Dark-mode override goes in the `@media (prefers-color-scheme: dark)` block.

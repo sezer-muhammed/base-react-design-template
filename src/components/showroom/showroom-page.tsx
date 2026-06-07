@@ -38,13 +38,42 @@ import {
 import { capabilityAreas } from "@/data/operations";
 import { siteConfig } from "@/config/site";
 
-export function ShowroomPage() {
+export const catalogSectionKeys = [
+  "foundation",
+  "buttons",
+  "charts",
+  "cards",
+  "media",
+  "tables",
+  "uploads",
+  "menus",
+  "command",
+  "states",
+  "auth",
+  "jobs",
+  "realtime",
+  "settings",
+  "blueprint",
+] as const;
+
+export type CatalogSectionKey = (typeof catalogSectionKeys)[number];
+
+export function ShowroomPage({
+  intro = true,
+  sections = catalogSectionKeys,
+}: {
+  intro?: boolean;
+  sections?: readonly CatalogSectionKey[];
+}) {
+  const visibleSections = new Set<CatalogSectionKey>(sections);
+
   return (
     <SiteShell>
       <div className="flex w-full flex-col gap-4 py-3">
         <div className="min-w-0 space-y-8">
-            <IntroPanel />
+            {intro ? <IntroPanel /> : null}
 
+            {visibleSections.has("foundation") ? (
             <ShowcaseSection
               componentId="S-01"
               id="foundation"
@@ -54,17 +83,21 @@ export function ShowroomPage() {
             >
               <FoundationTokenTable />
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("buttons") ? (
             <ShowcaseSection
               componentId="S-02"
-              id="actions"
-              kicker="02 / Actions"
+              id="buttons"
+              kicker="02 / Buttons"
               title="Button, badge, toolbar"
               summary="Fast scanning on compact surfaces: icon, short label, and status signal."
             >
               <ActionShowcase />
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("charts") ? (
             <ShowcaseSection
               componentId="S-03"
               id="charts"
@@ -74,7 +107,9 @@ export function ShowroomPage() {
             >
               <ChartShowcase />
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("cards") ? (
             <ShowcaseSection
               componentId="S-04"
               id="cards"
@@ -106,7 +141,9 @@ export function ShowroomPage() {
                 </div>
               </div>
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("media") ? (
             <ShowcaseSection
               componentId="S-05"
               id="media"
@@ -129,7 +166,9 @@ export function ShowroomPage() {
                 />
               </div>
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("tables") ? (
             <ShowcaseSection
               componentId="S-06"
               id="tables"
@@ -178,7 +217,9 @@ export function ShowroomPage() {
                 </Surface>
               </div>
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("uploads") ? (
             <ShowcaseSection
               componentId="S-07"
               id="uploads"
@@ -188,7 +229,9 @@ export function ShowroomPage() {
             >
               <FileUploadShowcase />
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("menus") ? (
             <ShowcaseSection
               componentId="S-08"
               id="menus"
@@ -240,7 +283,9 @@ export function ShowroomPage() {
                 </Surface>
               </div>
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("command") ? (
             <ShowcaseSection
               componentId="S-09"
               id="command"
@@ -250,7 +295,9 @@ export function ShowroomPage() {
             >
               <CommandShelf />
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("states") ? (
             <ShowcaseSection
               componentId="S-10"
               id="states"
@@ -260,7 +307,9 @@ export function ShowroomPage() {
             >
               <StateShelf />
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("auth") ? (
             <ShowcaseSection
               componentId="S-11"
               id="auth"
@@ -270,7 +319,9 @@ export function ShowroomPage() {
             >
               <AuthShellShelf />
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("jobs") ? (
             <ShowcaseSection
               componentId="S-12"
               id="jobs"
@@ -280,7 +331,9 @@ export function ShowroomPage() {
             >
               <JobMonitorShelf />
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("realtime") ? (
             <ShowcaseSection
               componentId="S-13"
               id="realtime"
@@ -290,7 +343,9 @@ export function ShowroomPage() {
             >
               <RealtimeShelf />
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("settings") ? (
             <ShowcaseSection
               componentId="S-14"
               id="settings"
@@ -300,7 +355,9 @@ export function ShowroomPage() {
             >
               <SettingsShelf />
             </ShowcaseSection>
+            ) : null}
 
+            {visibleSections.has("blueprint") ? (
             <ShowcaseSection
               componentId="S-15"
               id="blueprint"
@@ -310,6 +367,7 @@ export function ShowroomPage() {
             >
               <SystemBlueprint />
             </ShowcaseSection>
+            ) : null}
 
             <footer className="flex flex-col gap-2 border-t border-[var(--ds-gray-alpha-300)] py-6 text-[12px] text-[var(--ds-gray-700)] sm:flex-row sm:items-center sm:justify-between">
               <p>© 2026 {siteConfig.name} · Extensible Next.js starter</p>
@@ -814,7 +872,7 @@ function IntroPanel() {
     <section className="reveal grid gap-3 xl:grid-cols-[minmax(0,1fr)_minmax(320px,420px)] min-[1800px]:grid-cols-[minmax(0,1fr)_minmax(420px,520px)]">
       <div className="py-4">
         <p className="font-mono text-[12px] uppercase tracking-normal text-[var(--ds-gray-700)]">
-          Template showroom
+          Component catalog
         </p>
         <h1 className="mt-2 max-w-3xl text-[38px] font-semibold leading-[1.05] sm:text-[48px]">
           A production-minded base for any web product.

@@ -43,7 +43,7 @@ export const platformCapabilities = [
   },
 ] as const;
 
-export const suggestedShowroomSections = [
+export const suggestedCatalogSections = [
   "Forms",
   "Datepicker",
   "Pagination",
