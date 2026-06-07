@@ -15,6 +15,13 @@ import {
   SettingsShelf,
   StateShelf,
 } from "@/components/showroom/runtime-shelves";
+import {
+  FormsShowcase,
+  PageTemplatesShowcase,
+  ThemeConfigShowcase,
+  UsageDocsShowcase,
+  WorkflowShowcase,
+} from "@/components/showroom/starter-kit-showcases";
 import { platformCapabilities } from "@/config/capabilities";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -45,14 +52,19 @@ import { capabilityAreas } from "@/data/operations";
 export const catalogSectionKeys = [
   "foundation",
   "buttons",
+  "forms",
   "charts",
   "cards",
   "media",
   "tables",
+  "templates",
+  "workflows",
   "uploads",
   "menus",
   "command",
   "states",
+  "theme",
+  "usage",
   "auth",
   "jobs",
   "realtime",
@@ -103,11 +115,24 @@ export function ShowroomPage({
             </ShowcaseSection>
             ) : null}
 
-            {visibleSections.has("charts") ? (
+            {visibleSections.has("forms") ? (
             <ShowcaseSection
               componentId="S-03"
+              id="forms"
+              kicker="03 / Forms"
+              layout={catalogSectionLayouts.forms}
+              title="Form system"
+              summary="Inputs, selects, validation, toggles, and form actions for create/edit flows."
+            >
+              <FormsShowcase />
+            </ShowcaseSection>
+            ) : null}
+
+            {visibleSections.has("charts") ? (
+            <ShowcaseSection
+              componentId="S-04"
               id="charts"
-              kicker="03 / Charts"
+              kicker="04 / Charts"
               layout={catalogSectionLayouts.charts}
               title="Graph and chart system"
               summary="Recharts is the primary fit for this design: crisp SVG, composable React primitives, and CSS-variable theming."
@@ -118,9 +143,9 @@ export function ShowroomPage({
 
             {visibleSections.has("cards") ? (
             <ShowcaseSection
-              componentId="S-04"
+              componentId="S-05"
               id="cards"
-              kicker="04 / Cards"
+              kicker="05 / Cards"
               layout={catalogSectionLayouts.cards}
               title="Card system"
               summary="The same card skeleton, with tone, density, and depth controlled separately."
@@ -153,9 +178,9 @@ export function ShowroomPage({
 
             {visibleSections.has("media") ? (
             <ShowcaseSection
-              componentId="S-05"
+              componentId="S-06"
               id="media"
-              kicker="05 / Media"
+              kicker="06 / Media"
               layout={catalogSectionLayouts.media}
               title="Visual frame tests"
               summary="The same image tested with two frame languages: one product-like, one more editorial."
@@ -179,9 +204,9 @@ export function ShowroomPage({
 
             {visibleSections.has("tables") ? (
             <ShowcaseSection
-              componentId="S-06"
+              componentId="S-07"
               id="tables"
-              kicker="06 / Tables"
+              kicker="07 / Tables"
               layout={catalogSectionLayouts.tables}
               title="Table showcase"
               summary="A compact table system with filters and sortable column headers."
@@ -229,11 +254,37 @@ export function ShowroomPage({
             </ShowcaseSection>
             ) : null}
 
+            {visibleSections.has("templates") ? (
+            <ShowcaseSection
+              componentId="S-08"
+              id="templates"
+              kicker="08 / Page templates"
+              layout={catalogSectionLayouts.templates}
+              title="Starter page templates"
+              summary="Ready-made page patterns for dashboards, detail views, editors, and analytics screens."
+            >
+              <PageTemplatesShowcase />
+            </ShowcaseSection>
+            ) : null}
+
+            {visibleSections.has("workflows") ? (
+            <ShowcaseSection
+              componentId="S-09"
+              id="workflows"
+              kicker="09 / Workflows"
+              layout={catalogSectionLayouts.workflows}
+              title="Table and detail workflows"
+              summary="Composition patterns that connect tables, actions, details, states, and follow-up panels."
+            >
+              <WorkflowShowcase />
+            </ShowcaseSection>
+            ) : null}
+
             {visibleSections.has("uploads") ? (
             <ShowcaseSection
-              componentId="S-07"
+              componentId="S-10"
               id="uploads"
-              kicker="07 / Uploads"
+              kicker="10 / Uploads"
               layout={catalogSectionLayouts.uploads}
               title="File upload"
               summary="A compact dropzone, queue, and import summary for personal dashboards and website admin flows."
@@ -244,9 +295,9 @@ export function ShowroomPage({
 
             {visibleSections.has("menus") ? (
             <ShowcaseSection
-              componentId="S-08"
+              componentId="S-11"
               id="menus"
-              kicker="08 / Menus"
+              kicker="11 / Menus"
               layout={catalogSectionLayouts.menus}
               title="Recursive menu and lists"
               summary="The same data shape for sidebars, content trees, and nested information structures."
@@ -299,9 +350,9 @@ export function ShowroomPage({
 
             {visibleSections.has("command") ? (
             <ShowcaseSection
-              componentId="S-09"
+              componentId="S-12"
               id="command"
-              kicker="09 / Command"
+              kicker="12 / Command"
               layout={catalogSectionLayouts.command}
               title="Command menu"
               summary="A searchable command layer for navigation, runtime records, and global actions."
@@ -312,9 +363,9 @@ export function ShowroomPage({
 
             {visibleSections.has("states") ? (
             <ShowcaseSection
-              componentId="S-10"
+              componentId="S-13"
               id="states"
-              kicker="10 / States"
+              kicker="13 / States"
               layout={catalogSectionLayouts.states}
               title="Empty, loading and error"
               summary="Neutral state surfaces with small signal dots instead of colored panels."
@@ -323,11 +374,37 @@ export function ShowroomPage({
             </ShowcaseSection>
             ) : null}
 
+            {visibleSections.has("theme") ? (
+            <ShowcaseSection
+              componentId="S-14"
+              id="theme"
+              kicker="14 / Theme"
+              layout={catalogSectionLayouts.theme}
+              title="Theme and config"
+              summary="Template-level configuration for density, radius, accent, and preview behavior."
+            >
+              <ThemeConfigShowcase />
+            </ShowcaseSection>
+            ) : null}
+
+            {visibleSections.has("usage") ? (
+            <ShowcaseSection
+              componentId="S-15"
+              id="usage"
+              kicker="15 / Usage"
+              layout={catalogSectionLayouts.usage}
+              title="Usage notes and props"
+              summary="Documentation blocks for when to use, what to avoid, props, and code previews."
+            >
+              <UsageDocsShowcase />
+            </ShowcaseSection>
+            ) : null}
+
             {visibleSections.has("auth") ? (
             <ShowcaseSection
-              componentId="S-11"
+              componentId="S-16"
               id="auth"
-              kicker="11 / Auth"
+              kicker="16 / Auth"
               layout={catalogSectionLayouts.auth}
               title="Auth shell"
               summary="A compact authentication and permission surface that can become sign-in, invite, or role review."
@@ -338,9 +415,9 @@ export function ShowroomPage({
 
             {visibleSections.has("jobs") ? (
             <ShowcaseSection
-              componentId="S-12"
+              componentId="S-17"
               id="jobs"
-              kicker="12 / Job monitor"
+              kicker="17 / Job monitor"
               layout={catalogSectionLayouts.jobs}
               title="Pull and worker jobs"
               summary="A future-ready shelf for scheduled sync, queues, retry windows, and manual triggers."
@@ -351,9 +428,9 @@ export function ShowroomPage({
 
             {visibleSections.has("realtime") ? (
             <ShowcaseSection
-              componentId="S-13"
+              componentId="S-18"
               id="realtime"
-              kicker="13 / Realtime"
+              kicker="18 / Realtime"
               layout={catalogSectionLayouts.realtime}
               title="Realtime stream"
               summary="A feed pattern for SSE, WebSocket, broadcast channels, and local event previews."
@@ -364,9 +441,9 @@ export function ShowroomPage({
 
             {visibleSections.has("settings") ? (
             <ShowcaseSection
-              componentId="S-14"
+              componentId="S-19"
               id="settings"
-              kicker="14 / Settings"
+              kicker="19 / Settings"
               layout={catalogSectionLayouts.settings}
               title="Settings and config"
               summary="Toggle rows, summary cards, and environment-aware config slots."
@@ -377,9 +454,9 @@ export function ShowroomPage({
 
             {visibleSections.has("blueprint") ? (
             <ShowcaseSection
-              componentId="S-15"
+              componentId="S-20"
               id="blueprint"
-              kicker="15 / Blueprint"
+              kicker="20 / Blueprint"
               layout={catalogSectionLayouts.blueprint}
               title="Extensible runtime blueprint"
               summary="Adapter slots for API, push, pull, triggers, realtime, and future TCP / UDP transport support."
@@ -900,7 +977,7 @@ function IntroPanel() {
       <Surface className="overflow-hidden" tone="flat">
         <div className="grid grid-cols-3 divide-x divide-[var(--ds-gray-alpha-300)]">
           {[
-            ["Sections", "15"],
+            ["Sections", "20"],
             ["Runtime", "6"],
             ["Tokens", "Geist"],
           ].map(([label, value]) => (

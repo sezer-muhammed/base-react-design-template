@@ -27,6 +27,7 @@ export const catalogSectionLayouts = {
   charts: "wide",
   command: "wide",
   foundation: "wide",
+  forms: "wide",
   jobs: "wide",
   media: "media",
   menus: "wide",
@@ -34,5 +35,9 @@ export const catalogSectionLayouts = {
   settings: "wide",
   states: "default",
   tables: "full",
+  templates: "wide",
+  theme: "wide",
   uploads: "full",
+  usage: "wide",
+  workflows: "full",
 } as const satisfies Record<string, CatalogLayoutProfile>;

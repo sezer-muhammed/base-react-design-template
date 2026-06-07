@@ -8,7 +8,7 @@ A compact, extensible Next.js starter for dashboards, content systems, and opera
 
 Most starters give you a blank page or an overwhelming kitchen-sink. This template sits in between: it ships with a fully realised design system and direct component catalog pages so you can immediately see every primitive in context, then delete what you don't need and extend from a clean foundation.
 
-The component pages, such as `/buttons`, `/tables`, and `/charts`, act as a living inventory - they stay in the repo so future contributors can inspect every variant at a glance before reaching for something new.
+The component pages, such as `/buttons`, `/forms`, `/tables`, `/templates`, and `/charts`, act as a living inventory - they stay in the repo so future contributors can inspect every variant at a glance before reaching for something new.
 
 ---
 
@@ -176,9 +176,13 @@ Internal design references are split into direct pages:
 |---|---|
 | `/foundation` | Full Geist token shelf |
 | `/buttons` | Button variants, icon buttons, badges, action bars |
+| `/forms` | Inputs, selects, toggles, validation, and form actions |
 | `/tables` | DataTable, RecordTable, OperationTable with live sorting |
+| `/templates` | Dashboard, detail, editor, and analytics starter pages |
+| `/workflows` | Table-to-detail composition patterns and bulk actions |
 | `/charts` | Recharts area, bar, line, scatter, matrix, and donut examples |
 | `/cards` | Card tones, media cards, and wide data cards |
+| `/theme`, `/usage` | Template config controls and component docs patterns |
 | `/auth`, `/jobs`, `/realtime`, `/settings` | Runtime-oriented shelves |
 
 ---
@@ -214,7 +218,10 @@ src/
     page.tsx            ← Marketing home route
     (catalog)/
       buttons/page.tsx  - Direct component category routes
+      forms/page.tsx
       tables/page.tsx
+      templates/page.tsx
+      workflows/page.tsx
       charts/page.tsx
     showroom/
       page.tsx          - Redirects old showroom URL to /components
@@ -248,7 +255,7 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) for the marketing home.  
-Open [http://localhost:3000/buttons](http://localhost:3000/buttons), [http://localhost:3000/tables](http://localhost:3000/tables), or [http://localhost:3000/charts](http://localhost:3000/charts) for the component references.
+Open [http://localhost:3000/components](http://localhost:3000/components) for the full catalog, or direct pages such as [http://localhost:3000/buttons](http://localhost:3000/buttons), [http://localhost:3000/forms](http://localhost:3000/forms), [http://localhost:3000/tables](http://localhost:3000/tables), [http://localhost:3000/templates](http://localhost:3000/templates), and [http://localhost:3000/charts](http://localhost:3000/charts).
 
 ```bash
 npm run build   # production build
