@@ -217,7 +217,7 @@ src/
       tables/page.tsx
       charts/page.tsx
     showroom/
-      page.tsx          - Redirects old showroom URL to /buttons
+      page.tsx          - Redirects old showroom URL to /components
   components/
     layout/             ← SiteShell, SiteHeader, SiteFooter
     marketing/          ← HomePage

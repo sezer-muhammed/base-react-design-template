@@ -36,7 +36,6 @@ import {
   assetDemo,
 } from "@/data/showroom";
 import { capabilityAreas } from "@/data/operations";
-import { siteConfig } from "@/config/site";
 
 export const catalogSectionKeys = [
   "foundation",
@@ -369,10 +368,6 @@ export function ShowroomPage({
             </ShowcaseSection>
             ) : null}
 
-            <footer className="flex flex-col gap-2 border-t border-[var(--ds-gray-alpha-300)] py-6 text-[12px] text-[var(--ds-gray-700)] sm:flex-row sm:items-center sm:justify-between">
-              <p>© 2026 {siteConfig.name} · Extensible Next.js starter</p>
-              <p className="font-mono">Geist tokens / Tailwind / CVA / Radix / runtime contracts</p>
-            </footer>
         </div>
       </div>
     </SiteShell>
@@ -624,13 +619,13 @@ function AssetSpecCard() {
 function AssetWideVisualCard() {
   return (
     <Card
-      className="p-0"
+      className="mx-auto w-full max-w-[1040px] p-0"
       data-component-id="CARD-03"
       depth="base"
       id="card-03-asset-wide-visual"
       tone="default"
     >
-      <div className="relative min-h-[410px] overflow-hidden bg-[var(--ds-gray-1000)]">
+      <div className="relative aspect-[2/1] min-h-[440px] overflow-hidden bg-[var(--ds-gray-1000)]">
         <Image
           alt="Wide motion asset card sample"
           className="object-cover object-center"
@@ -755,16 +750,16 @@ function ImageFrame({
   const soft = mode === "soft";
   const frameTitle = soft ? "Soft metadata surface" : title;
   const transparentTagClass =
-    "border-white/28 bg-white/[0.34] text-[var(--ds-gray-1000)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.48),0_10px_24px_-18px_rgb(0_0_0_/_0.72)] before:bg-white/45 after:bg-white/[0.06]";
+    "border-white/35 bg-white/[0.68] text-[var(--ds-gray-1000)] shadow-[0_10px_24px_-18px_rgb(0_0_0_/_0.72)] before:bg-transparent after:bg-transparent";
 
   return (
     <Surface
-      className="overflow-hidden self-start"
+      className="mx-auto w-full max-w-[920px] overflow-hidden self-start"
       data-component-id={componentId}
       id={componentId.toLowerCase()}
       tone="raised"
     >
-      <div className={cn("relative bg-[var(--ds-gray-1000)]", soft ? "h-[420px]" : "h-[440px]")}>
+      <div className={cn("relative aspect-[2/1] min-h-[420px] bg-[var(--ds-gray-1000)]", soft ? "max-h-[520px]" : "max-h-[540px]")}>
         <Image
           alt="Motion asset scene used for visual frame testing"
           className={cn(

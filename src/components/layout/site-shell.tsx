@@ -13,9 +13,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div className="px-2 py-2 sm:px-3 xl:hidden">
             <SiteHeader />
           </div>
-          <div className="min-w-0 px-2 pb-3 pt-2 sm:px-3 xl:px-3 2xl:px-4">
+          <div className="flex min-h-screen min-w-0 flex-col px-2 pb-3 pt-2 sm:px-3 xl:px-3 2xl:px-4">
             <GlobalCommandSearch />
-            {children}
+            <div className="min-w-0 flex-1">{children}</div>
             <SiteFooter />
           </div>
         </div>

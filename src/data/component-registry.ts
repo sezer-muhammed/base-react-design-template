@@ -10,6 +10,42 @@ export type ComponentRegistryItem = {
 
 export const componentRegistry = [
   {
+    aliases: ["catalog", "all components", "docs"],
+    color: "var(--ds-gray-1000)",
+    description: "Component catalog overview.",
+    href: "/components",
+    id: "PAGE-COMPONENTS",
+    name: "Components",
+    section: "Pages",
+  },
+  {
+    aliases: ["button", "actions", "toolbar"],
+    color: "var(--ds-blue-700)",
+    description: "Button, badge, toolbar, alert, and overlay examples.",
+    href: "/buttons",
+    id: "PAGE-BUTTONS",
+    name: "Buttons",
+    section: "Pages",
+  },
+  {
+    aliases: ["table", "data", "grid"],
+    color: "var(--ds-gray-1000)",
+    description: "Table, hierarchy, filtering, sorting, and dense data examples.",
+    href: "/tables",
+    id: "PAGE-TABLES",
+    name: "Tables",
+    section: "Pages",
+  },
+  {
+    aliases: ["graph", "charts", "recharts"],
+    color: "var(--ds-purple-700)",
+    description: "Chart, graph, matrix, scatter, and donut examples.",
+    href: "/charts",
+    id: "PAGE-CHARTS",
+    name: "Charts",
+    section: "Pages",
+  },
+  {
     aliases: ["colors", "tokens", "foundation table"],
     color: "var(--ds-gray-1000)",
     description: "Foundation color token table.",

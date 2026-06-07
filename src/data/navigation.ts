@@ -15,7 +15,7 @@ export const siteNavigationTree: RecursiveMenuItem[] = [
     ],
   },
   {
-    href: "/buttons",
+    href: "/components",
     label: "Components",
     meta: "docs",
     status: "active",

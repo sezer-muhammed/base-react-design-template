@@ -73,7 +73,7 @@ const structureRows = [
     color: "var(--ds-green-700)",
   },
   {
-    id: "dir-showroom",
+    id: "dir-catalog",
     layer: "components/catalog",
     purpose: "Component docs",
     status: "Review",
@@ -157,7 +157,7 @@ const componentCards = [
 export function HomePage() {
   return (
     <SiteShell>
-      <div className="mx-auto w-full max-w-[var(--layout-max-w)] space-y-8 px-3 py-3 sm:px-5 lg:px-8 2xl:px-10">
+      <div className="w-full space-y-8 px-3 py-3 sm:px-5 lg:px-8 2xl:px-10">
         <Hero />
         <PlatformSection />
         <ComponentsSection />
@@ -186,7 +186,7 @@ function Hero() {
           jobs, streams, triggers, and future transport adapters.
         </p>
         <ActionBar className="mt-6">
-          <ButtonLink href="/buttons" icon={ArrowRight} variant="primary">
+          <ButtonLink href="/components" icon={ArrowRight} variant="primary">
             Open components
           </ButtonLink>
           <ButtonLink href="#structure" icon={GitBranch} variant="secondary">
@@ -270,7 +270,7 @@ function ComponentsSection() {
   return (
     <section className="scroll-mt-24 reveal" id="components">
       <DataPanel
-        action={<ButtonLink href="/buttons" icon={ArrowRight} size="sm">Components</ButtonLink>}
+        action={<ButtonLink href="/components" icon={ArrowRight} size="sm">Components</ButtonLink>}
         eyebrow="Components"
         padded
         summary="The landing page consumes the same primitives that the component pages document."
@@ -381,7 +381,7 @@ function FinalCta() {
           </h2>
         </div>
         <ActionBar align="right">
-          <ButtonLink href="/buttons" icon={Workflow} variant="primary">
+          <ButtonLink href="/components" icon={Workflow} variant="primary">
             Review components
           </ButtonLink>
           <ButtonLink href="#platform" icon={Cable} variant="secondary">
