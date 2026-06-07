@@ -345,6 +345,14 @@ body {
   container-type: inline-size;
 }
 
+.catalog-overview-grid {
+  align-items: start;
+  display: grid;
+  gap: 2rem;
+  grid-auto-flow: dense;
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .catalog-section-body {
   margin-inline: auto;
   min-width: 0;
@@ -382,4 +390,15 @@ body {
   max-width: min(100%, var(--catalog-content-media-w));
   min-width: 0;
   width: 100%;
+}
+
+@container (min-width: 1500px) {
+  .catalog-overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .catalog-overview-grid .catalog-section[data-layout="full"],
+  .catalog-overview-grid .catalog-section[data-layout="wide"] {
+    grid-column: 1 / -1;
+  }
 }
