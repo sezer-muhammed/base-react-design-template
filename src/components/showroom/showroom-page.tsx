@@ -30,6 +30,11 @@ import { StatusSignal } from "@/components/ui/status-signal";
 import { SectionHeader, Surface } from "@/components/ui/surface";
 import { cn } from "@/lib/cn";
 import {
+  catalogLayoutProfiles,
+  catalogSectionLayouts,
+  type CatalogLayoutProfile,
+} from "@/config/catalog-layout";
+import {
   menuShowcase,
   tokenRows,
   cardSamples,
@@ -68,7 +73,7 @@ export function ShowroomPage({
 
   return (
     <SiteShell>
-      <div className="flex w-full flex-col gap-4 py-3">
+      <div className="catalog-page flex w-full flex-col gap-4 py-3">
         <div className="min-w-0 space-y-8">
             {intro ? <IntroPanel /> : null}
 
@@ -77,6 +82,7 @@ export function ShowroomPage({
               componentId="S-01"
               id="foundation"
               kicker="01 / Foundation"
+              layout={catalogSectionLayouts.foundation}
               title="Geist token shelf"
               summary="A white and black foundation, low-contrast borders, and color only when status needs a signal."
             >
@@ -89,6 +95,7 @@ export function ShowroomPage({
               componentId="S-02"
               id="buttons"
               kicker="02 / Buttons"
+              layout={catalogSectionLayouts.buttons}
               title="Button, badge, toolbar"
               summary="Fast scanning on compact surfaces: icon, short label, and status signal."
             >
@@ -101,6 +108,7 @@ export function ShowroomPage({
               componentId="S-03"
               id="charts"
               kicker="03 / Charts"
+              layout={catalogSectionLayouts.charts}
               title="Graph and chart system"
               summary="Recharts is the primary fit for this design: crisp SVG, composable React primitives, and CSS-variable theming."
             >
@@ -113,11 +121,12 @@ export function ShowroomPage({
               componentId="S-04"
               id="cards"
               kicker="04 / Cards"
+              layout={catalogSectionLayouts.cards}
               title="Card system"
               summary="The same card skeleton, with tone, density, and depth controlled separately."
             >
               <div className="space-y-3">
-                <div className="stagger grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                <div className="stagger catalog-adaptive-grid">
                   {cardSamples.map((card) => (
                     <Card depth="lifted" key={card.title} tone="default">
                       <CardHeader>
@@ -147,10 +156,11 @@ export function ShowroomPage({
               componentId="S-05"
               id="media"
               kicker="05 / Media"
+              layout={catalogSectionLayouts.media}
               title="Visual frame tests"
               summary="The same image tested with two frame languages: one product-like, one more editorial."
             >
-              <div className="grid gap-3 xl:grid-cols-[0.95fr_1.05fr]">
+              <div className="catalog-adaptive-grid">
                 <ImageFrame
                   caption="Full visual surface / light glass / edge-safe metadata"
                   componentId="MEDIA-01"
@@ -172,6 +182,7 @@ export function ShowroomPage({
               componentId="S-06"
               id="tables"
               kicker="06 / Tables"
+              layout={catalogSectionLayouts.tables}
               title="Table showcase"
               summary="A compact table system with filters and sortable column headers."
             >
@@ -223,6 +234,7 @@ export function ShowroomPage({
               componentId="S-07"
               id="uploads"
               kicker="07 / Uploads"
+              layout={catalogSectionLayouts.uploads}
               title="File upload"
               summary="A compact dropzone, queue, and import summary for personal dashboards and website admin flows."
             >
@@ -235,6 +247,7 @@ export function ShowroomPage({
               componentId="S-08"
               id="menus"
               kicker="08 / Menus"
+              layout={catalogSectionLayouts.menus}
               title="Recursive menu and lists"
               summary="The same data shape for sidebars, content trees, and nested information structures."
             >
@@ -289,6 +302,7 @@ export function ShowroomPage({
               componentId="S-09"
               id="command"
               kicker="09 / Command"
+              layout={catalogSectionLayouts.command}
               title="Command menu"
               summary="A searchable command layer for navigation, runtime records, and global actions."
             >
@@ -301,6 +315,7 @@ export function ShowroomPage({
               componentId="S-10"
               id="states"
               kicker="10 / States"
+              layout={catalogSectionLayouts.states}
               title="Empty, loading and error"
               summary="Neutral state surfaces with small signal dots instead of colored panels."
             >
@@ -313,6 +328,7 @@ export function ShowroomPage({
               componentId="S-11"
               id="auth"
               kicker="11 / Auth"
+              layout={catalogSectionLayouts.auth}
               title="Auth shell"
               summary="A compact authentication and permission surface that can become sign-in, invite, or role review."
             >
@@ -325,6 +341,7 @@ export function ShowroomPage({
               componentId="S-12"
               id="jobs"
               kicker="12 / Job monitor"
+              layout={catalogSectionLayouts.jobs}
               title="Pull and worker jobs"
               summary="A future-ready shelf for scheduled sync, queues, retry windows, and manual triggers."
             >
@@ -337,6 +354,7 @@ export function ShowroomPage({
               componentId="S-13"
               id="realtime"
               kicker="13 / Realtime"
+              layout={catalogSectionLayouts.realtime}
               title="Realtime stream"
               summary="A feed pattern for SSE, WebSocket, broadcast channels, and local event previews."
             >
@@ -349,6 +367,7 @@ export function ShowroomPage({
               componentId="S-14"
               id="settings"
               kicker="14 / Settings"
+              layout={catalogSectionLayouts.settings}
               title="Settings and config"
               summary="Toggle rows, summary cards, and environment-aware config slots."
             >
@@ -361,6 +380,7 @@ export function ShowroomPage({
               componentId="S-15"
               id="blueprint"
               kicker="15 / Blueprint"
+              layout={catalogSectionLayouts.blueprint}
               title="Extensible runtime blueprint"
               summary="Adapter slots for API, push, pull, triggers, realtime, and future TCP / UDP transport support."
             >
@@ -625,7 +645,7 @@ function AssetWideVisualCard() {
       id="card-03-asset-wide-visual"
       tone="default"
     >
-      <div className="relative aspect-[2/1] min-h-[440px] overflow-hidden bg-[var(--ds-gray-1000)]">
+      <div className="catalog-ratio-guard relative min-h-[440px] overflow-hidden bg-[var(--ds-gray-1000)]">
         <Image
           alt="Wide motion asset card sample"
           className="object-cover object-center"
@@ -759,7 +779,7 @@ function ImageFrame({
       id={componentId.toLowerCase()}
       tone="raised"
     >
-      <div className={cn("relative aspect-[2/1] min-h-[420px] bg-[var(--ds-gray-1000)]", soft ? "max-h-[520px]" : "max-h-[540px]")}>
+      <div className={cn("catalog-ratio-guard relative min-h-[420px] bg-[var(--ds-gray-1000)]", soft ? "max-h-[520px]" : "max-h-[540px]")}>
         <Image
           alt="Motion asset scene used for visual frame testing"
           className={cn(
@@ -910,6 +930,7 @@ function ShowcaseSection({
   componentId,
   id,
   kicker,
+  layout = "default",
   summary,
   title,
 }: {
@@ -918,12 +939,18 @@ function ShowcaseSection({
   componentId: string;
   id: string;
   kicker: string;
+  layout?: CatalogLayoutProfile;
   summary: string;
   title: string;
 }) {
+  const layoutProfile = catalogLayoutProfiles[layout];
+
   return (
     <section
-      className={cn("scroll-mt-[var(--showroom-scroll-mt)] reveal", className)}
+      className={cn(
+        "catalog-section scroll-mt-[var(--showroom-scroll-mt)] reveal",
+        className,
+      )}
       data-component-id={componentId}
       id={id}
     >
@@ -939,7 +966,7 @@ function ShowcaseSection({
           {summary}
         </p>
       </div>
-      {children}
+      <div className={layoutProfile.bodyClassName}>{children}</div>
     </section>
   );
 }

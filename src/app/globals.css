@@ -158,6 +158,13 @@
 
   /* Layout */
   --layout-max-w: 1360px;   /* shared container cap — site-header, site-footer, home-page, catalog pages */
+  --catalog-content-default-w: 1120px;
+  --catalog-content-wide-w: 1320px;
+  --catalog-content-media-w: 1080px;
+  --catalog-grid-min: 260px;
+  --catalog-media-min-ratio: 1 / 2;
+  --catalog-media-ideal-ratio: 16 / 9;
+  --catalog-media-max-ratio: 2 / 1;
 
   /* Catalog sticky nav layout — change topbar dimensions here, subnav + scroll-mt follow automatically */
   --showroom-topbar-top: 0.75rem;   /* top-3 */
@@ -328,4 +335,51 @@ body {
     linear-gradient(var(--ds-gray-alpha-200) 1px, transparent 1px),
     linear-gradient(90deg, var(--ds-gray-alpha-200) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+.catalog-page {
+  container-type: inline-size;
+}
+
+.catalog-section {
+  container-type: inline-size;
+}
+
+.catalog-section-body {
+  margin-inline: auto;
+  min-width: 0;
+  width: 100%;
+}
+
+.catalog-layout-default {
+  max-width: min(100%, var(--catalog-content-default-w));
+}
+
+.catalog-layout-wide {
+  max-width: min(100%, var(--catalog-content-wide-w));
+}
+
+.catalog-layout-media {
+  max-width: min(100%, var(--catalog-content-media-w));
+}
+
+.catalog-layout-full {
+  max-width: 100%;
+}
+
+.catalog-adaptive-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--catalog-grid-min)), 1fr)
+  );
+}
+
+.catalog-ratio-guard {
+  aspect-ratio: var(--catalog-media-ideal-ratio);
+  margin-inline: auto;
+  max-width: min(100%, var(--catalog-content-media-w));
+  min-width: 0;
+  width: 100%;
 }
