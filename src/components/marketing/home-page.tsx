@@ -157,7 +157,7 @@ const componentCards = [
 export function HomePage() {
   return (
     <SiteShell>
-      <div className="w-full space-y-8 py-3">
+      <div className="mx-auto w-full max-w-[var(--layout-max-w)] space-y-8 px-3 py-3 sm:px-5 lg:px-8 2xl:px-10">
         <Hero />
         <PlatformSection />
         <ComponentsSection />
@@ -172,12 +172,12 @@ export function HomePage() {
 
 function Hero() {
   return (
-    <section className="grid min-h-[calc(100svh-104px)] gap-4 py-4 xl:grid-cols-[minmax(0,1fr)_minmax(420px,620px)] xl:items-center min-[1800px]:grid-cols-[minmax(0,1fr)_minmax(560px,760px)]">
-      <div className="max-w-3xl min-[1800px]:max-w-5xl">
+    <section className="grid min-h-[calc(100svh-104px)] gap-6 py-4 xl:grid-cols-[minmax(0,0.95fr)_minmax(420px,560px)] xl:items-center xl:gap-8 min-[1800px]:grid-cols-[minmax(0,0.92fr)_minmax(520px,680px)]">
+      <div className="max-w-[720px] min-[1800px]:max-w-[860px]">
         <p className="font-mono text-[12px] uppercase text-[var(--ds-gray-700)]">
           Production base / design system / runtime slots
         </p>
-        <h1 className="mt-3 text-[42px] font-semibold leading-[1.03] sm:text-[58px]">
+        <h1 className="mt-3 max-w-[760px] text-[42px] font-semibold leading-[1.03] sm:text-[58px]">
           A compact foundation for serious web products.
         </h1>
         <p className="mt-5 max-w-2xl text-[15px] leading-7 text-[var(--ds-gray-900)]">
@@ -205,7 +205,7 @@ function Hero() {
         </div>
       </div>
 
-      <div className="relative min-h-[520px] overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-gray-1000)] shadow-[0_18px_38px_-28px_rgb(0_0_0_/_0.82)] min-[1800px]:min-h-[620px]">
+      <div className="relative min-h-[460px] overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-gray-1000)] shadow-[0_18px_38px_-28px_rgb(0_0_0_/_0.82)] sm:min-h-[520px] min-[1800px]:min-h-[600px]">
         <Image
           alt="Template visual preview"
           className="object-cover object-center opacity-90"
