@@ -31,6 +31,7 @@ export const catalogSectionLayouts = {
   jobs: "wide",
   media: "media",
   menus: "wide",
+  primitives: "wide",
   realtime: "full",
   settings: "wide",
   states: "default",

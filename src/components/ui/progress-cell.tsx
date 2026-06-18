@@ -11,17 +11,21 @@ export function ProgressCell({
   showValue?: boolean;
   value: number;
 }) {
+  // Coerce + clamp so a missing/NaN value never produces an invalid width
+  // (which renders as an empty/"missing" bar) and never overflows the track.
+  const pct = Math.max(0, Math.min(100, Number.isFinite(value) ? value : 0));
+
   return (
     <span className={cn("inline-flex w-[104px] items-center gap-2", className)}>
-      <span className="block h-2 flex-1 rounded-full border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-[2px]">
+      <span className="block h-2 flex-1 overflow-hidden rounded-full border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-[2px]">
         <span
           className="block h-full rounded-full"
-          style={{ background: color, width: `${value}%` }}
+          style={{ background: color, width: `${pct}%` }}
         />
       </span>
       {showValue ? (
         <span className="w-8 font-mono text-[11px] text-[var(--ds-gray-900)]">
-          {value}%
+          {Number.isFinite(value) ? `${value}%` : "—"}
         </span>
       ) : null}
     </span>

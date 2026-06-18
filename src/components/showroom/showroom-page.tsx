@@ -3,6 +3,7 @@ import { SiteShell } from "@/components/layout/site-shell";
 import { ActionShowcase } from "@/components/showroom/action-showcase";
 import { ChartShowcase } from "@/components/showroom/chart-showcase";
 import { FileUploadShowcase } from "@/components/showroom/file-upload-showcase";
+import { PrimitivesShowcase } from "@/components/showroom/primitives-showcase";
 import {
   NestedHierarchyTable,
   OperationTable,
@@ -70,6 +71,7 @@ export const catalogSectionKeys = [
   "realtime",
   "settings",
   "blueprint",
+  "primitives",
 ] as const;
 
 export type CatalogSectionKey = (typeof catalogSectionKeys)[number];
@@ -462,6 +464,19 @@ export function ShowroomPage({
               summary="Adapter slots for API, push, pull, triggers, realtime, and future TCP / UDP transport support."
             >
               <SystemBlueprint />
+            </ShowcaseSection>
+            ) : null}
+
+            {visibleSections.has("primitives") ? (
+            <ShowcaseSection
+              componentId="S-21"
+              id="primitives"
+              kicker="21 / Primitives"
+              layout={catalogSectionLayouts.primitives}
+              title="Form, feedback, and utility primitives"
+              summary="Toggles, segmented controls, search, pagination, type scale, score colors, chart palette, logo avatars, and state placeholders synced from production apps."
+            >
+              <PrimitivesShowcase />
             </ShowcaseSection>
             ) : null}
 

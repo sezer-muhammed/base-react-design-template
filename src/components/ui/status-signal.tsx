@@ -27,7 +27,18 @@ export function StatusSignal({
   );
 
   if (variant === "dot") {
-    return dot;
+    // Wrap so the dot self-centers against adjacent text without caller margin
+    // hacks (e.g. mt-1.5). `h-[1lh]` matches the surrounding line box.
+    return (
+      <span
+        className={cn(
+          "inline-flex h-[1lh] items-center align-text-bottom",
+          className,
+        )}
+      >
+        {dot}
+      </span>
+    );
   }
 
   return (

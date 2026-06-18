@@ -11,8 +11,11 @@ export type RecordTableColumn<T> = {
   render: (row: T) => ReactNode;
 };
 
+type RecordTableDensity = "default" | "roomy";
+
 export function RecordTable<T>({
   columns,
+  density = "default",
   fit = false,
   getRowId,
   minWidth = 640,
@@ -21,6 +24,8 @@ export function RecordTable<T>({
   rows,
 }: {
   columns: readonly RecordTableColumn<T>[];
+  /** "roomy" scales font, row height, and padding up for reading-heavy tables. */
+  density?: RecordTableDensity;
   fit?: boolean;
   getRowId: (row: T) => string;
   minWidth?: number;
@@ -28,6 +33,8 @@ export function RecordTable<T>({
   rowClassName?: (row: T) => string | undefined;
   rows: readonly T[];
 }) {
+  const roomy = density === "roomy";
+
   function handleKeyDown(event: KeyboardEvent<HTMLTableRowElement>, row: T) {
     if (!onRowClick) {
       return;
@@ -42,7 +49,11 @@ export function RecordTable<T>({
   return (
     <div className={cn(fit ? "overflow-hidden" : "overflow-x-auto")}>
       <table
-        className={cn("w-full border-collapse text-left text-[13px]", fit && "table-fixed")}
+        className={cn(
+          "w-full border-collapse text-left",
+          roomy ? "text-[14.25px]" : "text-[13px]",
+          fit && "table-fixed",
+        )}
         style={fit ? undefined : { minWidth }}
       >
         <thead>
@@ -50,7 +61,8 @@ export function RecordTable<T>({
             {columns.map((column) => (
               <th
                 className={cn(
-                  "h-9 px-3 align-middle font-mono text-[11px] font-medium uppercase tracking-normal text-[var(--ds-gray-700)]",
+                  roomy ? "h-10 px-3.5 text-[12px]" : "h-9 px-3 text-[11px]",
+                  "align-middle font-mono font-medium uppercase tracking-normal text-[var(--ds-gray-700)]",
                   column.align === "right" && "text-right",
                   column.className,
                 )}
@@ -82,7 +94,8 @@ export function RecordTable<T>({
                 {columns.map((column) => (
                   <td
                     className={cn(
-                      "h-11 px-3 align-middle text-[var(--ds-gray-1000)]",
+                      roomy ? "h-12 px-3.5" : "h-11 px-3",
+                      "align-middle text-[var(--ds-gray-1000)]",
                       column.align === "right" && "text-right tabular-nums",
                       column.className,
                     )}

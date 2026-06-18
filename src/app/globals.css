@@ -195,8 +195,15 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Dark theme tokens.
+ *
+ * Applied automatically via OS preference (unless the user forces light with
+ * `data-theme="light"`), and explicitly via `data-theme="dark"`. Set the
+ * attribute on <html> to let users override the OS setting; with no attribute,
+ * the system follows `prefers-color-scheme`. The token body is shared between
+ * both selectors below. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --background: #000000;
     --foreground: #ededed;
     --page-grid-line: rgb(255 255 255 / 0.055);
@@ -246,8 +253,65 @@
   }
 }
 
+:root[data-theme="dark"] {
+  --background: #000000;
+  --foreground: #ededed;
+  --page-grid-line: rgb(255 255 255 / 0.055);
+  --page-grid-softener: rgb(0 0 0 / 0.58);
+  --ds-background-100-value: 0, 0%, 4%;
+  --ds-background-200-value: 0, 0%, 0%;
+  --ds-gray-100-value: 0, 0%, 10%;
+  --ds-gray-200-value: 0, 0%, 12%;
+  --ds-gray-300-value: 0, 0%, 16%;
+  --ds-gray-400-value: 0, 0%, 18%;
+  --ds-gray-500-value: 0, 0%, 27%;
+  --ds-gray-600-value: 0, 0%, 53%;
+  --ds-gray-700-value: 0, 0%, 62%;
+  --ds-gray-800-value: 0, 0%, 72%;
+  --ds-gray-900-value: 0, 0%, 63%;
+  --ds-gray-1000-value: 0, 0%, 93%;
+  --ds-blue-100-value: 216, 50%, 12%;
+  --ds-blue-400-value: 212, 78%, 23%;
+  --ds-blue-700-value: 212, 100%, 48%;
+  --ds-blue-900-value: 210, 100%, 66%;
+  --ds-amber-100-value: 35, 100%, 8%;
+  --ds-amber-400-value: 35, 100%, 17%;
+  --ds-amber-900-value: 39, 90%, 50%;
+  --ds-green-100-value: 136, 50%, 9%;
+  --ds-green-400-value: 135, 70%, 16%;
+  --ds-green-900-value: 131, 43%, 57%;
+  --ds-pink-100-value: 335, 32%, 12%;
+  --ds-pink-400-value: 335, 51%, 22%;
+  --ds-pink-900-value: 341, 90%, 67%;
+  --ds-purple-100-value: 283, 30%, 12%;
+  --ds-purple-400-value: 277, 46%, 28%;
+  --ds-purple-900-value: 275, 80%, 71%;
+  --ds-teal-100-value: 169, 78%, 7%;
+  --ds-teal-400-value: 171, 85%, 13%;
+  --ds-teal-900-value: 174, 90%, 41%;
+  --ds-gray-alpha-100: #ffffff0f;
+  --ds-gray-alpha-200: #ffffff17;
+  --ds-gray-alpha-300: #ffffff21;
+  --ds-gray-alpha-400: #ffffff24;
+  --ds-gray-alpha-500: #ffffff3d;
+  --ds-gray-alpha-600: #ffffff82;
+  --ds-gray-alpha-700: #ffffff8a;
+  --ds-gray-alpha-800: #ffffff78;
+  --ds-gray-alpha-900: #ffffff9c;
+  --ds-gray-alpha-1000: #ffffffeb;
+  --ds-focus-color: var(--ds-blue-900);
+}
+
 * {
   box-sizing: border-box;
+}
+
+/* Layered so Tailwind utility classes (e.g. button text colors) still win. */
+@layer base {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 html {
@@ -272,6 +336,28 @@ body {
 ::selection {
   background: var(--ds-blue-200);
   color: var(--ds-blue-1000);
+}
+
+/* Neutral-first guard: color is shown through dots, fills, and borders — never
+   through text. If a page (or imported markup) reaches for a colored text
+   utility, fold it back to neutral so the system rule holds everywhere. Use a
+   StatusSignal dot to indicate status/category instead. */
+[class*="text-sky-"],
+[class*="text-blue-"],
+[class*="text-green-"],
+[class*="text-emerald-"],
+[class*="text-red-"],
+[class*="text-orange-"],
+[class*="text-amber-"],
+[class*="text-purple-"],
+[class*="text-violet-"],
+[class*="text-pink-"],
+[class*="text-rose-"],
+[class*="text-indigo-"],
+[class*="text-cyan-"],
+[class*="text-lime-"],
+[class*="text-yellow-"] {
+  color: var(--ds-gray-1000) !important;
 }
 
 .depth-surface {
@@ -382,4 +468,73 @@ body {
   max-width: min(100%, var(--catalog-content-media-w));
   min-width: 0;
   width: 100%;
+}
+
+/* Fluid page containers with a clamp-based gutter. Use `.site-shell` for
+   standard pages and `.site-shell-wide` / `.site-header-shell` for wider
+   layouts (full-bleed dashboards, headers). Complements the fixed catalog
+   widths above. */
+.site-shell,
+.site-shell-wide,
+.site-header-shell {
+  margin-inline: auto;
+  width: min(calc(100% - clamp(1rem, 3vw, 6rem)), var(--site-shell-max));
+}
+
+.site-shell {
+  --site-shell-max: clamp(80rem, 92vw, 118rem);
+}
+
+.site-shell-wide,
+.site-header-shell {
+  --site-shell-max: clamp(96rem, 94vw, 140rem);
+}
+
+/* Print: drop elevation, compact type, avoid breaking cards across pages, and
+   keep progress fills colored. Generic enough for any report-style page. */
+@media print {
+  html,
+  body {
+    background: #fff;
+  }
+
+  .depth-surface,
+  .depth-surface::after {
+    box-shadow: none;
+  }
+
+  body {
+    font-size: 89%;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+  }
+
+  section,
+  article,
+  .depth-surface {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  [class*="overflow-hidden"][class*="rounded-full"],
+  [class*="rounded-full"][style*="width"] {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .max-w-2xl,
+  .max-w-3xl,
+  .max-w-4xl {
+    max-width: none !important;
+  }
 }
