@@ -15,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Gauge } from "@/components/ui/gauge";
 import { SectionHeader, Surface } from "@/components/ui/surface";
 import { StatusSignal } from "@/components/ui/status-signal";
 import {
@@ -302,6 +303,31 @@ export function ChartShowcase() {
               ]}
             />
           </div>
+        </div>
+      </Surface>
+
+      <Surface
+        className="overflow-hidden xl:col-span-2"
+        data-component-id="CHART-09"
+        id="chart-09-gauges"
+        tone="flat"
+      >
+        <SectionHeader
+          action={
+            <>
+              <ComponentIdBadge id="CHART-09" />
+              <SignalPill color={chartPalette.green}>gauge</SignalPill>
+            </>
+          }
+          eyebrow="Radial"
+          summary="A neutral 270° gauge for single-number health; color stays a signal, not a fill."
+          title="Capacity gauges"
+        />
+        <div className="flex flex-wrap items-center justify-around gap-6 p-5">
+          <Gauge label="CPU" unit="%" value={68} />
+          <Gauge color="var(--ds-amber-700)" label="Memory" unit="%" value={82} />
+          <Gauge color="var(--ds-green-700)" label="Uptime" unit="%" value={99} />
+          <Gauge color="var(--ds-red-700)" label="Error budget" unit="%" value={23} />
         </div>
       </Surface>
 
