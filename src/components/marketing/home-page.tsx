@@ -219,13 +219,13 @@ function Hero() {
           <GlassTag>visual system</GlassTag>
           <GlassTag>docs linked</GlassTag>
         </div>
-        <div className="absolute inset-x-4 bottom-4 rounded-[10px] border border-white/24 bg-white/[0.40] p-4 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.62),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md">
+        <div className="absolute inset-x-4 bottom-4 rounded-[10px] border border-black/10 bg-white/[0.62] p-4 shadow-[0_1px_2px_rgb(0_0_0_/_0.16)] backdrop-blur-md">
           <div className="grid gap-4 sm:grid-cols-[1fr_220px] sm:items-end">
             <div>
-              <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
+              <p className="font-mono text-[11px] uppercase text-black/55">
                 Website shell
               </p>
-              <h2 className="mt-2 text-[24px] font-semibold leading-7">
+              <h2 className="mt-2 text-[24px] font-semibold leading-7 text-[#0a0a0a]">
                 Header, navigation, content, and component routes now coexist.
               </h2>
             </div>

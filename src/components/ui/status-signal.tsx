@@ -36,9 +36,9 @@ export function StatusSignal({
         "inline-flex items-center gap-2 font-medium text-[var(--ds-gray-1000)]",
         variant === "inline" && "text-[13px]",
         variant === "pill" &&
-          "badge-frost h-6 rounded-full border px-2.5 text-[12px]",
+          "badge-frost h-6 rounded-[6px] border px-2 text-[12px]",
         variant === "cell" && "text-[13px]",
-        variant === "glass" && "glass-frost h-7 rounded-full border px-2.5 text-[12px]",
+        variant === "glass" && "glass-frost h-7 rounded-[6px] border px-2.5 text-[12px]",
         className,
       )}
     >

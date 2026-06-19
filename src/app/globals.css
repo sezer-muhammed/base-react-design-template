@@ -274,25 +274,12 @@ body {
   color: var(--ds-blue-1000);
 }
 
+/* Even, thin separation from the background (not a directional depth glow):
+   one hairline ring + a soft elevation shadow, the same on all four edges. */
 .depth-surface {
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.85),
-    inset 0 -1px 0 rgb(0 0 0 / 0.035),
-    0 1px 1px rgb(0 0 0 / 0.04),
-    0 18px 32px -28px rgb(0 0 0 / 0.55);
-}
-
-.depth-surface:not(.fixed):not(.absolute):not(.sticky) {
-  position: relative;
-}
-
-.depth-surface::after {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.28);
-  content: "";
+    0 1px 2px rgb(0 0 0 / 0.05),
+    0 14px 30px -26px rgb(0 0 0 / 0.4);
 }
 
 @keyframes fade-in {

@@ -827,14 +827,6 @@ function AssetWideDataCard() {
           ))}
         </div>
       </div>
-      <CardFooter>
-        <div className="flex flex-wrap gap-2">
-          <Badge tone="blue">REST API</Badge>
-          <Badge tone="teal">Webhook ready</Badge>
-          <Badge tone="purple">Pull sync</Badge>
-          <Badge tone="amber">transport adapters</Badge>
-        </div>
-      </CardFooter>
     </Card>
   );
 }
