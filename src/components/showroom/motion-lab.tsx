@@ -137,7 +137,7 @@ class Engine {
   /* 02 — flocking swarm into words */
   buildFlock() {
     const s = this.setup("flock"); if (!s) return;
-    const { ctx, W, H } = s, N = 180, parts: any[] = [];
+    const { ctx, W, H } = s, N = 320, parts: any[] = [];
     for (let i = 0; i < N; i++) parts.push({ x: Math.random() * W, y: Math.random() * H, vx: 0, vy: 0, ti: i });
     this.flock = { parts, N, W, H, ctx, idx: 0, shapes: [], last: 0 };
     this.buildFlockShapes();
@@ -177,7 +177,9 @@ class Engine {
     for (let yy = 0; yy < H; yy += 3) for (let xx = 0; xx < W; xx += 3) if (data[(yy * W + xx) * 4 + 3] > 128) pts.push({ x: xx, y: yy });
     const out: any[] = [];
     if (!pts.length) { for (let i = 0; i < n; i++) out.push({ x: W / 2, y: H / 2 }); return out; }
-    for (let i = 0; i < n; i++) out.push(pts[(i * 97) % pts.length]);
+    // Spread particles evenly across every glyph pixel so each letter gets
+    // proportional coverage (a fixed stride can clump and leave gaps).
+    for (let i = 0; i < n; i++) out.push(pts[Math.floor((i / n) * pts.length)]);
     return out;
   }
 
