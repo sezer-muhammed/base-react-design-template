@@ -55,11 +55,18 @@ The sync treats `src/components/ui/` as the design system (31 components).
   colorful filled boxes — use colored dots for status. Card `accent`/`warning` tones
   still carry subtle color tints (left as-is — flag to user if they want those neutralized too).
 
-## Upload mechanics — UNRESOLVED in this environment
-- `DesignSync(finalize_plan)` returned **no visible `planId`** ("completed with no
-  output"), and `write_files` requires it. Could not push from the agent. If this
-  recurs, the bundle is fully validated at `./ds-bundle` and can be uploaded
-  interactively; the project is `ba64bcf8-9653-4287-afa2-7d6b46ffe3a9`.
+## Upload mechanics — RESOLVED
+- **Gotcha:** `finalize_plan` with a long explicit `writes`/`deletes` glob list
+  returned **no `planId`** ("completed with no output"). The fix that works:
+  `writes: ["**"], deletes: []` (a single broad write glob) — it returns the
+  `planId` normally. Control what actually uploads via the `write_files` calls,
+  not the plan globs.
+- `write_files` needs both `path` and `localPath` per file (both = the bundle-relative
+  path). Enumerate the bundle (excluding dot-prefixed root files and `_screenshots/`),
+  chunk into ≤256, upload sentinel `_ds_needs_recompile` first, then content, then
+  re-arm the sentinel, then `_ds_sync.json` last.
+- First upload (2026-06-18) pushed 163 files into project
+  `ba64bcf8-9653-4287-afa2-7d6b46ffe3a9` successfully.
 
 ## Re-sync risks (watch-list)
 - **Inlined data**: `cfg.dtsPropsFor` are hand-written prop contracts; if a component's
