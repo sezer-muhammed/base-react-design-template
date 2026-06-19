@@ -7,6 +7,7 @@ import {
   NestedHierarchyTable,
   OperationTable,
 } from "@/components/showroom/interactive-tables";
+import { MotionShowcase } from "@/components/showroom/motion-showcase";
 import {
   AuthShellShelf,
   CommandShelf,
@@ -70,6 +71,7 @@ export const catalogSectionKeys = [
   "realtime",
   "settings",
   "blueprint",
+  "animation",
 ] as const;
 
 export type CatalogSectionKey = (typeof catalogSectionKeys)[number];
@@ -462,6 +464,19 @@ export function ShowroomPage({
               summary="Adapter slots for API, push, pull, triggers, realtime, and future TCP / UDP transport support."
             >
               <SystemBlueprint />
+            </ShowcaseSection>
+            ) : null}
+
+            {visibleSections.has("animation") ? (
+            <ShowcaseSection
+              componentId="S-21"
+              id="animation"
+              kicker="21 / Animation"
+              layout={catalogSectionLayouts.animation}
+              title="The accent, in motion"
+              summary="Snappy micro-animations where a single colored dot carries — and drives — every change. Hover or click any tile to replay."
+            >
+              <MotionShowcase />
             </ShowcaseSection>
             ) : null}
 
@@ -977,7 +992,7 @@ function IntroPanel() {
       <Surface className="overflow-hidden" tone="flat">
         <div className="grid grid-cols-3 divide-x divide-[var(--ds-gray-alpha-300)]">
           {[
-            ["Sections", "20"],
+            ["Sections", "21"],
             ["Runtime", "6"],
             ["Tokens", "Geist"],
           ].map(([label, value]) => (

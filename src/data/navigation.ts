@@ -33,6 +33,7 @@ export const siteNavigationTree: RecursiveMenuItem[] = [
       { href: "/menus", label: "Menus", meta: "nav", status: "ready" },
       { href: "/command", label: "Command", meta: "search", status: "ready" },
       { href: "/states", label: "States", meta: "feedback", status: "ready" },
+      { href: "/animation", label: "Animation", meta: "motion", status: "active" },
       { href: "/theme", label: "Theme", meta: "config", status: "ready" },
       { href: "/usage", label: "Usage", meta: "docs", status: "ready" },
       { href: "/auth", label: "Auth", meta: "shell", status: "ready" },
