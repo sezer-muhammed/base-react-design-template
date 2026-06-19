@@ -1,7 +1,9 @@
 "use client";
 
+import * as Popover from "@radix-ui/react-popover";
 import {
   BarChart3,
+  CalendarDays,
   CheckCircle2,
   FilePenLine,
   LayoutDashboard,
@@ -16,9 +18,11 @@ import { useState } from "react";
 import { ActionBar } from "@/components/ui/action-bar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Calendar, type DateRange } from "@/components/ui/calendar";
 import {
   Card,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -28,6 +32,14 @@ import { SectionHeader, Surface } from "@/components/ui/surface";
 import { StatusSignal } from "@/components/ui/status-signal";
 import { ToggleCell } from "@/components/ui/toggle-cell";
 import { cn } from "@/lib/cn";
+
+const MONTHS_SHORT = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
+function formatDate(date: Date) {
+  return `${MONTHS_SHORT[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}
 
 const inputClass =
   "h-9 rounded-[7px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-2.5 text-[13px] text-[var(--ds-gray-1000)] outline-none transition placeholder:text-[var(--ds-gray-700)] focus:shadow-[var(--ds-focus-ring)]";
@@ -135,6 +147,15 @@ const workflowColumns: RecordTableColumn<(typeof workflowRows)[number]>[] = [
 export function FormsShowcase() {
   const [publish, setPublish] = useState(true);
   const [notify, setNotify] = useState(false);
+  const [scheduleDate, setScheduleDate] = useState<Date | null>(null);
+  const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [range, setRange] = useState<DateRange>({ start: null, end: null });
+
+  const rangeLabel = range.start
+    ? range.end
+      ? `${formatDate(range.start)} → ${formatDate(range.end)}`
+      : `${formatDate(range.start)} → pick end`
+    : "Pick a date range";
 
   return (
     <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_360px]">
@@ -160,7 +181,36 @@ export function FormsShowcase() {
             <input className={inputClass} placeholder="https://api.example.com/events" />
           </Field>
           <Field label="Schedule">
-            <input className={inputClass} type="datetime-local" />
+            <Popover.Root onOpenChange={setScheduleOpen} open={scheduleOpen}>
+              <Popover.Trigger asChild>
+                <button
+                  className={cn(
+                    inputClass,
+                    "flex items-center justify-between text-left",
+                    !scheduleDate && "text-[var(--ds-gray-700)]",
+                  )}
+                  type="button"
+                >
+                  {scheduleDate ? formatDate(scheduleDate) : "Select a date"}
+                  <CalendarDays aria-hidden="true" className="h-4 w-4 text-[var(--ds-gray-700)]" />
+                </button>
+              </Popover.Trigger>
+              <Popover.Portal>
+                <Popover.Content
+                  align="start"
+                  className="depth-surface z-50 mt-2 rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] p-3"
+                >
+                  <Calendar
+                    mode="single"
+                    onChange={(date) => {
+                      setScheduleDate(date);
+                      setScheduleOpen(false);
+                    }}
+                    value={scheduleDate}
+                  />
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
           </Field>
           <Field className="md:col-span-2" label="Notes">
             <textarea className={textareaClass} placeholder="Retry window, filters, downstream target..." />
@@ -190,31 +240,46 @@ export function FormsShowcase() {
         </form>
       </Surface>
 
-      <Card data-component-id="FORM-02" id="form-02-validation">
-        <CardHeader action={<ComponentIdBadge id="FORM-02" />}>
-          <CardTitle>Validation panel</CardTitle>
-          <CardDescription>
-            Keep validation close to the form without turning the page into a warning surface.
-          </CardDescription>
-        </CardHeader>
-        <div className="grid gap-2">
-          {[
-            ["Name", "Ready", "var(--ds-green-700)"],
-            ["Source URL", "Needs review", "var(--ds-amber-700)"],
-            ["Schedule", "Ready", "var(--ds-green-700)"],
-          ].map(([label, state, color]) => (
-            <div
-              className="flex items-center justify-between rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] px-3 py-2"
-              key={label}
-            >
-              <span className="text-[13px] font-medium">{label}</span>
-              <StatusSignal color={color} variant="pill">
-                {state}
-              </StatusSignal>
-            </div>
-          ))}
-        </div>
-      </Card>
+      <div className="grid content-start gap-3">
+        <Card data-component-id="FORM-02" id="form-02-validation">
+          <CardHeader action={<ComponentIdBadge id="FORM-02" />}>
+            <CardTitle>Validation panel</CardTitle>
+            <CardDescription>
+              Keep validation close to the form without turning the page into a warning surface.
+            </CardDescription>
+          </CardHeader>
+          <div className="grid gap-2">
+            {[
+              ["Name", "Ready", "var(--ds-green-700)"],
+              ["Source URL", "Needs review", "var(--ds-amber-700)"],
+              ["Schedule", "Ready", "var(--ds-green-700)"],
+            ].map(([label, state, color]) => (
+              <div
+                className="flex items-center justify-between rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] px-3 py-2"
+                key={label}
+              >
+                <span className="text-[13px] font-medium">{label}</span>
+                <StatusSignal color={color} variant="pill">
+                  {state}
+                </StatusSignal>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        <Card data-component-id="FORM-03" id="form-03-daterange">
+          <CardHeader action={<ComponentIdBadge id="FORM-03" />}>
+            <CardTitle>Date range</CardTitle>
+            <CardDescription>Range selection on the same calendar primitive.</CardDescription>
+          </CardHeader>
+          <div className="rounded-[8px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-3">
+            <Calendar mode="range" onRangeChange={setRange} range={range} />
+          </div>
+          <CardFooter>
+            <p className="font-mono text-[12px] text-[var(--ds-gray-700)]">{rangeLabel}</p>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 }
