@@ -84,7 +84,7 @@ const workflowColumns: RecordTableColumn<(typeof workflowRows)[number]>[] = [
       <StatusSignal
         color={
           row.risk === "High"
-            ? "var(--ds-pink-700)"
+            ? "var(--ds-red-700)"
             : row.risk === "Medium"
               ? "var(--ds-amber-700)"
               : "var(--ds-green-700)"
@@ -219,7 +219,7 @@ export function PageTemplatesShowcase() {
       title: "Create/edit form",
     },
     {
-      color: "var(--ds-purple-700)",
+      color: "var(--ds-teal-700)",
       icon: BarChart3,
       label: "Analytics",
       title: "Metrics and charts",

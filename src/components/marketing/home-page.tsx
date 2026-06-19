@@ -84,7 +84,7 @@ const structureRows = [
     layer: "server/contracts",
     purpose: "Runtime envelopes",
     status: "Slot",
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
   },
 ] as const;
 
@@ -142,7 +142,7 @@ const componentCards = [
   },
   {
     body: "Modal frame with standard footer",
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     icon: ShieldCheck,
     title: "OverlayFrame",
   },
@@ -334,7 +334,7 @@ function RuntimeSection() {
                 <div className="flex items-center justify-between gap-3">
                   <span className="truncate text-[13px] font-semibold">{row.module}</span>
                   <StatusSignal
-                    color={row.risk === "High" ? "var(--ds-pink-700)" : row.risk === "Medium" ? "var(--ds-amber-700)" : "var(--ds-green-700)"}
+                    color={row.risk === "High" ? "var(--ds-red-700)" : row.risk === "Medium" ? "var(--ds-amber-700)" : "var(--ds-green-700)"}
                     variant="dot"
                   />
                 </div>

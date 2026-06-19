@@ -515,14 +515,14 @@ const listAccentColors = [
   "var(--ds-amber-700)",
   "var(--ds-red-700)",
   "var(--ds-teal-700)",
-  "var(--ds-purple-700)",
+  "var(--ds-gray-1000)",
 ] as const;
 
 const assetChannelColors = [
   "var(--ds-blue-700)",
   "var(--ds-teal-700)",
   "var(--ds-amber-700)",
-  "var(--ds-purple-700)",
+  "var(--ds-green-700)",
 ] as const;
 
 function DotLabel({
@@ -648,7 +648,7 @@ function AssetSpecCard() {
               note area for operational metrics, channels, and runtime context.
             </CardDescription>
             <div className="mt-3 flex flex-wrap items-center gap-2">
-              <DotLabel color="var(--ds-purple-700)">
+              <DotLabel color="var(--ds-teal-700)">
                 {assetDemo.identity.label}
               </DotLabel>
               <DotLabel color="var(--ds-green-700)">healthy</DotLabel>

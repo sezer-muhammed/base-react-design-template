@@ -42,23 +42,23 @@ export const tokenRows = [
     ],
   },
   {
-    family: "Red / Pink",
+    family: "Red",
     role: "Error, blocked and high-risk state",
     swatches: [
-      ["Red 100", "var(--ds-red-100)"],
-      ["Red 400", "var(--ds-red-400)"],
-      ["Pink 400", "var(--ds-pink-400)"],
-      ["Pink 900", "var(--ds-pink-900)"],
+      ["100", "var(--ds-red-100)"],
+      ["400", "var(--ds-red-400)"],
+      ["700", "var(--ds-red-700)"],
+      ["900", "var(--ds-red-900)"],
     ],
   },
   {
-    family: "Purple / Teal",
+    family: "Teal",
     role: "Semantic tags, judgment and empathy signals",
     swatches: [
-      ["Purple 100", "var(--ds-purple-100)"],
-      ["Purple 400", "var(--ds-purple-400)"],
-      ["Teal 400", "var(--ds-teal-400)"],
-      ["Teal 900", "var(--ds-teal-900)"],
+      ["100", "var(--ds-teal-100)"],
+      ["400", "var(--ds-teal-400)"],
+      ["700", "var(--ds-teal-700)"],
+      ["900", "var(--ds-teal-900)"],
     ],
   },
 ] as const;

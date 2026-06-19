@@ -57,7 +57,7 @@ const commandItems = [
     title: "Open Push Inbox",
   },
   {
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     description: "Review cursor sync jobs and retry windows.",
     group: "Jobs",
     id: "cmd-jobs",
@@ -108,7 +108,7 @@ const jobRows = [
     status: "Watch",
   },
   {
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     id: "job-mail-004",
     label: "Digest delivery",
     nextRun: "18:00",
@@ -168,7 +168,7 @@ const streamRows = [
   },
   {
     channel: "Broadcast",
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     event: "broadcast.sent",
     handled: 78,
     id: "evt-005",
@@ -199,7 +199,7 @@ const stateRows = [
   },
   {
     action: "Retry",
-    color: "var(--ds-pink-700)",
+    color: "var(--ds-red-700)",
     description: "Error surfaces stay neutral; urgency lives in the signal dot.",
     icon: AlertTriangle,
     id: "STATE-03",
@@ -612,7 +612,7 @@ export function AuthShellShelf() {
             {[
               ["Owner", "Full workspace controls", "var(--ds-gray-1000)"],
               ["Operator", "Jobs, streams, and tables", "var(--ds-blue-700)"],
-              ["Viewer", "Read-only observability", "var(--ds-purple-700)"],
+              ["Viewer", "Read-only observability", "var(--ds-teal-700)"],
             ].map(([label, detail, color]) => (
               <div
                 className="rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-100)] p-3"

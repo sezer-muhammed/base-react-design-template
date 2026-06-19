@@ -153,7 +153,7 @@ const operationColumns: InteractiveColumn<OperationRow>[] = [
     header: "Risk",
     key: "risk",
     render: (row) => (
-      <StatusSignal color={row.risk === "High" ? "var(--ds-pink-700)" : row.risk === "Medium" ? "var(--ds-amber-700)" : "var(--ds-green-700)"} variant="cell">
+      <StatusSignal color={row.risk === "High" ? "var(--ds-red-700)" : row.risk === "Medium" ? "var(--ds-amber-700)" : "var(--ds-green-700)"} variant="cell">
         {row.risk}
       </StatusSignal>
     ),

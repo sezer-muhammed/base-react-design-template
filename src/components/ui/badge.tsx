@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-type BadgeTone = "amber" | "blue" | "gray" | "green" | "pink" | "purple" | "teal";
+type BadgeTone = "amber" | "blue" | "gray" | "green" | "red" | "teal";
 
 // The box is always neutral; color is carried only by the dot.
 const toneDotColor: Record<BadgeTone, string | null> = {
@@ -9,8 +9,7 @@ const toneDotColor: Record<BadgeTone, string | null> = {
   blue: "var(--ds-blue-700)",
   gray: null,
   green: "var(--ds-green-700)",
-  pink: "var(--ds-pink-700)",
-  purple: "var(--ds-purple-700)",
+  red: "var(--ds-red-700)",
   teal: "var(--ds-teal-700)",
 };
 

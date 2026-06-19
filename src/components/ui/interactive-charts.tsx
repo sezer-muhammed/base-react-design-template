@@ -22,7 +22,6 @@ export const chartPalette = {
   blue: "var(--ds-blue-700)",
   gray: "var(--ds-gray-1000)",
   green: "var(--ds-green-700)",
-  purple: "var(--ds-purple-700)",
   red: "var(--ds-red-700)",
   teal: "var(--ds-teal-700)",
 } as const;

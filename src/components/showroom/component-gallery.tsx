@@ -44,7 +44,7 @@ const graphData = [
   { color: chartPalette.green, label: "Empathy", value: 88 },
   { color: chartPalette.teal, label: "Risk", value: 54 },
   { color: chartPalette.amber, label: "AI", value: 91 },
-  { color: chartPalette.purple, label: "Trust", value: 67 },
+  { color: chartPalette.red, label: "Trust", value: 67 },
 ];
 
 const listItems = [
@@ -360,7 +360,7 @@ function CoreActionsCard() {
       <div className="mt-4 flex flex-wrap gap-2">
         <Badge tone="blue">Active</Badge>
         <Badge tone="amber">Review</Badge>
-        <Badge tone="pink">Blocked</Badge>
+        <Badge tone="red">Blocked</Badge>
       </div>
     </Card>
   );
