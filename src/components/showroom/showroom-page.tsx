@@ -7,6 +7,7 @@ import {
   NestedHierarchyTable,
   OperationTable,
 } from "@/components/showroom/interactive-tables";
+import { MotionLab } from "@/components/showroom/motion-lab";
 import { MotionShowcase } from "@/components/showroom/motion-showcase";
 import {
   AuthShellShelf,
@@ -72,6 +73,7 @@ export const catalogSectionKeys = [
   "settings",
   "blueprint",
   "animation",
+  "motion",
 ] as const;
 
 export type CatalogSectionKey = (typeof catalogSectionKeys)[number];
@@ -477,6 +479,19 @@ export function ShowroomPage({
               summary="Snappy micro-animations where a single colored dot carries — and drives — every change. Hover or click any tile to replay."
             >
               <MotionShowcase />
+            </ShowcaseSection>
+            ) : null}
+
+            {visibleSections.has("motion") ? (
+            <ShowcaseSection
+              componentId="S-22"
+              id="motion"
+              kicker="22 / Motion"
+              layout={catalogSectionLayouts.motion}
+              title="The dot, unleashed"
+              summary="Eighteen physics-driven micro-animations. Dots stay ink-black at rest and bloom to the accent only where the cursor touches them — move, click, drag."
+            >
+              <MotionLab />
             </ShowcaseSection>
             ) : null}
 
@@ -984,7 +999,7 @@ function IntroPanel() {
       <Surface className="overflow-hidden" tone="flat">
         <div className="grid grid-cols-3 divide-x divide-[var(--ds-gray-alpha-300)]">
           {[
-            ["Sections", "21"],
+            ["Sections", "22"],
             ["Runtime", "6"],
             ["Tokens", "Geist"],
           ].map(([label, value]) => (

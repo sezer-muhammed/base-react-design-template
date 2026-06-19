@@ -22,6 +22,7 @@ export const catalogLayoutProfiles = {
 export const catalogSectionLayouts = {
   animation: "wide",
   auth: "wide",
+  motion: "wide",
   blueprint: "wide",
   buttons: "wide",
   cards: "default",
