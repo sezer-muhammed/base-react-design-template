@@ -318,10 +318,11 @@ function NeutralAlert({
       id={id.toLowerCase()}
     >
       <div className="min-w-0">
-        <p className="flex flex-wrap items-center gap-2 text-[13px] font-semibold">
-          <StatusSignal color={color} variant="dot" />
+        <p className="flex flex-wrap items-center gap-2">
           <ComponentIdBadge id={id} />
-          {title}
+          <StatusSignal color={color} variant="pill">
+            {title}
+          </StatusSignal>
         </p>
         <p className="mt-1 text-[12px] leading-5 text-[var(--ds-gray-900)]">{body}</p>
       </div>
