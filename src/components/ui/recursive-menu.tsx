@@ -42,7 +42,7 @@ function RecursiveMenuNode({
   level: number;
 }) {
   const hasChildren = Boolean(item.children?.length);
-  const [isOpen, setIsOpen] = useState(level === 0);
+  const [isOpen, setIsOpen] = useState(false);
   const dotColor = item.status ? statusColor[item.status] : "var(--ds-gray-alpha-600)";
 
   const indicator = hasChildren ? (
@@ -84,7 +84,7 @@ function RecursiveMenuNode({
         ) : null}
         {indicator}
         <span
-          className="relative z-[1] h-2.5 w-2.5 shrink-0 rounded-full border border-[var(--ds-gray-alpha-500)]"
+          className="ds-dot relative z-[1] h-2.5 w-2.5 shrink-0 rounded-full"
           style={{ background: dotColor }}
         />
         <span className="pointer-events-none relative z-[1] min-w-0 truncate text-[13px] font-medium text-[var(--ds-gray-1000)]">

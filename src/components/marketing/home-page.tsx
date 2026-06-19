@@ -157,7 +157,7 @@ const componentCards = [
 export function HomePage() {
   return (
     <SiteShell>
-      <div className="w-full space-y-8 px-3 py-3 sm:px-5 lg:px-8 2xl:px-10">
+      <div className="w-full space-y-8 px-3 py-3 sm:px-5 lg:px-8 2xl:px-10 min-[1700px]:px-16 min-[2100px]:px-24 min-[2600px]:px-40">
         <Hero />
         <PlatformSection />
         <ComponentsSection />

@@ -42,6 +42,13 @@ const workflowRows = [
     progress: 82,
     risk: "Low",
     status: "Active",
+    trigger: "Webhook",
+    schedule: "On event",
+    lastRun: "2m ago",
+    nextRun: "on next event",
+    retries: "0 / 3",
+    region: "iad1",
+    note: "Signed intake events fan out to the queue with idempotency keys.",
   },
   {
     id: "wf-002",
@@ -50,6 +57,13 @@ const workflowRows = [
     progress: 64,
     risk: "Medium",
     status: "Queued",
+    trigger: "Cron",
+    schedule: "Every 15m",
+    lastRun: "11m ago",
+    nextRun: "in 4m",
+    retries: "1 / 3",
+    region: "sfo1",
+    note: "Cursor-based pull keeps the catalog warm between full rebuilds.",
   },
   {
     id: "wf-003",
@@ -58,6 +72,13 @@ const workflowRows = [
     progress: 43,
     risk: "High",
     status: "Review",
+    trigger: "Manual",
+    schedule: "On request",
+    lastRun: "1h ago",
+    nextRun: "awaiting review",
+    retries: "0 / 1",
+    region: "global",
+    note: "Two-person review gate before a release is promoted to production.",
   },
 ] as const;
 
@@ -275,7 +296,7 @@ export function WorkflowShowcase() {
   const selected = workflowRows.find((row) => row.id === selectedId) ?? workflowRows[0];
 
   return (
-    <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_360px]">
+    <div className="grid gap-3 xl:grid-cols-[minmax(0,4fr)_minmax(300px,1fr)]">
       <Surface className="overflow-hidden" data-component-id="FLOW-01" id="flow-01-table-detail" tone="flat">
         <SectionHeader
           action={<ComponentIdBadge id="FLOW-01" />}
@@ -320,16 +341,28 @@ export function WorkflowShowcase() {
             ["Owner", selected.owner],
             ["Status", selected.status],
             ["Risk", selected.risk],
+            ["Trigger", selected.trigger],
+            ["Schedule", selected.schedule],
+            ["Last run", selected.lastRun],
+            ["Next run", selected.nextRun],
+            ["Retries", selected.retries],
+            ["Region", selected.region],
           ].map(([label, value]) => (
             <div
-              className="flex items-center justify-between rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] px-3 py-2"
+              className="flex items-center justify-between gap-3 rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] px-3 py-2"
               key={label}
             >
               <span className="text-[12px] text-[var(--ds-gray-700)]">{label}</span>
-              <span className="font-mono text-[12px]">{value}</span>
+              <span className="truncate font-mono text-[12px]">{value}</span>
             </div>
           ))}
-          <ProgressCell color="var(--ds-gray-1000)" showValue value={selected.progress} />
+          <div className="mt-1">
+            <p className="mb-1 text-[12px] text-[var(--ds-gray-700)]">Completion</p>
+            <ProgressCell color="var(--ds-gray-1000)" showValue value={selected.progress} />
+          </div>
+          <p className="mt-1 text-[12px] leading-5 text-[var(--ds-gray-700)]">
+            {selected.note}
+          </p>
         </div>
       </Card>
     </div>
