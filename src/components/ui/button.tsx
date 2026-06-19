@@ -24,7 +24,7 @@ export const buttonVariants = cva(
         ghost:
           "border-transparent bg-transparent text-[var(--ds-gray-900)] hover:bg-[var(--ds-gray-100)]",
         primary:
-          "border-[var(--ds-gray-1000)] bg-[var(--ds-gray-1000)] text-[var(--ds-background-100)] hover:border-black hover:bg-black",
+          "border-[var(--ds-gray-1000)] bg-[var(--ds-gray-1000)] text-[var(--ds-background-100)] hover:border-[var(--ds-gray-900)] hover:bg-[var(--ds-gray-900)]",
         secondary:
           "border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] text-[var(--ds-gray-1000)] hover:border-[var(--ds-gray-alpha-500)] hover:bg-[var(--ds-gray-100)]",
       },

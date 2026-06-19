@@ -11,6 +11,7 @@ import { siteNavigationTree } from "@/data/navigation";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/components", label: "Components" },
+  { href: "/animation", label: "Animation" },
 ] as const;
 
 export function SiteHeader() {
