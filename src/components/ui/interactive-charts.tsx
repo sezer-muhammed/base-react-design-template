@@ -502,7 +502,8 @@ export function InteractiveConfusionMatrix({
             allowDecimals={false}
             axisLine={false}
             dataKey="actualIndex"
-            domain={[size - 0.5, -0.5]}
+            domain={[-0.5, size - 0.5]}
+            reversed
             interval={0}
             label={{
               value: "Actual",

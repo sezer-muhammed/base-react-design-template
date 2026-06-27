@@ -22,7 +22,7 @@ export function ToggleCell({
     >
       <span
         className={cn(
-          "absolute left-1 top-1 grid h-5 w-5 place-items-center rounded-full border border-[var(--ds-gray-alpha-500)] bg-[var(--ds-background-100)] shadow-[0_1px_2px_rgb(0_0_0_/_0.22)] transition",
+          "absolute left-[3px] top-[3px] grid h-5 w-5 place-items-center rounded-full border border-[var(--ds-gray-alpha-500)] bg-[var(--ds-background-100)] shadow-[0_1px_2px_rgb(0_0_0_/_0.22)] transition",
           checked && "translate-x-5 border-transparent bg-[var(--ds-background-100)]",
         )}
       >
