@@ -1,8 +1,8 @@
 export const siteConfig = {
   description:
     "A compact, extensible Next.js template for dashboards, content systems, and operational web apps.",
-  name: "Base System Template",
-  shortName: "BST",
+  name: "Sezer's React Template",
+  shortName: "SRT",
   tagline: "Geist-inspired / compact UI / extensible runtime",
 } as const;
 

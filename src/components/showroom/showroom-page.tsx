@@ -82,9 +82,13 @@ export type CatalogSectionKey = (typeof catalogSectionKeys)[number];
 export function ShowroomPage({
   intro = true,
   sections = catalogSectionKeys,
+  introSlot,
 }: {
   intro?: boolean;
   sections?: readonly CatalogSectionKey[];
+  // Optional custom hero rendered in place of the default IntroPanel — used by
+  // category landing pages to give each group its own heading.
+  introSlot?: React.ReactNode;
 }) {
   const visibleSections = new Set<CatalogSectionKey>(sections);
 
@@ -92,7 +96,7 @@ export function ShowroomPage({
     <SiteShell>
       <div className="catalog-page flex w-full flex-col gap-4 py-3">
         <div className="min-w-0 space-y-8">
-            {intro ? <IntroPanel /> : null}
+            {introSlot ?? (intro ? <IntroPanel /> : null)}
 
             {visibleSections.has("foundation") ? (
             <ShowcaseSection
@@ -173,10 +177,7 @@ export function ShowroomPage({
 
                 <AssetSpecCard />
 
-                <div className="grid gap-3">
-                  <AssetWideVisualCard />
-                  <AssetWideDataCard />
-                </div>
+                <AssetWideDataCard />
               </div>
             </ShowcaseSection>
             ) : null}
@@ -747,68 +748,6 @@ function AssetSpecCard() {
   );
 }
 
-function AssetWideVisualCard() {
-  return (
-    <Card
-      className="mx-auto w-full max-w-[1040px] p-0"
-      data-component-id="CARD-03"
-      depth="base"
-      id="card-03-asset-wide-visual"
-      tone="default"
-    >
-      <div className="catalog-ratio-guard relative min-h-[440px] overflow-hidden bg-[var(--ds-gray-1000)]">
-        <Image
-          alt="Wide motion asset card sample"
-          className="object-cover object-center"
-          fill
-          sizes="(min-width: 1280px) 1320px, 100vw"
-          src={assetDemo.media.image}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_64%_48%,transparent_36%,rgb(0_0_0_/_0.22)_72%,rgb(0_0_0_/_0.58)_100%)]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/38 via-transparent to-black/12" />
-        <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-          <ComponentIdBadge id="CARD-03" />
-          <GlassTag>wide visual</GlassTag>
-        </div>
-        <div className="absolute inset-x-4 bottom-4 grid gap-4 rounded-[10px] border border-white/18 bg-white/[0.26] p-4 text-[var(--ds-gray-1000)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.42),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md sm:p-5 lg:grid-cols-[1fr_430px] lg:items-end">
-          <div>
-            <div className="flex flex-wrap gap-2">
-              <Badge tone="gray">Horizontal</Badge>
-              <Badge tone="blue">{assetDemo.identity.version}</Badge>
-              <Badge tone="amber">{assetDemo.identity.category}</Badge>
-            </div>
-            <h3 className="mt-4 text-[26px] font-semibold leading-8 text-[var(--ds-gray-1000)]">
-              Wide media record card
-            </h3>
-            <p className="mt-2 max-w-2xl text-[14px] leading-6 text-[var(--ds-gray-1000)]">
-              For records that need to feel more premium in a list: strong visual
-              presence, short copy, metrics, and reusable flag space.
-            </p>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-4">
-            {[
-              ["Budget", formatUsd(assetDemo.notes.budget)],
-              ["Latency", `${assetDemo.metrics.latencyMs}ms`],
-              ["Events", `${assetDemo.metrics.throughput}k`],
-              ["Mode", assetDemo.metrics.transport],
-            ].map(([label, value]) => (
-              <div
-                className="rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-3 text-[var(--ds-gray-1000)]"
-                key={label}
-              >
-                <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
-                  {label}
-                </p>
-                <p className="mt-1 truncate text-[15px] font-semibold">{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
 function AssetWideDataCard() {
   return (
     <Card
@@ -872,8 +811,9 @@ function ImageFrame({
 }) {
   const soft = mode === "soft";
   const frameTitle = soft ? "Soft metadata surface" : title;
+  // Let the glass-frost fill + refraction show through (no opaque white override).
   const transparentTagClass =
-    "border-white/35 bg-white/[0.68] text-[var(--ds-gray-1000)] shadow-[0_10px_24px_-18px_rgb(0_0_0_/_0.72)] before:bg-transparent after:bg-transparent";
+    "border-white/40 text-[var(--ds-gray-1000)] shadow-[0_10px_24px_-18px_rgb(0_0_0_/_0.72)]";
 
   return (
     <Surface
@@ -914,19 +854,21 @@ function ImageFrame({
           <GlassTag className={transparentTagClass} tone="dark">{assetDemo.identity.name}</GlassTag>
           <GlassTag className={transparentTagClass} tone="dark">{soft ? assetDemo.identity.version : assetDemo.media.color}</GlassTag>
         </div>
-        <div className="absolute inset-x-0 bottom-0 grid gap-3 p-4 text-white sm:grid-cols-[1fr_auto] sm:items-end">
-          <div>
-            <div className="mb-3 flex flex-wrap gap-2">
-              <GlassTag className={transparentTagClass} tone="dark">{soft ? "crop-safe" : "full bleed"}</GlassTag>
-              <GlassTag className={transparentTagClass} tone="dark">{soft ? "edge meta" : "vignette"}</GlassTag>
+        <div className="absolute inset-x-4 bottom-4">
+          <div className="liquid-glass grid gap-3 rounded-[10px] p-4 text-[var(--ds-gray-1000)] sm:grid-cols-[1fr_auto] sm:items-end">
+            <div>
+              <div className="mb-3 flex flex-wrap gap-2">
+                <GlassTag className={transparentTagClass} tone="dark">{soft ? "crop-safe" : "full bleed"}</GlassTag>
+                <GlassTag className={transparentTagClass} tone="dark">{soft ? "edge meta" : "vignette"}</GlassTag>
+              </div>
+              <h3 className="text-[22px] font-semibold leading-7 text-[var(--ds-gray-1000)]">{frameTitle}</h3>
+              <p className="mt-2 max-w-md text-[13px] leading-5 text-[var(--ds-gray-900)]">{caption}</p>
             </div>
-            <h3 className="text-[22px] font-semibold leading-7">{frameTitle}</h3>
-            <p className="mt-2 max-w-md text-[13px] leading-5 text-white/70">{caption}</p>
-          </div>
-          <div className="flex flex-wrap gap-2 sm:max-w-[280px] sm:justify-end">
-            <GlassTag className={transparentTagClass} tone="dark">mode: {assetDemo.media.trim}</GlassTag>
-            <GlassTag className={transparentTagClass} tone="dark">scope: {assetDemo.identity.market}</GlassTag>
-            <GlassTag className={transparentTagClass} tone="dark">latency: {assetDemo.metrics.latencyMs}ms</GlassTag>
+            <div className="flex flex-wrap gap-2 sm:max-w-[280px] sm:justify-end">
+              <GlassTag className={transparentTagClass} tone="dark">mode: {assetDemo.media.trim}</GlassTag>
+              <GlassTag className={transparentTagClass} tone="dark">scope: {assetDemo.identity.market}</GlassTag>
+              <GlassTag className={transparentTagClass} tone="dark">latency: {assetDemo.metrics.latencyMs}ms</GlassTag>
+            </div>
           </div>
         </div>
       </div>

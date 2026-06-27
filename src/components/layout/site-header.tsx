@@ -8,12 +8,6 @@ import { StatusSignal } from "@/components/ui/status-signal";
 import { siteConfig } from "@/config/site";
 import { siteNavigationTree } from "@/data/navigation";
 
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/components", label: "Components" },
-  { href: "/animation", label: "Animation" },
-] as const;
-
 export function SiteHeader() {
   return (
     <header className="depth-surface sticky top-2 z-30 grid min-h-14 w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-3 xl:hidden">
@@ -22,7 +16,6 @@ export function SiteHeader() {
       <BrandLink />
 
       <div className="hidden items-center gap-1 md:flex">
-        <PrimaryNav orientation="horizontal" />
         <StatusSignal color="var(--ds-green-700)" variant="pill">
           template
         </StatusSignal>
@@ -41,10 +34,6 @@ export function SiteSidebar() {
     >
       <div className="border-b border-[var(--ds-gray-alpha-300)] p-3">
         <BrandLink />
-      </div>
-
-      <div className="border-b border-[var(--ds-gray-alpha-300)] p-2">
-        <PrimaryNav orientation="vertical" />
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto">
@@ -81,37 +70,6 @@ function BrandLink() {
         </span>
       </span>
     </Link>
-  );
-}
-
-function PrimaryNav({
-  orientation,
-}: {
-  orientation: "horizontal" | "vertical";
-}) {
-  return (
-    <nav
-      aria-label="Primary"
-      className={
-        orientation === "vertical"
-          ? "grid gap-1"
-          : "flex items-center gap-1"
-      }
-    >
-      {navItems.map((item) => (
-        <Link
-          className={
-            orientation === "vertical"
-              ? "rounded-[7px] px-3 py-2 text-[13px] font-medium text-[var(--ds-gray-900)] transition hover:bg-[var(--ds-gray-100)] hover:text-[var(--ds-gray-1000)]"
-              : "rounded-[6px] px-2.5 py-2 text-[13px] font-medium text-[var(--ds-gray-900)] transition hover:bg-[var(--ds-gray-100)] hover:text-[var(--ds-gray-1000)]"
-          }
-          href={item.href}
-          key={item.href}
-        >
-          {item.label}
-        </Link>
-      ))}
-    </nav>
   );
 }
 
