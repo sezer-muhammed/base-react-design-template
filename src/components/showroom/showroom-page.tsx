@@ -811,9 +811,10 @@ function ImageFrame({
 }) {
   const soft = mode === "soft";
   const frameTitle = soft ? "Soft metadata surface" : title;
-  // Let the glass-frost fill + refraction show through (no opaque white override).
+  // Over a dark image the glass needs real white presence to read as frosted glass
+  // (not a transparent tint) — bg-white/55 + the glass-frost blur/refraction/halo.
   const transparentTagClass =
-    "border-white/40 text-[var(--ds-gray-1000)] shadow-[0_10px_24px_-18px_rgb(0_0_0_/_0.72)]";
+    "bg-white/55 border-white/45 text-[var(--ds-gray-1000)] shadow-[0_10px_24px_-18px_rgb(0_0_0_/_0.72)]";
 
   return (
     <Surface
@@ -855,7 +856,7 @@ function ImageFrame({
           <GlassTag className={transparentTagClass} tone="dark">{soft ? assetDemo.identity.version : assetDemo.media.color}</GlassTag>
         </div>
         <div className="absolute inset-x-4 bottom-4">
-          <div className="liquid-glass grid gap-3 rounded-[10px] p-4 text-[var(--ds-gray-1000)] sm:grid-cols-[1fr_auto] sm:items-end">
+          <div className="liquid-glass-strong grid gap-3 rounded-[10px] p-4 text-[var(--ds-gray-1000)] sm:grid-cols-[1fr_auto] sm:items-end">
             <div>
               <div className="mb-3 flex flex-wrap gap-2">
                 <GlassTag className={transparentTagClass} tone="dark">{soft ? "crop-safe" : "full bleed"}</GlassTag>
