@@ -61,6 +61,76 @@ export const tokenRows = [
       ["900", "var(--ds-teal-900)"],
     ],
   },
+  {
+    family: "Indigo",
+    role: "AI, automated and agentic actions",
+    swatches: [
+      ["100", "var(--ds-indigo-100)"],
+      ["400", "var(--ds-indigo-400)"],
+      ["700", "var(--ds-indigo-700)"],
+      ["900", "var(--ds-indigo-900)"],
+    ],
+  },
+  {
+    family: "Lime",
+    role: "Live, realtime and streaming signal",
+    swatches: [
+      ["100", "var(--ds-lime-100)"],
+      ["400", "var(--ds-lime-400)"],
+      ["700", "var(--ds-lime-700)"],
+      ["900", "var(--ds-lime-900)"],
+    ],
+  },
+  {
+    family: "Orange",
+    role: "In-progress, running and queued state",
+    swatches: [
+      ["100", "var(--ds-orange-100)"],
+      ["400", "var(--ds-orange-400)"],
+      ["700", "var(--ds-orange-700)"],
+      ["900", "var(--ds-orange-900)"],
+    ],
+  },
+  {
+    family: "Rose",
+    role: "New, beta and experimental highlight",
+    swatches: [
+      ["100", "var(--ds-pink-100)"],
+      ["400", "var(--ds-pink-400)"],
+      ["700", "var(--ds-pink-700)"],
+      ["900", "var(--ds-pink-900)"],
+    ],
+  },
+  {
+    family: "Slate",
+    role: "Inactive, archived and disabled state",
+    swatches: [
+      ["100", "var(--ds-slate-100)"],
+      ["400", "var(--ds-slate-400)"],
+      ["700", "var(--ds-slate-700)"],
+      ["900", "var(--ds-slate-900)"],
+    ],
+  },
+  {
+    family: "Sky",
+    role: "Passive, informational notice",
+    swatches: [
+      ["100", "var(--ds-sky-100)"],
+      ["400", "var(--ds-sky-400)"],
+      ["700", "var(--ds-sky-700)"],
+      ["900", "var(--ds-sky-900)"],
+    ],
+  },
+  {
+    family: "Bronze",
+    role: "Favorite, pinned and premium accent",
+    swatches: [
+      ["100", "var(--ds-bronze-100)"],
+      ["400", "var(--ds-bronze-400)"],
+      ["700", "var(--ds-bronze-700)"],
+      ["900", "var(--ds-bronze-900)"],
+    ],
+  },
 ] as const;
 
 export const cardSamples = [

@@ -1,7 +1,20 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-type BadgeTone = "amber" | "blue" | "gray" | "green" | "red" | "teal";
+type BadgeTone =
+  | "amber"
+  | "blue"
+  | "gray"
+  | "green"
+  | "red"
+  | "teal"
+  | "indigo"
+  | "lime"
+  | "orange"
+  | "rose"
+  | "slate"
+  | "sky"
+  | "bronze";
 
 // The box is always neutral; color is carried only by the dot.
 const toneDotColor: Record<BadgeTone, string | null> = {
@@ -11,6 +24,13 @@ const toneDotColor: Record<BadgeTone, string | null> = {
   green: "var(--ds-green-700)",
   red: "var(--ds-red-700)",
   teal: "var(--ds-teal-700)",
+  indigo: "var(--ds-indigo-700)",
+  lime: "var(--ds-lime-700)",
+  orange: "var(--ds-orange-700)",
+  rose: "var(--ds-pink-700)",
+  slate: "var(--ds-slate-700)",
+  sky: "var(--ds-sky-700)",
+  bronze: "var(--ds-bronze-700)",
 };
 
 export function Badge({

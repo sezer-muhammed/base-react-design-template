@@ -89,6 +89,32 @@
   --ds-pink-900-value: 336, 65%, 45%;
   --ds-pink-1000-value: 333, 74%, 15%;
 
+  /* Extended semantic families — added scales (100 / 400 / 700 / 900) */
+  --ds-indigo-100-value: 245, 100%, 97%;
+  --ds-indigo-400-value: 244, 90%, 90%;
+  --ds-indigo-700-value: 245, 70%, 56%;
+  --ds-indigo-900-value: 246, 65%, 48%;
+  --ds-lime-100-value: 80, 60%, 95%;
+  --ds-lime-400-value: 84, 60%, 82%;
+  --ds-lime-700-value: 88, 60%, 38%;
+  --ds-lime-900-value: 90, 55%, 30%;
+  --ds-orange-100-value: 30, 100%, 95%;
+  --ds-orange-400-value: 28, 100%, 86%;
+  --ds-orange-700-value: 24, 95%, 52%;
+  --ds-orange-900-value: 20, 90%, 44%;
+  --ds-slate-100-value: 215, 25%, 96%;
+  --ds-slate-400-value: 215, 18%, 88%;
+  --ds-slate-700-value: 215, 14%, 46%;
+  --ds-slate-900-value: 216, 16%, 32%;
+  --ds-sky-100-value: 196, 100%, 96%;
+  --ds-sky-400-value: 196, 95%, 86%;
+  --ds-sky-700-value: 196, 90%, 44%;
+  --ds-sky-900-value: 198, 90%, 36%;
+  --ds-bronze-100-value: 38, 50%, 95%;
+  --ds-bronze-400-value: 37, 45%, 84%;
+  --ds-bronze-700-value: 36, 48%, 46%;
+  --ds-bronze-900-value: 34, 45%, 36%;
+
   --ds-background-100: hsla(var(--ds-background-100-value), 1);
   --ds-background-200: hsla(var(--ds-background-200-value), 1);
   --ds-gray-100: hsla(var(--ds-gray-100-value), 1);
@@ -141,6 +167,30 @@
   --ds-pink-700: hsla(var(--ds-pink-700-value), 1);
   --ds-pink-900: hsla(var(--ds-pink-900-value), 1);
   --ds-pink-1000: hsla(var(--ds-pink-1000-value), 1);
+  --ds-indigo-100: hsla(var(--ds-indigo-100-value), 1);
+  --ds-indigo-400: hsla(var(--ds-indigo-400-value), 1);
+  --ds-indigo-700: hsla(var(--ds-indigo-700-value), 1);
+  --ds-indigo-900: hsla(var(--ds-indigo-900-value), 1);
+  --ds-lime-100: hsla(var(--ds-lime-100-value), 1);
+  --ds-lime-400: hsla(var(--ds-lime-400-value), 1);
+  --ds-lime-700: hsla(var(--ds-lime-700-value), 1);
+  --ds-lime-900: hsla(var(--ds-lime-900-value), 1);
+  --ds-orange-100: hsla(var(--ds-orange-100-value), 1);
+  --ds-orange-400: hsla(var(--ds-orange-400-value), 1);
+  --ds-orange-700: hsla(var(--ds-orange-700-value), 1);
+  --ds-orange-900: hsla(var(--ds-orange-900-value), 1);
+  --ds-slate-100: hsla(var(--ds-slate-100-value), 1);
+  --ds-slate-400: hsla(var(--ds-slate-400-value), 1);
+  --ds-slate-700: hsla(var(--ds-slate-700-value), 1);
+  --ds-slate-900: hsla(var(--ds-slate-900-value), 1);
+  --ds-sky-100: hsla(var(--ds-sky-100-value), 1);
+  --ds-sky-400: hsla(var(--ds-sky-400-value), 1);
+  --ds-sky-700: hsla(var(--ds-sky-700-value), 1);
+  --ds-sky-900: hsla(var(--ds-sky-900-value), 1);
+  --ds-bronze-100: hsla(var(--ds-bronze-100-value), 1);
+  --ds-bronze-400: hsla(var(--ds-bronze-400-value), 1);
+  --ds-bronze-700: hsla(var(--ds-bronze-700-value), 1);
+  --ds-bronze-900: hsla(var(--ds-bronze-900-value), 1);
 
   --ds-gray-alpha-100: #0000000d;
   --ds-gray-alpha-200: #00000015;
@@ -232,6 +282,24 @@
     --ds-teal-100-value: 169, 78%, 7%;
     --ds-teal-400-value: 171, 85%, 13%;
     --ds-teal-900-value: 174, 90%, 41%;
+    --ds-indigo-100-value: 245, 45%, 14%;
+    --ds-indigo-400-value: 245, 60%, 26%;
+    --ds-indigo-900-value: 244, 90%, 75%;
+    --ds-lime-100-value: 90, 40%, 9%;
+    --ds-lime-400-value: 88, 55%, 18%;
+    --ds-lime-900-value: 86, 60%, 58%;
+    --ds-orange-100-value: 24, 80%, 10%;
+    --ds-orange-400-value: 24, 90%, 24%;
+    --ds-orange-900-value: 26, 95%, 62%;
+    --ds-slate-100-value: 215, 18%, 14%;
+    --ds-slate-400-value: 215, 14%, 26%;
+    --ds-slate-900-value: 214, 14%, 68%;
+    --ds-sky-100-value: 196, 60%, 11%;
+    --ds-sky-400-value: 196, 80%, 22%;
+    --ds-sky-900-value: 196, 90%, 64%;
+    --ds-bronze-100-value: 36, 35%, 11%;
+    --ds-bronze-400-value: 36, 40%, 22%;
+    --ds-bronze-900-value: 38, 48%, 62%;
     --ds-gray-alpha-100: #ffffff0f;
     --ds-gray-alpha-200: #ffffff17;
     --ds-gray-alpha-300: #ffffff21;
@@ -375,8 +443,8 @@ body {
   border-color: hsla(0, 0%, 0%, 0.1);
   /* Liquid-glass refraction via the global #srt-liquid-chip filter; moderate blur
      keeps the warp visible while text reads. -webkit- falls back to plain frost. */
-  -webkit-backdrop-filter: blur(6px) saturate(170%);
-  backdrop-filter: url(#srt-liquid-chip) blur(6px) saturate(170%);
+  -webkit-backdrop-filter: blur(13px) saturate(170%);
+  backdrop-filter: url(#srt-liquid-chip) blur(13px) saturate(170%);
   box-shadow:
     inset 0 1px 0 hsla(0, 0%, 100%, 0.72),
     inset 0 0 0 0.5px hsla(0, 0%, 100%, 0.3),
@@ -415,8 +483,8 @@ body {
   );
   /* Liquid-glass refraction via the global #srt-liquid-panel filter; medium blur
      keeps the warp visible while text stays legible. -webkit- → plain frost. */
-  -webkit-backdrop-filter: blur(6px) saturate(175%);
-  backdrop-filter: url(#srt-liquid-panel) blur(6px) saturate(175%);
+  -webkit-backdrop-filter: blur(16px) saturate(175%);
+  backdrop-filter: url(#srt-liquid-panel) blur(16px) saturate(175%);
   box-shadow:
     inset 0 1px 0 hsla(0, 0%, 100%, 0.7),
     inset 0 0 0 0.5px hsla(0, 0%, 100%, 0.35),
@@ -433,14 +501,14 @@ body {
 .liquid-glass-strong {
   position: relative;
   color: #0a0a0a;
-  background-color: hsla(0, 0%, 100%, 0.36);
+  background-color: hsla(0, 0%, 100%, 0.46);
   background-image: linear-gradient(
     to bottom,
-    hsla(0, 0%, 100%, 0.52) 0%,
-    hsla(0, 0%, 100%, 0.4) 100%
+    hsla(0, 0%, 100%, 0.6) 0%,
+    hsla(0, 0%, 100%, 0.46) 100%
   );
-  -webkit-backdrop-filter: blur(9px) saturate(185%);
-  backdrop-filter: url(#srt-liquid-panel) blur(9px) saturate(185%);
+  -webkit-backdrop-filter: blur(22px) saturate(185%);
+  backdrop-filter: url(#srt-liquid-panel) blur(22px) saturate(185%);
   box-shadow:
     inset 0 1.5px 0 hsla(0, 0%, 100%, 0.82),
     inset 0 0 0 0.75px hsla(0, 0%, 100%, 0.45),
