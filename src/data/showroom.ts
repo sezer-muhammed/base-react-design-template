@@ -1,5 +1,6 @@
 import type { RecursiveMenuItem } from "@/components/ui/recursive-menu";
 
+// Ordered by the spectrum (Neutral first, then ascending hue from red to rose).
 export const tokenRows = [
   {
     family: "Neutral",
@@ -9,36 +10,6 @@ export const tokenRows = [
       ["Muted", "var(--ds-background-200)"],
       ["Line", "var(--ds-gray-alpha-400)"],
       ["Text", "var(--ds-gray-1000)"],
-    ],
-  },
-  {
-    family: "Blue",
-    role: "Active state, focus and primary system signal",
-    swatches: [
-      ["100", "var(--ds-blue-100)"],
-      ["400", "var(--ds-blue-400)"],
-      ["700", "var(--ds-blue-700)"],
-      ["900", "var(--ds-blue-900)"],
-    ],
-  },
-  {
-    family: "Green",
-    role: "Success, complete and positive state",
-    swatches: [
-      ["100", "var(--ds-green-100)"],
-      ["400", "var(--ds-green-400)"],
-      ["700", "var(--ds-green-700)"],
-      ["900", "var(--ds-green-900)"],
-    ],
-  },
-  {
-    family: "Amber",
-    role: "Warning, review and medium-risk state",
-    swatches: [
-      ["100", "var(--ds-amber-100)"],
-      ["400", "var(--ds-amber-400)"],
-      ["700", "var(--ds-amber-700)"],
-      ["900", "var(--ds-amber-900)"],
     ],
   },
   {
@@ -52,36 +23,6 @@ export const tokenRows = [
     ],
   },
   {
-    family: "Teal",
-    role: "Semantic tags, judgment and empathy signals",
-    swatches: [
-      ["100", "var(--ds-teal-100)"],
-      ["400", "var(--ds-teal-400)"],
-      ["700", "var(--ds-teal-700)"],
-      ["900", "var(--ds-teal-900)"],
-    ],
-  },
-  {
-    family: "Indigo",
-    role: "AI, automated and agentic actions",
-    swatches: [
-      ["100", "var(--ds-indigo-100)"],
-      ["400", "var(--ds-indigo-400)"],
-      ["700", "var(--ds-indigo-700)"],
-      ["900", "var(--ds-indigo-900)"],
-    ],
-  },
-  {
-    family: "Lime",
-    role: "Live, realtime and streaming signal",
-    swatches: [
-      ["100", "var(--ds-lime-100)"],
-      ["400", "var(--ds-lime-400)"],
-      ["700", "var(--ds-lime-700)"],
-      ["900", "var(--ds-lime-900)"],
-    ],
-  },
-  {
     family: "Orange",
     role: "In-progress, running and queued state",
     swatches: [
@@ -92,23 +33,43 @@ export const tokenRows = [
     ],
   },
   {
-    family: "Rose",
-    role: "New, beta and experimental highlight",
+    family: "Bronze",
+    role: "Favorite, pinned and premium accent",
     swatches: [
-      ["100", "var(--ds-pink-100)"],
-      ["400", "var(--ds-pink-400)"],
-      ["700", "var(--ds-pink-700)"],
-      ["900", "var(--ds-pink-900)"],
+      ["100", "var(--ds-bronze-100)"],
+      ["400", "var(--ds-bronze-400)"],
+      ["700", "var(--ds-bronze-700)"],
+      ["900", "var(--ds-bronze-900)"],
     ],
   },
   {
-    family: "Slate",
-    role: "Inactive, archived and disabled state",
+    family: "Amber",
+    role: "Warning, review and medium-risk state",
     swatches: [
-      ["100", "var(--ds-slate-100)"],
-      ["400", "var(--ds-slate-400)"],
-      ["700", "var(--ds-slate-700)"],
-      ["900", "var(--ds-slate-900)"],
+      ["100", "var(--ds-amber-100)"],
+      ["400", "var(--ds-amber-400)"],
+      ["700", "var(--ds-amber-700)"],
+      ["900", "var(--ds-amber-900)"],
+    ],
+  },
+  {
+    family: "Green",
+    role: "Success, complete and positive state",
+    swatches: [
+      ["100", "var(--ds-green-100)"],
+      ["400", "var(--ds-green-400)"],
+      ["700", "var(--ds-green-700)"],
+      ["900", "var(--ds-green-900)"],
+    ],
+  },
+  {
+    family: "Teal",
+    role: "Semantic tags, judgment and empathy signals",
+    swatches: [
+      ["100", "var(--ds-teal-100)"],
+      ["400", "var(--ds-teal-400)"],
+      ["700", "var(--ds-teal-700)"],
+      ["900", "var(--ds-teal-900)"],
     ],
   },
   {
@@ -122,13 +83,43 @@ export const tokenRows = [
     ],
   },
   {
-    family: "Bronze",
-    role: "Favorite, pinned and premium accent",
+    family: "Blue",
+    role: "Active state, focus and primary system signal",
     swatches: [
-      ["100", "var(--ds-bronze-100)"],
-      ["400", "var(--ds-bronze-400)"],
-      ["700", "var(--ds-bronze-700)"],
-      ["900", "var(--ds-bronze-900)"],
+      ["100", "var(--ds-blue-100)"],
+      ["400", "var(--ds-blue-400)"],
+      ["700", "var(--ds-blue-700)"],
+      ["900", "var(--ds-blue-900)"],
+    ],
+  },
+  {
+    family: "Slate",
+    role: "Inactive, archived and disabled state",
+    swatches: [
+      ["100", "var(--ds-slate-100)"],
+      ["400", "var(--ds-slate-400)"],
+      ["700", "var(--ds-slate-700)"],
+      ["900", "var(--ds-slate-900)"],
+    ],
+  },
+  {
+    family: "Indigo",
+    role: "AI, automated and agentic actions",
+    swatches: [
+      ["100", "var(--ds-indigo-100)"],
+      ["400", "var(--ds-indigo-400)"],
+      ["700", "var(--ds-indigo-700)"],
+      ["900", "var(--ds-indigo-900)"],
+    ],
+  },
+  {
+    family: "Rose",
+    role: "New, beta and experimental highlight",
+    swatches: [
+      ["100", "var(--ds-pink-100)"],
+      ["400", "var(--ds-pink-400)"],
+      ["700", "var(--ds-pink-700)"],
+      ["900", "var(--ds-pink-900)"],
     ],
   },
 ] as const;

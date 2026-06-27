@@ -9,7 +9,6 @@ type BadgeTone =
   | "red"
   | "teal"
   | "indigo"
-  | "lime"
   | "orange"
   | "rose"
   | "slate"
@@ -25,7 +24,6 @@ const toneDotColor: Record<BadgeTone, string | null> = {
   red: "var(--ds-red-700)",
   teal: "var(--ds-teal-700)",
   indigo: "var(--ds-indigo-700)",
-  lime: "var(--ds-lime-700)",
   orange: "var(--ds-orange-700)",
   rose: "var(--ds-pink-700)",
   slate: "var(--ds-slate-700)",
