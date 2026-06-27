@@ -3,6 +3,7 @@ import { SiteShell } from "@/components/layout/site-shell";
 import { ActionShowcase } from "@/components/showroom/action-showcase";
 import { ChartShowcase } from "@/components/showroom/chart-showcase";
 import { FileUploadShowcase } from "@/components/showroom/file-upload-showcase";
+import { LiveTrainingShowcase } from "@/components/showroom/live-training-showcase";
 import {
   NestedHierarchyTable,
   OperationTable,
@@ -439,7 +440,10 @@ export function ShowroomPage({
               title="Realtime stream"
               summary="A feed pattern for SSE, WebSocket, broadcast channels, and local event previews."
             >
-              <RealtimeShelf />
+              <div className="space-y-4">
+                <RealtimeShelf />
+                <LiveTrainingShowcase />
+              </div>
             </ShowcaseSection>
             ) : null}
 
