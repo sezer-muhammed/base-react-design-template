@@ -32,7 +32,7 @@ export function InfoTooltip({
       >
         <span
           aria-hidden="true"
-          className="ds-dot h-2.5 w-2.5 shrink-0 rounded-full"
+          className="ds-dot h-[1em] w-[1em] shrink-0 rounded-full"
           style={{ background: color }}
         />
         <span className="truncate">{label}</span>
@@ -48,7 +48,7 @@ export function InfoTooltip({
         <span className="mb-1 flex items-center gap-2 font-semibold text-[var(--ds-gray-1000)]">
           <span
             aria-hidden="true"
-            className="ds-dot h-2.5 w-2.5 rounded-full"
+            className="ds-dot h-[1em] w-[1em] rounded-full"
             style={{ background: color }}
           />
           {label}

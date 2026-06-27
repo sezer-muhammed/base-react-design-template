@@ -34,7 +34,7 @@ export function Badge({
       {dotColor ? (
         <span
           aria-hidden="true"
-          className="ds-dot h-2 w-2 shrink-0 rounded-full"
+          className="ds-dot h-[1em] w-[1em] shrink-0 rounded-full"
           style={{ background: dotColor }}
         />
       ) : null}

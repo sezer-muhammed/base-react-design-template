@@ -19,7 +19,7 @@ export function StatusSignal({
   const dot = (
     <span
       className={cn(
-        "ds-dot inline-block h-2.5 w-2.5 shrink-0 rounded-full",
+        "ds-dot inline-block h-[1em] w-[1em] shrink-0 rounded-full",
         pulse && "animate-pulse",
       )}
       style={{ background: color }}

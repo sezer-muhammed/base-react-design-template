@@ -84,7 +84,7 @@ function RecursiveMenuNode({
         ) : null}
         {indicator}
         <span
-          className="ds-dot relative z-[1] h-2.5 w-2.5 shrink-0 rounded-full"
+          className="ds-dot relative z-[1] h-[1em] w-[1em] shrink-0 rounded-full"
           style={{ background: dotColor }}
         />
         <span className="pointer-events-none relative z-[1] min-w-0 truncate text-[13px] font-medium text-[var(--ds-gray-1000)]">

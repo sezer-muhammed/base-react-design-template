@@ -115,12 +115,12 @@ function PageRevealTile() {
         {/* view A */}
         <div className="absolute inset-0 flex flex-col justify-center gap-1.5 px-8">
           <div className="flex items-center gap-2.5">
-            <span className="ds-dot h-[9px] w-[9px] shrink-0 rounded-full bg-[var(--ds-gray-alpha-600)]" />
+            <span className="ds-dot h-3 w-3 shrink-0 rounded-full bg-[var(--ds-gray-alpha-600)]" />
             <span className="text-[18px] font-semibold text-[var(--ds-gray-1000)]">
               build #4821 · ready
             </span>
           </div>
-          <span className="pl-[19px] font-mono text-[13px] text-[var(--ds-gray-600)]">
+          <span className="pl-[22px] font-mono text-[13px] text-[var(--ds-gray-600)]">
             main · 2 commits ahead
           </span>
         </div>
@@ -135,12 +135,12 @@ function PageRevealTile() {
           }}
         >
           <div className="flex items-center gap-2.5">
-            <span className="ds-dot h-[9px] w-[9px] shrink-0 rounded-full bg-[var(--ds-green-700)]" />
+            <span className="ds-dot h-3 w-3 shrink-0 rounded-full bg-[var(--ds-green-700)]" />
             <span className="text-[18px] font-semibold text-[var(--ds-gray-1000)]">
               Deployed to production
             </span>
           </div>
-          <span className="pl-[19px] font-mono text-[13px] text-[var(--ds-gray-600)]">
+          <span className="pl-[22px] font-mono text-[13px] text-[var(--ds-gray-600)]">
             iad1 · live · 320ms
           </span>
         </div>
@@ -151,7 +151,7 @@ function PageRevealTile() {
           className="absolute right-7 top-1/2 z-[2] inline-flex h-10 -translate-y-1/2 items-center gap-2.5 rounded-[10px] border border-[var(--ds-gray-alpha-500)] bg-[var(--ds-background-100)] pl-3.5 pr-[15px] font-sans shadow-[0_1px_2px_rgb(0_0_0_/_0.2),inset_0_1px_0_rgb(255_255_255_/_0.05)] outline-none transition hover:border-[var(--ds-gray-alpha-700)] focus-visible:shadow-[var(--ds-focus-ring)]"
         >
           <span
-            className="ds-dot h-[9px] w-[9px] shrink-0 rounded-full transition-colors duration-300"
+            className="ds-dot h-3 w-3 shrink-0 rounded-full transition-colors duration-300"
             style={{
               background: on ? "var(--ds-green-700)" : "var(--ds-blue-700)",
             }}
@@ -205,13 +205,13 @@ function DotMorphTile() {
           }}
         >
           <div className="flex h-8 flex-none items-center gap-2.5 px-3.5">
-            <span className="ds-dot h-[9px] w-[9px] shrink-0 rounded-full bg-[var(--ds-blue-700)]" />
+            <span className="ds-dot h-3 w-3 shrink-0 rounded-full bg-[var(--ds-blue-700)]" />
             <span className="whitespace-nowrap text-[13px] font-semibold text-[var(--ds-gray-1000)]">
               Region · iad1
             </span>
           </div>
           <div
-            className="flex w-[214px] flex-col gap-2.5 pl-[31px] pr-3.5 pt-0.5"
+            className="flex w-[214px] flex-col gap-2.5 pl-[34px] pr-3.5 pt-0.5"
             style={{
               opacity: on ? 1 : 0,
               transform: on
@@ -223,7 +223,7 @@ function DotMorphTile() {
           >
             <div className="h-2 w-[74%] rounded-[5px] bg-[var(--ds-gray-alpha-300)]" />
             <div className="flex items-center gap-2">
-              <span className="ds-dot h-[7px] w-[7px] shrink-0 rounded-full bg-[var(--ds-green-700)]" />
+              <span className="ds-dot h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--ds-green-700)]" />
               <span className="whitespace-nowrap font-mono text-[11px] text-[var(--ds-gray-700)]">
                 all systems healthy
               </span>
@@ -246,9 +246,9 @@ function GlideTile() {
       <Stage>
         <div className="relative w-[186px]">
           <span
-            className="ds-dot absolute left-0 h-2 w-2 rounded-full bg-[var(--ds-blue-700)]"
+            className="ds-dot absolute left-0 h-3 w-3 rounded-full bg-[var(--ds-blue-700)]"
             style={{
-              top: idx * 30 + 11,
+              top: idx * 30 + 9,
               transition: `top 0.26s ${SPRING}`,
             }}
           />
@@ -257,7 +257,7 @@ function GlideTile() {
               key={label}
               type="button"
               onClick={() => setIdx(i)}
-              className="flex h-[30px] w-full select-none items-center pl-[22px] text-left text-[13px] outline-none transition-colors duration-200"
+              className="flex h-[30px] w-full select-none items-center pl-[26px] text-left text-[13px] outline-none transition-colors duration-200"
               style={{
                 color:
                   idx === i ? "var(--ds-gray-1000)" : "var(--ds-gray-600)",
@@ -301,7 +301,7 @@ function SpinnerTile() {
           >
             <div className="absolute inset-0 rounded-full border-2 border-[var(--ds-gray-alpha-300)]" />
             <div className="absolute inset-0 [animation:ms-spin_0.9s_linear_infinite]">
-              <span className="absolute left-1/2 top-[-4px] ml-[-4px] h-[9px] w-[9px] rounded-full bg-[var(--ds-blue-700)]" />
+              <span className="absolute left-1/2 top-[-6px] ml-[-6px] h-3 w-3 rounded-full bg-[var(--ds-blue-700)]" />
             </div>
           </div>
           <div
@@ -312,7 +312,7 @@ function SpinnerTile() {
               transition: `opacity 0.3s ease, transform 0.35s ${SPRING}`,
             }}
           >
-            <span className="ds-dot h-[9px] w-[9px] shrink-0 rounded-full bg-[var(--ds-blue-700)]" />
+            <span className="ds-dot h-3 w-3 shrink-0 rounded-full bg-[var(--ds-blue-700)]" />
             <span className="text-[14px] font-semibold text-[var(--ds-gray-1000)]">
               Done
             </span>
@@ -495,7 +495,7 @@ function CopyTile() {
           className="inline-flex items-center gap-2.5 rounded-lg border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-[15px] py-2.5 font-sans text-[13px] font-medium text-[var(--ds-gray-1000)] outline-none transition active:scale-[0.96] focus-visible:shadow-[var(--ds-focus-ring)]"
         >
           <span
-            className="ds-dot h-2 w-2 shrink-0 rounded-full transition-colors duration-200"
+            className="ds-dot h-3 w-3 shrink-0 rounded-full transition-colors duration-200"
             style={{
               background: copied
                 ? "var(--ds-green-700)"
@@ -544,7 +544,7 @@ function DialogTile() {
             }}
           >
             <div className="flex items-center gap-2.5">
-              <span className="ds-dot h-[9px] w-[9px] shrink-0 rounded-full bg-[var(--ds-amber-700)]" />
+              <span className="ds-dot h-3 w-3 shrink-0 rounded-full bg-[var(--ds-amber-700)]" />
               <span className="text-[14px] font-semibold text-[var(--ds-gray-1000)]">
                 Delete branch?
               </span>
@@ -590,7 +590,7 @@ function AccordionTile() {
             className="flex w-full select-none items-center gap-2.5 px-3.5 py-3 text-left"
           >
             <span
-              className="ds-dot h-2 w-2 shrink-0 rounded-full transition-colors duration-200"
+              className="ds-dot h-3 w-3 shrink-0 rounded-full transition-colors duration-200"
               style={{
                 background: open
                   ? "var(--ds-blue-700)"
@@ -679,7 +679,7 @@ function SkeletonRevealTile() {
             className="absolute inset-0 flex items-center gap-3 opacity-0"
           >
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--ds-gray-alpha-200)]">
-              <span className="ds-dot h-[9px] w-[9px] rounded-full bg-[var(--ds-blue-700)]" />
+              <span className="ds-dot h-3 w-3 rounded-full bg-[var(--ds-blue-700)]" />
             </div>
             <div className="flex flex-1 flex-col gap-0.5">
               <span className="text-[13px] font-semibold text-[var(--ds-gray-1000)]">
