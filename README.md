@@ -23,6 +23,7 @@ The component pages, such as `/buttons`, `/forms`, `/tables`, `/templates`, and 
 | Primitives | Radix UI (Avatar, Dialog, Popover, Toast, Slot) | latest |
 | Icons | Lucide React | 1.x |
 | Charts | Recharts | 3.x |
+| Motion | Framer Motion (hero + interactive moments); CSS `animation-timeline: view()` for section scroll-reveals | 12.x |
 | Font | Geist Sans + Geist Mono (Next.js built-in) | — |
 
 ---
