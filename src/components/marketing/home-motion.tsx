@@ -18,9 +18,7 @@ import {
   motion,
   useMotionValue,
   useReducedMotion,
-  useScroll,
   useSpring,
-  useTransform,
   type Variants,
 } from "framer-motion";
 import { cn } from "@/lib/cn";
@@ -124,30 +122,17 @@ export function StaggerItem({
 /* ------------------------------------------------------------- tilt card --- */
 
 /**
- * Pointer-reactive 3D tilt + lift. Wrap a <Card>. The tilt is subtle (max ~7°)
- * and springs back to flat when the pointer leaves.
+ * Calm hover lift for a <Card>. No 3D tilt/perspective (those blur the text and
+ * make the card wobble); just a small, crisp rise on hover that springs home.
  */
 export function TiltCard({
   children,
   className,
-  max = 7,
 }: {
   children: ReactNode;
   className?: string;
-  max?: number;
 }) {
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const px = useMotionValue(0.5);
-  const py = useMotionValue(0.5);
-  const rx = useSpring(useTransform(py, [0, 1], [max, -max]), {
-    stiffness: 260,
-    damping: 22,
-  });
-  const ry = useSpring(useTransform(px, [0, 1], [-max, max]), {
-    stiffness: 260,
-    damping: 22,
-  });
 
   if (reduce) {
     return <div className={className}>{children}</div>;
@@ -155,22 +140,11 @@ export function TiltCard({
 
   return (
     <motion.div
-      ref={ref}
-      className={cn("[transform-style:preserve-3d]", className)}
-      style={{ rotateX: rx, rotateY: ry, perspective: 900 }}
-      onPointerMove={(e) => {
-        const rect = ref.current?.getBoundingClientRect();
-        if (!rect) return;
-        px.set((e.clientX - rect.left) / rect.width);
-        py.set((e.clientY - rect.top) / rect.height);
-      }}
-      onPointerLeave={() => {
-        px.set(0.5);
-        py.set(0.5);
-      }}
-      whileHover={{ y: -5, transition: { ...SPRING, damping: 20 } }}
+      className={className}
+      whileHover={{ y: -4 }}
+      transition={{ ...SPRING, damping: 22 }}
     >
-      <div style={{ transform: "translateZ(24px)" }}>{children}</div>
+      {children}
     </motion.div>
   );
 }
@@ -223,8 +197,8 @@ export function Magnetic({
 /* ------------------------------------------------------- parallax panel --- */
 
 /**
- * Scroll-linked parallax wrapper for the hero visual. The panel drifts up as
- * the page scrolls and eases in on mount.
+ * Wrapper for the hero visual. Static in place — no scroll drift or mount scale
+ * (both made the panel wobble and blur); just a plain fade-in on mount.
  */
 export function ParallaxPanel({
   children,
@@ -233,25 +207,12 @@ export function ParallaxPanel({
   children: ReactNode;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const y = useSpring(useTransform(scrollYProgress, [0, 1], [40, -40]), {
-    stiffness: 120,
-    damping: 30,
-  });
-
   return (
     <motion.div
-      ref={ref}
       className={className}
-      style={reduce ? undefined : { y }}
-      initial={{ opacity: 0, scale: reduce ? 1 : 0.97 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ ...SPRING, delay: 0.1 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
     >
       {children}
     </motion.div>

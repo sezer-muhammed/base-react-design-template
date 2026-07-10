@@ -239,7 +239,7 @@ function Hero() {
           <GlassTag>visual system</GlassTag>
           <GlassTag>docs linked</GlassTag>
         </div>
-        <div className="absolute inset-x-4 bottom-4 rounded-[10px] border border-black/10 bg-white/[0.62] p-4 shadow-[0_1px_2px_rgb(0_0_0_/_0.16)] backdrop-blur-md">
+        <div className="absolute inset-x-4 bottom-4 rounded-[10px] border border-black/10 bg-white p-4 shadow-[0_1px_2px_rgb(0_0_0_/_0.16)]">
           <div className="grid gap-4 sm:grid-cols-[1fr_220px] sm:items-end">
             <div>
               <p className="font-mono text-[11px] uppercase text-black/55">
