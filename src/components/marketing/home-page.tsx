@@ -1,6 +1,7 @@
 "use client";
 
-import Image from "next/image";
+import { AuroraCanvas } from "@/components/ui/aurora-canvas";
+import { SpectralText } from "@/components/ui/spectral-text";
 import {
   ArrowRight,
   Boxes,
@@ -26,7 +27,6 @@ import { StatusSignal } from "@/components/ui/status-signal";
 import { platformCapabilities } from "@/config/capabilities";
 import { frameworkBadges, siteConfig } from "@/config/site";
 import { operationRows } from "@/data/operations";
-import { assetDemo } from "@/data/showroom";
 import {
   Magnetic,
   ParallaxPanel,
@@ -189,7 +189,7 @@ function Hero() {
         </StaggerItem>
         <StaggerItem>
           <h1 className="mt-3 max-w-[760px] text-[42px] font-semibold leading-[1.03] sm:text-[58px]">
-            A compact foundation for serious web products.
+            A compact foundation for a <SpectralText>spectrum</SpectralText> of web products.
           </h1>
         </StaggerItem>
         <StaggerItem>
@@ -226,15 +226,8 @@ function Hero() {
       </Stagger>
 
       <ParallaxPanel className="relative min-h-[460px] overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-gray-1000)] shadow-[0_18px_38px_-28px_rgb(0_0_0_/_0.82)] sm:min-h-[520px] min-[1800px]:min-h-[600px]">
-        <Image
-          alt="Template visual preview"
-          className="object-cover object-center opacity-90"
-          fill
-          priority
-          sizes="(min-width: 1800px) 760px, (min-width: 1280px) 620px, 100vw"
-          src={assetDemo.media.image02}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_36%,transparent_32%,rgb(0_0_0_/_0.20)_66%,rgb(0_0_0_/_0.62)_100%)]" />
+        <AuroraCanvas className="absolute inset-0 h-full w-full" dark />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,transparent_42%,rgb(0_0_0_/_0.32)_100%)]" />
         <div className="absolute inset-x-4 top-4 flex flex-wrap gap-2">
           <GlassTag>visual system</GlassTag>
           <GlassTag>docs linked</GlassTag>

@@ -612,3 +612,7 @@ body {
   min-width: 0;
   width: 100%;
 }
+
+/* Spectral wordmark — per-letter wave (SpectralText component) */
+@keyframes srt-wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-.09em)}}
+@media (prefers-reduced-motion: reduce){.srt-wave{animation:none !important}}
