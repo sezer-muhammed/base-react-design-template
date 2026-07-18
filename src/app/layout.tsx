@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import { LiquidGlassFilters } from "@/components/ui/liquid-glass-filters";
+import { AppProviders } from "@/components/providers/app-providers";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,7 +32,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <LiquidGlassFilters />
-        {children}
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

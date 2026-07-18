@@ -207,6 +207,20 @@ src/server/
 
 Each adapter slot maps to a `platformCapabilities` entry in `src/config/capabilities.ts`. Concrete adapters implement the contracts from `runtime.ts` — components never import adapter implementations directly.
 
+### Platform foundation
+
+The template also ships with vendor-neutral primitives for product work:
+
+- `src/server/contracts/platform.ts` — users, organizations, memberships, audit events, and repository interfaces.
+- `src/server/access-control.ts` — role-to-permission mapping and authorization errors.
+- `src/server/http.ts` — consistent success/error envelopes and request correlation ids.
+- `src/server/logger.ts` — structured server logging with request and organization context.
+- `src/components/providers/app-providers.tsx` — typed session and permission context boundary.
+- `src/app/api/health` and `src/app/api/ready` — deployment health probes.
+- `src/features/README.md` — convention for isolatable domain modules.
+
+Read [`docs/architecture.md`](docs/architecture.md) before adding a product feature or provider adapter.
+
 ---
 
 ## Project structure
@@ -261,6 +275,8 @@ Open [http://localhost:3000/components](http://localhost:3000/components) for th
 ```bash
 npm run build   # production build
 npm run lint    # ESLint
+npm run typecheck # TypeScript validation
+npm run check   # lint + typecheck + production build
 ```
 
 ---

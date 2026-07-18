@@ -177,6 +177,9 @@ export function LiveTrainingTerminal({
   const [lossHist, setLossHist] = useState<number[]>([]);
   useEffect(() => {
     if (loss !== null) {
+      // Streaming telemetry is an external event source; local history must
+      // be updated when a new sample arrives.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLossHist((h) => {
         const n = [...h, loss];
         return n.length > 56 ? n.slice(-56) : n;
@@ -197,6 +200,9 @@ export function LiveTrainingTerminal({
   const [stale, setStale] = useState(false);
   useEffect(() => {
     lastUpdate.current = typeof performance !== "undefined" ? performance.now() : 0;
+    // Resetting the liveness indicator is part of accepting a new telemetry
+    // sample, not a derived render value.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setStale(false);
   }, [step, loss, its]);
   useEffect(() => {
@@ -215,12 +221,16 @@ export function LiveTrainingTerminal({
     return Math.max(0, stepsLeft) / its;
   }, [paused, its, totalEpochs, epoch, totalSteps, step]);
   const [eta, setEta] = useState<number | null>(serverEta);
+  // This state deliberately follows server telemetry and then ticks locally
+  // between samples so the countdown remains readable.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setEta(serverEta), [serverEta]);
+  const etaActive = eta !== null;
   useEffect(() => {
-    if (eta === null) return;
+    if (!etaActive) return;
     const id = setInterval(() => setEta((e) => (e === null ? null : Math.max(0, e - 1))), 1000);
     return () => clearInterval(id);
-  }, [eta === null]);
+  }, [etaActive]);
 
   // ---- health verdict (the one thing color is allowed to say)
   const [lo, hi] = useMemo<[number | null, number | null]>(() => {
@@ -246,6 +256,9 @@ export function LiveTrainingTerminal({
           : { c: T.green, label: "healthy" };
 
   const overallPct = totalEpochs > 0 ? ((epoch + pct / 100) / totalEpochs) * 100 : 0;
+  // The displayed finish time is intentionally based on the current render
+  // clock; it is a presentation-only estimate, not persisted state.
+  // eslint-disable-next-line react-hooks/purity
   const finishAt = eta !== null ? new Date(Date.now() + eta * 1000) : null;
   const cleanRaw = live?.raw ? live.raw.replace(/\^\[?\[?[A-Z]|\^\[O[A-Z]/g, "").trim() : "";
 
