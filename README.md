@@ -161,13 +161,25 @@ Eyebrow labels (category tags above section titles) always use `font-mono text-[
 
 ## Pages
 
-### `/` — Marketing home
+### `/` — System home
 
 `src/components/marketing/home-page.tsx`
 
-Full-page marketing layout showcasing the system to external visitors or stakeholders. Demonstrates every UI primitive in a realistic product context: hero with capabilities grid, feature cards, live data table, record cards, dialogs, progress cells, toggle cells, and a realtime-style state block.
+Factual product page describing the design language, actual architecture layers, runtime contracts, component documentation, and composed examples. It intentionally avoids invented product metrics or mock business claims.
 
-### Component catalog pages
+### `/components` — Component documentation
+
+`src/components/docs/component-doc-page.tsx`
+
+The component index is driven by `src/data/component-docs.ts`. Every documented primitive has a dedicated route under `/components/[slug]` with a live preview, API notes, usage guidance, and source reference.
+
+### `/examples` — Composed product surfaces
+
+`src/components/examples/example-pages.tsx`
+
+Examples demonstrate how primitives combine into product-level interfaces. Available examples are `/examples/dashboard`, `/examples/admin`, `/examples/realtime`, and `/examples/workflows`. Their data is deterministic scenario data and is clearly presented as illustrative.
+
+### Legacy catalog pages
 
 `src/components/showroom/showroom-page.tsx`
 
@@ -230,7 +242,9 @@ src/
   app/
     globals.css         ← Design tokens + global utilities
     layout.tsx          ← Root layout (Geist font, metadata)
-    page.tsx            ← Marketing home route
+    page.tsx            ← Factual system home route
+    components/[slug]   ← One documentation page per component
+    examples/[example]  ← Composed product examples
     (catalog)/
       buttons/page.tsx  - Direct component category routes
       forms/page.tsx
@@ -239,18 +253,21 @@ src/
       workflows/page.tsx
       charts/page.tsx
     showroom/
-      page.tsx          - Redirects old showroom URL to /components
+      page.tsx          - Full legacy catalog and showcase route
   components/
     layout/             ← SiteShell, SiteHeader, SiteFooter
     marketing/          ← HomePage
-    showroom/           ← ShowroomPage + section components
+    docs/               ← Component index, docs pages, and live previews
+    examples/           ← Composed dashboard, admin, realtime, and workflow screens
+    showroom/           ← Legacy catalog sections
     ui/                 ← All reusable primitives
   config/
     capabilities.ts     ← Platform capability definitions
     site.ts             ← Site name, tagline, framework badges
   data/
     navigation.ts       ← Nav tree data
-    operations.ts       ← Sample operation rows + capability areas
+    component-docs.ts   ← Source-of-truth component documentation registry
+    operations.ts       ← Legacy showcase scenario rows
     showroom.ts         ← Token table, card samples, menu data
   lib/
     cn.ts               ← clsx + tailwind-merge helper
@@ -269,8 +286,8 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) for the marketing home.  
-Open [http://localhost:3000/components](http://localhost:3000/components) for the full catalog, or direct pages such as [http://localhost:3000/buttons](http://localhost:3000/buttons), [http://localhost:3000/forms](http://localhost:3000/forms), [http://localhost:3000/tables](http://localhost:3000/tables), [http://localhost:3000/templates](http://localhost:3000/templates), and [http://localhost:3000/charts](http://localhost:3000/charts).
+Open [http://localhost:3000](http://localhost:3000) for the system home.
+Open [http://localhost:3000/components](http://localhost:3000/components) for component documentation, or [http://localhost:3000/examples](http://localhost:3000/examples) for composed product surfaces. The legacy catalog remains available at [http://localhost:3000/showroom](http://localhost:3000/showroom).
 
 ```bash
 npm run build   # production build

@@ -1,5 +1,5 @@
-import { ShowroomPage } from "@/components/showroom/showroom-page";
+import { ComponentsIndex } from "@/components/docs/component-doc-page";
 
 export default function Page() {
-  return <ShowroomPage />;
+  return <ComponentsIndex />;
 }
