@@ -86,8 +86,8 @@ export function ComponentDocPage({ slug }: { slug: string }) {
     <SiteShell>
       <div className="w-full space-y-6 px-3 py-5 sm:px-5 lg:px-8 2xl:px-10">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <Link className="inline-flex items-center gap-2 font-mono text-[11px] uppercase text-[var(--ds-gray-700)] hover:text-[var(--ds-gray-1000)]" href="/components">
-            <ArrowLeft aria-hidden="true" className="h-3.5 w-3.5" /> Back to components
+          <Link className="inline-flex items-center gap-2 font-mono text-[11px] uppercase text-[var(--ds-gray-700)] hover:text-[var(--ds-gray-1000)]" href="/components/docs">
+            <ArrowLeft aria-hidden="true" className="h-3.5 w-3.5" /> Back to component docs
           </Link>
           <div className="flex items-center gap-2"><Badge tone="gray">{component.category}</Badge><StatusSignal color={component.color} variant="pill">documented</StatusSignal></div>
         </div>

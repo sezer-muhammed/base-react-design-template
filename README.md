@@ -161,13 +161,25 @@ Eyebrow labels (category tags above section titles) always use `font-mono text-[
 
 ## Pages
 
-### `/` — System home
+### `/` — Interactive system showcase
 
 `src/components/marketing/home-page.tsx`
 
-Factual product page describing the design language, actual architecture layers, runtime contracts, component documentation, and composed examples. It intentionally avoids invented product metrics or mock business claims.
+The full visual entry point: animated hero treatments, platform and runtime shelves, colorful data summaries, a searchable live proof console, progress cells, status signals, records, empty/error states, and direct links into the catalog.
 
-### `/components` — Component documentation
+### `/overview` — Factual system overview
+
+`src/components/marketing/system-home-page.tsx`
+
+The architecture-focused product page introduced by the newer iteration. It documents the design language, actual runtime contracts, component documentation, and composed examples without invented product metrics or mock business claims.
+
+### `/components` — Comprehensive component showroom
+
+`src/components/showroom/showroom-page.tsx`
+
+The complete live inventory, including inputs, actions, menus, tables, charts, cards, media, layouts, runtime states, motion, and composed product patterns.
+
+### `/components/docs` — Focused component documentation
 
 `src/components/docs/component-doc-page.tsx`
 
@@ -179,7 +191,7 @@ The component index is driven by `src/data/component-docs.ts`. Every documented 
 
 Examples demonstrate how primitives combine into product-level interfaces. Available examples are `/examples/dashboard`, `/examples/admin`, `/examples/realtime`, and `/examples/workflows`. Their data is deterministic scenario data and is clearly presented as illustrative.
 
-### Legacy catalog pages
+### Direct catalog pages
 
 `src/components/showroom/showroom-page.tsx`
 
@@ -242,8 +254,10 @@ src/
   app/
     globals.css         ← Design tokens + global utilities
     layout.tsx          ← Root layout (Geist font, metadata)
-    page.tsx            ← Factual system home route
+    page.tsx            ← Interactive system showcase
+    overview/page.tsx   ← Factual architecture overview
     components/[slug]   ← One documentation page per component
+    components/docs     ← Focused documentation index
     examples/[example]  ← Composed product examples
     (catalog)/
       buttons/page.tsx  - Direct component category routes
@@ -253,7 +267,7 @@ src/
       workflows/page.tsx
       charts/page.tsx
     showroom/
-      page.tsx          - Full legacy catalog and showcase route
+      page.tsx          - Full catalog mirror route
   components/
     layout/             ← SiteShell, SiteHeader, SiteFooter
     marketing/          ← HomePage
@@ -286,14 +300,13 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) for the system home.
-Open [http://localhost:3000/components](http://localhost:3000/components) for component documentation, or [http://localhost:3000/examples](http://localhost:3000/examples) for composed product surfaces. The legacy catalog remains available at [http://localhost:3000/showroom](http://localhost:3000/showroom).
+Open [http://localhost:3000](http://localhost:3000) for the interactive system showcase, [http://localhost:3000/overview](http://localhost:3000/overview) for the factual architecture overview, and [http://localhost:3000/components](http://localhost:3000/components) for the complete live component showroom. Focused documentation remains at [http://localhost:3000/components/docs](http://localhost:3000/components/docs), composed product surfaces at [http://localhost:3000/examples](http://localhost:3000/examples), and the showroom mirror at [http://localhost:3000/showroom](http://localhost:3000/showroom).
 
 ```bash
 npm run build   # production build
 npm run lint    # ESLint
 npm run typecheck # TypeScript validation
-npm run check   # lint + typecheck + production build
+npm run check   # lint + typecheck + tests + production build
 ```
 
 ---
