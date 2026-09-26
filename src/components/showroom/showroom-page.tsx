@@ -3,10 +3,13 @@ import { SiteShell } from "@/components/layout/site-shell";
 import { ActionShowcase } from "@/components/showroom/action-showcase";
 import { ChartShowcase } from "@/components/showroom/chart-showcase";
 import { FileUploadShowcase } from "@/components/showroom/file-upload-showcase";
+import { LiveTrainingShowcase } from "@/components/showroom/live-training-showcase";
 import {
   NestedHierarchyTable,
   OperationTable,
 } from "@/components/showroom/interactive-tables";
+import { MotionLab } from "@/components/showroom/motion-lab";
+import { MotionShowcase } from "@/components/showroom/motion-showcase";
 import {
   AuthShellShelf,
   CommandShelf,
@@ -70,6 +73,8 @@ export const catalogSectionKeys = [
   "realtime",
   "settings",
   "blueprint",
+  "animation",
+  "motion",
 ] as const;
 
 export type CatalogSectionKey = (typeof catalogSectionKeys)[number];
@@ -77,9 +82,13 @@ export type CatalogSectionKey = (typeof catalogSectionKeys)[number];
 export function ShowroomPage({
   intro = true,
   sections = catalogSectionKeys,
+  introSlot,
 }: {
   intro?: boolean;
   sections?: readonly CatalogSectionKey[];
+  // Optional custom hero rendered in place of the default IntroPanel — used by
+  // category landing pages to give each group its own heading.
+  introSlot?: React.ReactNode;
 }) {
   const visibleSections = new Set<CatalogSectionKey>(sections);
 
@@ -87,7 +96,7 @@ export function ShowroomPage({
     <SiteShell>
       <div className="catalog-page flex w-full flex-col gap-4 py-3">
         <div className="min-w-0 space-y-8">
-            {intro ? <IntroPanel /> : null}
+            {introSlot ?? (intro ? <IntroPanel /> : null)}
 
             {visibleSections.has("foundation") ? (
             <ShowcaseSection
@@ -168,10 +177,7 @@ export function ShowroomPage({
 
                 <AssetSpecCard />
 
-                <div className="grid gap-3">
-                  <AssetWideVisualCard />
-                  <AssetWideDataCard />
-                </div>
+                <AssetWideDataCard />
               </div>
             </ShowcaseSection>
             ) : null}
@@ -435,7 +441,10 @@ export function ShowroomPage({
               title="Realtime stream"
               summary="A feed pattern for SSE, WebSocket, broadcast channels, and local event previews."
             >
-              <RealtimeShelf />
+              <div className="space-y-4">
+                <RealtimeShelf />
+                <LiveTrainingShowcase />
+              </div>
             </ShowcaseSection>
             ) : null}
 
@@ -462,6 +471,32 @@ export function ShowroomPage({
               summary="Adapter slots for API, push, pull, triggers, realtime, and future TCP / UDP transport support."
             >
               <SystemBlueprint />
+            </ShowcaseSection>
+            ) : null}
+
+            {visibleSections.has("animation") ? (
+            <ShowcaseSection
+              componentId="S-21"
+              id="animation"
+              kicker="21 / Animation"
+              layout={catalogSectionLayouts.animation}
+              title="The accent, in motion"
+              summary="Snappy micro-animations where a single colored dot carries — and drives — every change. Hover or click any tile to replay."
+            >
+              <MotionShowcase />
+            </ShowcaseSection>
+            ) : null}
+
+            {visibleSections.has("motion") ? (
+            <ShowcaseSection
+              componentId="S-22"
+              id="motion"
+              kicker="22 / Motion"
+              layout={catalogSectionLayouts.motion}
+              title="The dot, unleashed"
+              summary="Eighteen physics-driven micro-animations. Dots stay ink-black at rest and bloom to the accent only where the cursor touches them — move, click, drag."
+            >
+              <MotionLab />
             </ShowcaseSection>
             ) : null}
 
@@ -500,14 +535,14 @@ const listAccentColors = [
   "var(--ds-amber-700)",
   "var(--ds-red-700)",
   "var(--ds-teal-700)",
-  "var(--ds-purple-700)",
+  "var(--ds-gray-1000)",
 ] as const;
 
 const assetChannelColors = [
   "var(--ds-blue-700)",
   "var(--ds-teal-700)",
   "var(--ds-amber-700)",
-  "var(--ds-purple-700)",
+  "var(--ds-green-700)",
 ] as const;
 
 function DotLabel({
@@ -633,7 +668,7 @@ function AssetSpecCard() {
               note area for operational metrics, channels, and runtime context.
             </CardDescription>
             <div className="mt-3 flex flex-wrap items-center gap-2">
-              <DotLabel color="var(--ds-purple-700)">
+              <DotLabel color="var(--ds-teal-700)">
                 {assetDemo.identity.label}
               </DotLabel>
               <DotLabel color="var(--ds-green-700)">healthy</DotLabel>
@@ -713,68 +748,6 @@ function AssetSpecCard() {
   );
 }
 
-function AssetWideVisualCard() {
-  return (
-    <Card
-      className="mx-auto w-full max-w-[1040px] p-0"
-      data-component-id="CARD-03"
-      depth="base"
-      id="card-03-asset-wide-visual"
-      tone="default"
-    >
-      <div className="catalog-ratio-guard relative min-h-[440px] overflow-hidden bg-[var(--ds-gray-1000)]">
-        <Image
-          alt="Wide motion asset card sample"
-          className="object-cover object-center"
-          fill
-          sizes="(min-width: 1280px) 1320px, 100vw"
-          src={assetDemo.media.image}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_64%_48%,transparent_36%,rgb(0_0_0_/_0.22)_72%,rgb(0_0_0_/_0.58)_100%)]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/38 via-transparent to-black/12" />
-        <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-          <ComponentIdBadge id="CARD-03" />
-          <GlassTag>wide visual</GlassTag>
-        </div>
-        <div className="absolute inset-x-4 bottom-4 grid gap-4 rounded-[10px] border border-white/18 bg-white/[0.26] p-4 text-[var(--ds-gray-1000)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.42),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md sm:p-5 lg:grid-cols-[1fr_430px] lg:items-end">
-          <div>
-            <div className="flex flex-wrap gap-2">
-              <Badge tone="gray">Horizontal</Badge>
-              <Badge tone="blue">{assetDemo.identity.version}</Badge>
-              <Badge tone="amber">{assetDemo.identity.category}</Badge>
-            </div>
-            <h3 className="mt-4 text-[26px] font-semibold leading-8 text-[var(--ds-gray-1000)]">
-              Wide media record card
-            </h3>
-            <p className="mt-2 max-w-2xl text-[14px] leading-6 text-[var(--ds-gray-1000)]">
-              For records that need to feel more premium in a list: strong visual
-              presence, short copy, metrics, and reusable flag space.
-            </p>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-4">
-            {[
-              ["Budget", formatUsd(assetDemo.notes.budget)],
-              ["Latency", `${assetDemo.metrics.latencyMs}ms`],
-              ["Events", `${assetDemo.metrics.throughput}k`],
-              ["Mode", assetDemo.metrics.transport],
-            ].map(([label, value]) => (
-              <div
-                className="rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-3 text-[var(--ds-gray-1000)]"
-                key={label}
-              >
-                <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
-                  {label}
-                </p>
-                <p className="mt-1 truncate text-[15px] font-semibold">{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
 function AssetWideDataCard() {
   return (
     <Card
@@ -812,14 +785,6 @@ function AssetWideDataCard() {
           ))}
         </div>
       </div>
-      <CardFooter>
-        <div className="flex flex-wrap gap-2">
-          <Badge tone="blue">REST API</Badge>
-          <Badge tone="teal">Webhook ready</Badge>
-          <Badge tone="purple">Pull sync</Badge>
-          <Badge tone="amber">transport adapters</Badge>
-        </div>
-      </CardFooter>
     </Card>
   );
 }
@@ -846,8 +811,10 @@ function ImageFrame({
 }) {
   const soft = mode === "soft";
   const frameTitle = soft ? "Soft metadata surface" : title;
+  // Over a dark image the glass needs real white presence to read as frosted glass
+  // (not a transparent tint) — bg-white/55 + the glass-frost blur/refraction/halo.
   const transparentTagClass =
-    "border-white/35 bg-white/[0.68] text-[var(--ds-gray-1000)] shadow-[0_10px_24px_-18px_rgb(0_0_0_/_0.72)] before:bg-transparent after:bg-transparent";
+    "bg-white/55 border-white/45 text-[var(--ds-gray-1000)] shadow-[0_10px_24px_-18px_rgb(0_0_0_/_0.72)]";
 
   return (
     <Surface
@@ -888,19 +855,21 @@ function ImageFrame({
           <GlassTag className={transparentTagClass} tone="dark">{assetDemo.identity.name}</GlassTag>
           <GlassTag className={transparentTagClass} tone="dark">{soft ? assetDemo.identity.version : assetDemo.media.color}</GlassTag>
         </div>
-        <div className="absolute inset-x-0 bottom-0 grid gap-3 p-4 text-white sm:grid-cols-[1fr_auto] sm:items-end">
-          <div>
-            <div className="mb-3 flex flex-wrap gap-2">
-              <GlassTag className={transparentTagClass} tone="dark">{soft ? "crop-safe" : "full bleed"}</GlassTag>
-              <GlassTag className={transparentTagClass} tone="dark">{soft ? "edge meta" : "vignette"}</GlassTag>
+        <div className="absolute inset-x-4 bottom-4">
+          <div className="liquid-glass-strong grid gap-3 rounded-[10px] p-4 text-[var(--ds-gray-1000)] sm:grid-cols-[1fr_auto] sm:items-end">
+            <div>
+              <div className="mb-3 flex flex-wrap gap-2">
+                <GlassTag className={transparentTagClass} tone="dark">{soft ? "crop-safe" : "full bleed"}</GlassTag>
+                <GlassTag className={transparentTagClass} tone="dark">{soft ? "edge meta" : "vignette"}</GlassTag>
+              </div>
+              <h3 className="text-[22px] font-semibold leading-7 text-[var(--ds-gray-1000)]">{frameTitle}</h3>
+              <p className="mt-2 max-w-md text-[13px] leading-5 text-[var(--ds-gray-900)]">{caption}</p>
             </div>
-            <h3 className="text-[22px] font-semibold leading-7">{frameTitle}</h3>
-            <p className="mt-2 max-w-md text-[13px] leading-5 text-white/70">{caption}</p>
-          </div>
-          <div className="flex flex-wrap gap-2 sm:max-w-[280px] sm:justify-end">
-            <GlassTag className={transparentTagClass} tone="dark">mode: {assetDemo.media.trim}</GlassTag>
-            <GlassTag className={transparentTagClass} tone="dark">scope: {assetDemo.identity.market}</GlassTag>
-            <GlassTag className={transparentTagClass} tone="dark">latency: {assetDemo.metrics.latencyMs}ms</GlassTag>
+            <div className="flex flex-wrap gap-2 sm:max-w-[280px] sm:justify-end">
+              <GlassTag className={transparentTagClass} tone="dark">mode: {assetDemo.media.trim}</GlassTag>
+              <GlassTag className={transparentTagClass} tone="dark">scope: {assetDemo.identity.market}</GlassTag>
+              <GlassTag className={transparentTagClass} tone="dark">latency: {assetDemo.metrics.latencyMs}ms</GlassTag>
+            </div>
           </div>
         </div>
       </div>
@@ -977,7 +946,7 @@ function IntroPanel() {
       <Surface className="overflow-hidden" tone="flat">
         <div className="grid grid-cols-3 divide-x divide-[var(--ds-gray-alpha-300)]">
           {[
-            ["Sections", "20"],
+            ["Sections", "22"],
             ["Runtime", "6"],
             ["Tokens", "Geist"],
           ].map(([label, value]) => (

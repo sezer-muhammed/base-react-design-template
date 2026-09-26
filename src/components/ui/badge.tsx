@@ -1,43 +1,59 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-type BadgeTone = "gray" | "blue" | "green" | "amber" | "teal" | "purple" | "pink";
+type BadgeTone =
+  | "amber"
+  | "blue"
+  | "gray"
+  | "green"
+  | "red"
+  | "teal"
+  | "indigo"
+  | "orange"
+  | "rose"
+  | "slate"
+  | "sky"
+  | "bronze";
 
-// Grayscale box + a colored dot that identifies the tone (same colored-circle
-// idiom used across the site). The box stays neutral; color lives in the dot.
-const toneDot: Record<BadgeTone, string> = {
-  gray: "var(--ds-gray-500)",
-  blue: "var(--ds-blue-700)",
-  green: "var(--ds-green-700)",
+// The box is always neutral; color is carried only by the dot.
+const toneDotColor: Record<BadgeTone, string | null> = {
   amber: "var(--ds-amber-700)",
+  blue: "var(--ds-blue-700)",
+  gray: null,
+  green: "var(--ds-green-700)",
+  red: "var(--ds-red-700)",
   teal: "var(--ds-teal-700)",
-  purple: "var(--ds-purple-700)",
-  pink: "var(--ds-pink-700)",
+  indigo: "var(--ds-indigo-700)",
+  orange: "var(--ds-orange-700)",
+  rose: "var(--ds-pink-700)",
+  slate: "var(--ds-slate-700)",
+  sky: "var(--ds-sky-700)",
+  bronze: "var(--ds-bronze-700)",
 };
 
 export function Badge({
   children,
   className,
-  dot = true,
   tone = "gray",
 }: {
   children: ReactNode;
   className?: string;
-  dot?: boolean;
   tone?: BadgeTone;
 }) {
+  const dotColor = toneDotColor[tone];
+
   return (
     <span
       className={cn(
-        "inline-flex h-6 shrink-0 items-center gap-1.5 rounded-[6px] border border-[var(--ds-gray-alpha-400)] bg-[color-mix(in_srgb,var(--ds-gray-100)_72%,var(--ds-background-100))] px-2 text-[11px] font-medium leading-none text-[var(--ds-gray-1000)] shadow-[inset_0_1px_0_rgb(255_255_255_/_0.76),0_1px_1px_rgb(0_0_0_/_0.04)]",
+        "badge-frost inline-flex h-6 shrink-0 items-center gap-1.5 rounded-[6px] border px-2 text-[11px] font-medium leading-none text-[var(--ds-gray-1000)]",
         className,
       )}
     >
-      {dot ? (
+      {dotColor ? (
         <span
           aria-hidden="true"
-          className="inline-block h-2 w-2 shrink-0 rounded-full border border-[var(--ds-gray-alpha-500)]"
-          style={{ background: toneDot[tone] }}
+          className="ds-dot h-[1em] w-[1em] shrink-0 rounded-full"
+          style={{ background: dotColor }}
         />
       ) : null}
       {children}

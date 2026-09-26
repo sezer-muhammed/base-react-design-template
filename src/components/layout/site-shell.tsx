@@ -3,10 +3,15 @@ import { ComponentCommandPalette } from "@/components/layout/component-command-p
 import { GlobalCommandSearch } from "@/components/layout/global-command-search";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader, SiteSidebar } from "@/components/layout/site-header";
+import { SkipLink } from "@/components/layout/skip-link";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
-    <main className="min-h-screen text-[var(--ds-gray-1000)]">
+    <main
+      aria-label="Application"
+      className="min-h-screen text-[var(--ds-gray-1000)]"
+    >
+      <SkipLink />
       <div className="min-h-screen xl:grid xl:grid-cols-[280px_minmax(0,1fr)]">
         <SiteSidebar />
         <div className="min-w-0">
@@ -15,7 +20,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
           </div>
           <div className="flex min-h-screen min-w-0 flex-col px-2 pb-3 pt-2 sm:px-3 xl:px-3 2xl:px-4">
             <GlobalCommandSearch />
-            <div className="min-w-0 flex-1">{children}</div>
+            <div className="min-w-0 flex-1" id="main-content" tabIndex={-1}>
+              {children}
+            </div>
             <SiteFooter />
           </div>
         </div>

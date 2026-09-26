@@ -23,6 +23,7 @@ The component pages, such as `/buttons`, `/forms`, `/tables`, `/templates`, and 
 | Primitives | Radix UI (Avatar, Dialog, Popover, Toast, Slot) | latest |
 | Icons | Lucide React | 1.x |
 | Charts | Recharts | 3.x |
+| Motion | Framer Motion (hero + interactive moments); CSS `animation-timeline: view()` for section scroll-reveals | 12.x |
 | Font | Geist Sans + Geist Mono (Next.js built-in) | — |
 
 ---
@@ -160,13 +161,37 @@ Eyebrow labels (category tags above section titles) always use `font-mono text-[
 
 ## Pages
 
-### `/` — Marketing home
+### `/` — Interactive system showcase
 
 `src/components/marketing/home-page.tsx`
 
-Full-page marketing layout showcasing the system to external visitors or stakeholders. Demonstrates every UI primitive in a realistic product context: hero with capabilities grid, feature cards, live data table, record cards, dialogs, progress cells, toggle cells, and a realtime-style state block.
+The full visual entry point: animated hero treatments, platform and runtime shelves, colorful data summaries, a searchable live proof console, progress cells, status signals, records, empty/error states, and direct links into the catalog.
 
-### Component catalog pages
+### `/overview` — Factual system overview
+
+`src/components/marketing/system-home-page.tsx`
+
+The architecture-focused product page introduced by the newer iteration. It documents the design language, actual runtime contracts, component documentation, and composed examples without invented product metrics or mock business claims.
+
+### `/components` — Comprehensive component showroom
+
+`src/components/showroom/showroom-page.tsx`
+
+The complete live inventory, including inputs, actions, menus, tables, charts, cards, media, layouts, runtime states, motion, and composed product patterns.
+
+### `/components/docs` — Focused component documentation
+
+`src/components/docs/component-doc-page.tsx`
+
+The component index is driven by `src/data/component-docs.ts`. Every documented primitive has a dedicated route under `/components/[slug]` with a live preview, API notes, usage guidance, and source reference.
+
+### `/examples` — Composed product surfaces
+
+`src/components/examples/example-pages.tsx`
+
+Examples demonstrate how primitives combine into product-level interfaces. Available examples are `/examples/dashboard`, `/examples/admin`, `/examples/realtime`, and `/examples/workflows`. Their data is deterministic scenario data and is clearly presented as illustrative.
+
+### Direct catalog pages
 
 `src/components/showroom/showroom-page.tsx`
 
@@ -206,6 +231,20 @@ src/server/
 
 Each adapter slot maps to a `platformCapabilities` entry in `src/config/capabilities.ts`. Concrete adapters implement the contracts from `runtime.ts` — components never import adapter implementations directly.
 
+### Platform foundation
+
+The template also ships with vendor-neutral primitives for product work:
+
+- `src/server/contracts/platform.ts` — users, organizations, memberships, audit events, and repository interfaces.
+- `src/server/access-control.ts` — role-to-permission mapping and authorization errors.
+- `src/server/http.ts` — consistent success/error envelopes and request correlation ids.
+- `src/server/logger.ts` — structured server logging with request and organization context.
+- `src/components/providers/app-providers.tsx` — typed session and permission context boundary.
+- `src/app/api/health` and `src/app/api/ready` — deployment health probes.
+- `src/features/README.md` — convention for isolatable domain modules.
+
+Read [`docs/architecture.md`](docs/architecture.md) before adding a product feature or provider adapter.
+
 ---
 
 ## Project structure
@@ -215,7 +254,11 @@ src/
   app/
     globals.css         ← Design tokens + global utilities
     layout.tsx          ← Root layout (Geist font, metadata)
-    page.tsx            ← Marketing home route
+    page.tsx            ← Interactive system showcase
+    overview/page.tsx   ← Factual architecture overview
+    components/[slug]   ← One documentation page per component
+    components/docs     ← Focused documentation index
+    examples/[example]  ← Composed product examples
     (catalog)/
       buttons/page.tsx  - Direct component category routes
       forms/page.tsx
@@ -224,18 +267,21 @@ src/
       workflows/page.tsx
       charts/page.tsx
     showroom/
-      page.tsx          - Redirects old showroom URL to /components
+      page.tsx          - Full catalog mirror route
   components/
     layout/             ← SiteShell, SiteHeader, SiteFooter
     marketing/          ← HomePage
-    showroom/           ← ShowroomPage + section components
+    docs/               ← Component index, docs pages, and live previews
+    examples/           ← Composed dashboard, admin, realtime, and workflow screens
+    showroom/           ← Legacy catalog sections
     ui/                 ← All reusable primitives
   config/
     capabilities.ts     ← Platform capability definitions
     site.ts             ← Site name, tagline, framework badges
   data/
     navigation.ts       ← Nav tree data
-    operations.ts       ← Sample operation rows + capability areas
+    component-docs.ts   ← Source-of-truth component documentation registry
+    operations.ts       ← Legacy showcase scenario rows
     showroom.ts         ← Token table, card samples, menu data
   lib/
     cn.ts               ← clsx + tailwind-merge helper
@@ -254,12 +300,13 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) for the marketing home.  
-Open [http://localhost:3000/components](http://localhost:3000/components) for the full catalog, or direct pages such as [http://localhost:3000/buttons](http://localhost:3000/buttons), [http://localhost:3000/forms](http://localhost:3000/forms), [http://localhost:3000/tables](http://localhost:3000/tables), [http://localhost:3000/templates](http://localhost:3000/templates), and [http://localhost:3000/charts](http://localhost:3000/charts).
+Open [http://localhost:3000](http://localhost:3000) for the interactive system showcase, [http://localhost:3000/overview](http://localhost:3000/overview) for the factual architecture overview, and [http://localhost:3000/components](http://localhost:3000/components) for the complete live component showroom. Focused documentation remains at [http://localhost:3000/components/docs](http://localhost:3000/components/docs), composed product surfaces at [http://localhost:3000/examples](http://localhost:3000/examples), and the showroom mirror at [http://localhost:3000/showroom](http://localhost:3000/showroom).
 
 ```bash
 npm run build   # production build
 npm run lint    # ESLint
+npm run typecheck # TypeScript validation
+npm run check   # lint + typecheck + tests + production build
 ```
 
 ---

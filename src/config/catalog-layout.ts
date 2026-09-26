@@ -20,7 +20,9 @@ export const catalogLayoutProfiles = {
 } as const satisfies Record<CatalogLayoutProfile, CatalogLayoutProfileConfig>;
 
 export const catalogSectionLayouts = {
+  animation: "wide",
   auth: "wide",
+  motion: "wide",
   blueprint: "wide",
   buttons: "wide",
   cards: "default",

@@ -89,6 +89,28 @@
   --ds-pink-900-value: 336, 65%, 45%;
   --ds-pink-1000-value: 333, 74%, 15%;
 
+  /* Extended semantic families — added scales (100 / 400 / 700 / 900) */
+  --ds-indigo-100-value: 245, 100%, 97%;
+  --ds-indigo-400-value: 244, 90%, 90%;
+  --ds-indigo-700-value: 245, 70%, 56%;
+  --ds-indigo-900-value: 246, 65%, 48%;
+  --ds-orange-100-value: 30, 100%, 95%;
+  --ds-orange-400-value: 28, 100%, 86%;
+  --ds-orange-700-value: 24, 95%, 52%;
+  --ds-orange-900-value: 20, 90%, 44%;
+  --ds-slate-100-value: 215, 25%, 96%;
+  --ds-slate-400-value: 215, 18%, 88%;
+  --ds-slate-700-value: 215, 14%, 46%;
+  --ds-slate-900-value: 216, 16%, 32%;
+  --ds-sky-100-value: 196, 100%, 96%;
+  --ds-sky-400-value: 196, 95%, 86%;
+  --ds-sky-700-value: 196, 90%, 44%;
+  --ds-sky-900-value: 198, 90%, 36%;
+  --ds-bronze-100-value: 38, 50%, 95%;
+  --ds-bronze-400-value: 37, 45%, 84%;
+  --ds-bronze-700-value: 36, 48%, 46%;
+  --ds-bronze-900-value: 34, 45%, 36%;
+
   --ds-background-100: hsla(var(--ds-background-100-value), 1);
   --ds-background-200: hsla(var(--ds-background-200-value), 1);
   --ds-gray-100: hsla(var(--ds-gray-100-value), 1);
@@ -141,6 +163,26 @@
   --ds-pink-700: hsla(var(--ds-pink-700-value), 1);
   --ds-pink-900: hsla(var(--ds-pink-900-value), 1);
   --ds-pink-1000: hsla(var(--ds-pink-1000-value), 1);
+  --ds-indigo-100: hsla(var(--ds-indigo-100-value), 1);
+  --ds-indigo-400: hsla(var(--ds-indigo-400-value), 1);
+  --ds-indigo-700: hsla(var(--ds-indigo-700-value), 1);
+  --ds-indigo-900: hsla(var(--ds-indigo-900-value), 1);
+  --ds-orange-100: hsla(var(--ds-orange-100-value), 1);
+  --ds-orange-400: hsla(var(--ds-orange-400-value), 1);
+  --ds-orange-700: hsla(var(--ds-orange-700-value), 1);
+  --ds-orange-900: hsla(var(--ds-orange-900-value), 1);
+  --ds-slate-100: hsla(var(--ds-slate-100-value), 1);
+  --ds-slate-400: hsla(var(--ds-slate-400-value), 1);
+  --ds-slate-700: hsla(var(--ds-slate-700-value), 1);
+  --ds-slate-900: hsla(var(--ds-slate-900-value), 1);
+  --ds-sky-100: hsla(var(--ds-sky-100-value), 1);
+  --ds-sky-400: hsla(var(--ds-sky-400-value), 1);
+  --ds-sky-700: hsla(var(--ds-sky-700-value), 1);
+  --ds-sky-900: hsla(var(--ds-sky-900-value), 1);
+  --ds-bronze-100: hsla(var(--ds-bronze-100-value), 1);
+  --ds-bronze-400: hsla(var(--ds-bronze-400-value), 1);
+  --ds-bronze-700: hsla(var(--ds-bronze-700-value), 1);
+  --ds-bronze-900: hsla(var(--ds-bronze-900-value), 1);
 
   --ds-gray-alpha-100: #0000000d;
   --ds-gray-alpha-200: #00000015;
@@ -232,6 +274,21 @@
     --ds-teal-100-value: 169, 78%, 7%;
     --ds-teal-400-value: 171, 85%, 13%;
     --ds-teal-900-value: 174, 90%, 41%;
+    --ds-indigo-100-value: 245, 45%, 14%;
+    --ds-indigo-400-value: 245, 60%, 26%;
+    --ds-indigo-900-value: 244, 90%, 75%;
+    --ds-orange-100-value: 24, 80%, 10%;
+    --ds-orange-400-value: 24, 90%, 24%;
+    --ds-orange-900-value: 26, 95%, 62%;
+    --ds-slate-100-value: 215, 18%, 14%;
+    --ds-slate-400-value: 215, 14%, 26%;
+    --ds-slate-900-value: 214, 14%, 68%;
+    --ds-sky-100-value: 196, 60%, 11%;
+    --ds-sky-400-value: 196, 80%, 22%;
+    --ds-sky-900-value: 196, 90%, 64%;
+    --ds-bronze-100-value: 36, 35%, 11%;
+    --ds-bronze-400-value: 36, 40%, 22%;
+    --ds-bronze-900-value: 38, 48%, 62%;
     --ds-gray-alpha-100: #ffffff0f;
     --ds-gray-alpha-200: #ffffff17;
     --ds-gray-alpha-300: #ffffff21;
@@ -267,6 +324,11 @@ body {
   background-size: auto, 72px 72px, 72px 72px, auto;
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  /* High-quality global text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga" 1, "calt" 1;
 }
 
 ::selection {
@@ -274,25 +336,12 @@ body {
   color: var(--ds-blue-1000);
 }
 
+/* Even, thin separation from the background (not a directional depth glow):
+   one hairline ring + a soft elevation shadow, the same on all four edges. */
 .depth-surface {
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.85),
-    inset 0 -1px 0 rgb(0 0 0 / 0.035),
-    0 1px 1px rgb(0 0 0 / 0.04),
-    0 18px 32px -28px rgb(0 0 0 / 0.55);
-}
-
-.depth-surface:not(.fixed):not(.absolute):not(.sticky) {
-  position: relative;
-}
-
-.depth-surface::after {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.28);
-  content: "";
+    0 1px 2px rgb(0 0 0 / 0.05),
+    0 14px 30px -26px rgb(0 0 0 / 0.4);
 }
 
 @keyframes fade-in {
@@ -335,6 +384,186 @@ body {
     linear-gradient(var(--ds-gray-alpha-200) 1px, transparent 1px),
     linear-gradient(90deg, var(--ds-gray-alpha-200) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+/* Neutral frosted chip — liquid glass: a see-through tint lets the blurred,
+   saturated backdrop refract through (so it reacts to whatever is behind it).
+   An EVEN top-down sheen reads as light from above — no left/right hotspots —
+   and a crisp top edge + faint ring define the glass. No brightness wash, so the
+   frosted backdrop stays colorful instead of going flat-white. Color is never
+   carried by the box itself — use a .ds-dot for status. */
+.badge-frost {
+  position: relative;
+  background-color: hsla(var(--ds-gray-700-value), 0.07);
+  /* Even highlight: brightest along the top edge, fading straight down. */
+  background-image: linear-gradient(
+    to bottom,
+    hsla(0, 0%, 100%, 0.24) 0%,
+    hsla(0, 0%, 100%, 0) 52%
+  );
+  border-color: hsla(var(--ds-gray-700-value), 0.3);
+  /* Liquid-glass refraction: the #srt-liquid-chip filter (rendered globally in
+     the root layout) warps the backdrop through the chip; blur + saturate frost
+     it. -webkit- has no url() refraction (falls back to a plain frost). */
+  -webkit-backdrop-filter: blur(7px) saturate(150%);
+  backdrop-filter: url(#srt-liquid-chip) blur(7px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.55),
+    inset 0 0 0 0.5px hsla(0, 0%, 100%, 0.18),
+    inset 0 -6px 10px -8px hsla(0, 0%, 0%, 0.05),
+    0 1px 2px rgb(0 0 0 / 0.07);
+}
+
+/* Translucent glass chip — liquid glass: a lightly-tinted, see-through fill so
+   the blurred + saturated backdrop clearly shows through and the chip reacts to
+   whatever is behind it (image, dark, light). Even top-down sheen + crisp top
+   edge; no diagonal hotspots. Black text stays legible via a soft white halo. */
+.glass-frost {
+  position: relative;
+  color: #0a0a0a;
+  /* Full-coverage fill (does NOT fade to transparent) so small label text stays
+     legible on images — same readable recipe as the approved dot-lab panel. */
+  background-color: hsla(0, 0%, 100%, 0.42);
+  background-image: linear-gradient(
+    to bottom,
+    hsla(0, 0%, 100%, 0.52) 0%,
+    hsla(0, 0%, 100%, 0.42) 100%
+  );
+  border-color: hsla(0, 0%, 0%, 0.1);
+  /* Liquid-glass refraction via the global #srt-liquid-chip filter; moderate blur
+     keeps the warp visible while text reads. -webkit- falls back to plain frost. */
+  -webkit-backdrop-filter: blur(13px) saturate(170%);
+  backdrop-filter: url(#srt-liquid-chip) blur(13px) saturate(170%);
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.72),
+    inset 0 0 0 0.5px hsla(0, 0%, 100%, 0.3),
+    inset 0 -8px 12px -8px hsla(0, 0%, 0%, 0.06),
+    0 1px 2px rgb(0 0 0 / 0.14),
+    0 6px 18px -12px rgb(0 0 0 / 0.4);
+  text-shadow:
+    0 1px 1px hsla(0, 0%, 100%, 0.7),
+    0 0 6px hsla(0, 0%, 100%, 0.5);
+}
+
+/* Status dot: a flat, solid color with a single crisp dark ring so the whole
+   family stays consistent. Color is set inline; size follows the adjacent text
+   (1em). No gloss/highlight — flat fill, as before, just bigger. */
+.ds-dot {
+  border: 1px solid rgb(0 0 0 / 0.55);
+  border-color: rgb(0 0 0 / 0.55);
+}
+
+/* ── Liquid glass surfaces (60% liquid glass / 40% glassmorphism) ──────────
+   Reusable on-image card/panel overlays. Add as a plain className on a <div>
+   that already carries padding / rounded / border utilities — radius is
+   inherited, never forced. SSR-safe pure CSS: strong backdrop refraction, a
+   translucent fill, a top-left specular highlight, a thin bright inset edge
+   ring, a soft drop shadow, and a diagonal sheen (::before). Dark text stays
+   legible by default via a white text halo; reads well over light, dark, or
+   image backdrops and in dark mode (translucent white glass over dark). */
+.liquid-glass {
+  position: relative;
+  color: #0a0a0a;
+  background-color: hsla(0, 0%, 100%, 0.4);
+  background-image: linear-gradient(
+    to bottom,
+    hsla(0, 0%, 100%, 0.5) 0%,
+    hsla(0, 0%, 100%, 0.4) 100%
+  );
+  /* Liquid-glass refraction via the global #srt-liquid-panel filter; medium blur
+     keeps the warp visible while text stays legible. -webkit- → plain frost. */
+  -webkit-backdrop-filter: blur(16px) saturate(175%);
+  backdrop-filter: url(#srt-liquid-panel) blur(16px) saturate(175%);
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.7),
+    inset 0 0 0 0.5px hsla(0, 0%, 100%, 0.35),
+    inset 0 -10px 16px -10px hsla(0, 0%, 0%, 0.07),
+    0 1px 2px rgb(0 0 0 / 0.08),
+    0 16px 40px -24px rgb(0 0 0 / 0.45);
+  text-shadow:
+    0 1px 1px hsla(0, 0%, 100%, 0.65),
+    0 0 8px hsla(0, 0%, 100%, 0.45);
+}
+
+/* Heavier variant for large card overlays: more blur, a more pronounced
+   specular highlight + sheen, deeper elevation. Same composition rules. */
+.liquid-glass-strong {
+  position: relative;
+  color: #0a0a0a;
+  background-color: hsla(0, 0%, 100%, 0.46);
+  background-image: linear-gradient(
+    to bottom,
+    hsla(0, 0%, 100%, 0.6) 0%,
+    hsla(0, 0%, 100%, 0.46) 100%
+  );
+  -webkit-backdrop-filter: blur(22px) saturate(185%);
+  backdrop-filter: url(#srt-liquid-panel) blur(22px) saturate(185%);
+  box-shadow:
+    inset 0 1.5px 0 hsla(0, 0%, 100%, 0.82),
+    inset 0 0 0 0.75px hsla(0, 0%, 100%, 0.45),
+    inset 0 -12px 20px -12px hsla(0, 0%, 0%, 0.08),
+    0 2px 4px rgb(0 0 0 / 0.1),
+    0 28px 60px -28px rgb(0 0 0 / 0.55);
+  text-shadow:
+    0 1px 1px hsla(0, 0%, 100%, 0.7),
+    0 0 8px hsla(0, 0%, 100%, 0.5);
+}
+
+/* ── Stripe-glass button: a glass pill floats on a sliding diagonal track and the
+   glass refracts the moving stripes. Pair with the global #srt-liquid-chip filter
+   (mounted in the root layout). Use anywhere via <StripeGlassButton />. ───────── */
+.stripe-glass {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  border-radius: 9999px;
+  padding: 2px;
+  isolation: isolate;
+  border: 1px solid var(--ds-gray-alpha-300);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+}
+.stripe-glass-track {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: linear-gradient(-45deg,
+    #c4c4c4 25%, #f3f3f3 25%, #f3f3f3 50%,
+    #c4c4c4 50%, #c4c4c4 75%, #f3f3f3 75%);
+  background-size: 30px 30px;
+  animation: stripeGlassMove 1.7s linear infinite;
+}
+@keyframes stripeGlassMove { from { background-position: 0 0; } to { background-position: 30px 0; } }
+.stripe-glass-face {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--ds-gray-1000);
+  background-color: hsla(0, 0%, 100%, 0.42);
+  background-image: linear-gradient(to bottom, hsla(0, 0%, 100%, 0.58), hsla(0, 0%, 100%, 0.42));
+  -webkit-backdrop-filter: blur(10px) saturate(165%);
+  backdrop-filter: url(#srt-liquid-chip) blur(10px) saturate(165%);
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.85),
+    inset 0 0 0 0.5px hsla(0, 0%, 100%, 0.45);
+  text-shadow: 0 1px 1px hsla(0, 0%, 100%, 0.7);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.stripe-glass-face:hover {
+  transform: translateY(-1px);
+  background-color: hsla(0, 0%, 100%, 0.5);
+}
+.stripe-glass-accent {
+  box-shadow:
+    inset 0 0 0 1px hsla(212, 100%, 48%, 0.5),
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.85);
+}
+@media (prefers-reduced-motion: reduce) {
+  .stripe-glass-track { animation: none; }
 }
 
 .catalog-page {
@@ -383,3 +612,7 @@ body {
   min-width: 0;
   width: 100%;
 }
+
+/* Spectral wordmark — per-letter wave (SpectralText component) */
+@keyframes srt-wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-.09em)}}
+@media (prefers-reduced-motion: reduce){.srt-wave{animation:none !important}}

@@ -20,6 +20,7 @@ export const cardVariants = cva(
         base: "shadow-[0_1px_1px_rgb(0_0_0_/_0.03)]",
         deep: "depth-surface",
         flat: "shadow-none",
+        glass: "liquid-glass-strong",
         lifted:
           "shadow-[0_1px_1px_rgb(0_0_0_/_0.04),0_16px_32px_-24px_rgb(0_0_0_/_0.5)]",
       },

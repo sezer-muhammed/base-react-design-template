@@ -15,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Gauge } from "@/components/ui/gauge";
 import { SectionHeader, Surface } from "@/components/ui/surface";
 import { StatusSignal } from "@/components/ui/status-signal";
 import {
@@ -106,7 +107,7 @@ const channelShareData = [
   { label: "Jobs", value: 21, color: chartPalette.amber },
   { label: "Realtime", value: 18, color: chartPalette.teal },
   { label: "UI", value: 16, color: chartPalette.green },
-  { label: "Adapters", value: 11, color: chartPalette.purple },
+  { label: "Adapters", value: 11, color: chartPalette.red },
 ] as const;
 
 const scatterData = [
@@ -277,7 +278,7 @@ export function ChartShowcase() {
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <ComponentIdBadge id="CHART-03" />
-              <SignalPill color={chartPalette.purple}>bar matrix</SignalPill>
+              <SignalPill color={chartPalette.red}>bar matrix</SignalPill>
             </div>
             <h3 className="mt-4 text-[18px] font-semibold">Bar graph direction</h3>
             <p className="mt-1 max-w-md text-[13px] leading-5 text-[var(--ds-gray-900)]">
@@ -302,6 +303,31 @@ export function ChartShowcase() {
               ]}
             />
           </div>
+        </div>
+      </Surface>
+
+      <Surface
+        className="overflow-hidden xl:col-span-2"
+        data-component-id="CHART-09"
+        id="chart-09-gauges"
+        tone="flat"
+      >
+        <SectionHeader
+          action={
+            <>
+              <ComponentIdBadge id="CHART-09" />
+              <SignalPill color={chartPalette.green}>gauge</SignalPill>
+            </>
+          }
+          eyebrow="Radial"
+          summary="A neutral 270° gauge for single-number health; color stays a signal, not a fill."
+          title="Capacity gauges"
+        />
+        <div className="flex flex-wrap items-center justify-around gap-6 p-5">
+          <Gauge label="CPU" unit="%" value={68} />
+          <Gauge color="var(--ds-amber-700)" label="Memory" unit="%" value={82} />
+          <Gauge color="var(--ds-green-700)" label="Uptime" unit="%" value={99} />
+          <Gauge color="var(--ds-red-700)" label="Error budget" unit="%" value={23} />
         </div>
       </Surface>
 
@@ -473,7 +499,7 @@ function ChartDecisionCard() {
   const rows = [
     ["Primary", "Recharts", "Best fit for this template now.", chartPalette.green],
     ["Bar system", "Geist 700", "Colored bars with black borders.", chartPalette.blue],
-    ["Matrix heatmap", "Recharts", "Use custom scatter cells for dense class comparison.", chartPalette.purple],
+    ["Matrix heatmap", "Recharts", "Use custom scatter cells for dense class comparison.", chartPalette.red],
   ] as const;
 
   return (

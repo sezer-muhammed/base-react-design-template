@@ -1,6 +1,7 @@
 "use client";
 
-import Image from "next/image";
+import { AuroraCanvas } from "@/components/ui/aurora-canvas";
+import { SpectralText } from "@/components/ui/spectral-text";
 import {
   ArrowRight,
   Boxes,
@@ -26,7 +27,14 @@ import { StatusSignal } from "@/components/ui/status-signal";
 import { platformCapabilities } from "@/config/capabilities";
 import { frameworkBadges, siteConfig } from "@/config/site";
 import { operationRows } from "@/data/operations";
-import { assetDemo } from "@/data/showroom";
+import {
+  Magnetic,
+  ParallaxPanel,
+  Reveal,
+  Stagger,
+  StaggerItem,
+  TiltCard,
+} from "./home-motion";
 import { ProofSection } from "./proof-section";
 
 const featureCards = [
@@ -84,7 +92,7 @@ const structureRows = [
     layer: "server/contracts",
     purpose: "Runtime envelopes",
     status: "Slot",
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
   },
 ] as const;
 
@@ -142,7 +150,7 @@ const componentCards = [
   },
   {
     body: "Modal frame with standard footer",
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     icon: ShieldCheck,
     title: "OverlayFrame",
   },
@@ -157,7 +165,7 @@ const componentCards = [
 export function HomePage() {
   return (
     <SiteShell>
-      <div className="w-full space-y-8 px-3 py-3 sm:px-5 lg:px-8 2xl:px-10">
+      <div className="w-full space-y-8 px-3 py-3 sm:px-5 lg:px-8 2xl:px-10 min-[1700px]:px-16 min-[2100px]:px-24 min-[2600px]:px-40">
         <Hero />
         <PlatformSection />
         <ComponentsSection />
@@ -173,59 +181,64 @@ export function HomePage() {
 function Hero() {
   return (
     <section className="grid min-h-[calc(100svh-104px)] gap-6 py-4 xl:grid-cols-[minmax(0,0.95fr)_minmax(420px,560px)] xl:items-center xl:gap-8 min-[1800px]:grid-cols-[minmax(0,0.92fr)_minmax(520px,680px)]">
-      <div className="max-w-[720px] min-[1800px]:max-w-[860px]">
-        <p className="font-mono text-[12px] uppercase text-[var(--ds-gray-700)]">
-          Production base / design system / runtime slots
-        </p>
-        <h1 className="mt-3 max-w-[760px] text-[42px] font-semibold leading-[1.03] sm:text-[58px]">
-          A compact foundation for serious web products.
-        </h1>
-        <p className="mt-5 max-w-2xl text-[15px] leading-7 text-[var(--ds-gray-900)]">
-          {siteConfig.name} is a neutral Next.js template with a real site shell,
-          direct component pages, and runtime-ready structure for APIs,
-          jobs, streams, triggers, and future transport adapters.
-        </p>
-        <ActionBar className="mt-6">
-          <ButtonLink href="/components" icon={ArrowRight} variant="primary">
-            Open components
-          </ButtonLink>
-          <ButtonLink href="#structure" icon={GitBranch} variant="secondary">
-            View structure
-          </ButtonLink>
-        </ActionBar>
-        <div className="mt-6 flex flex-wrap gap-2">
-          {frameworkBadges.map((badge) => (
-            <StatusSignal color={badge.color} key={badge.label} variant="pill">
-              {badge.label}
+      <Stagger trigger="mount" className="max-w-[720px] min-[1800px]:max-w-[860px]">
+        <StaggerItem>
+          <p className="font-mono text-[12px] uppercase text-[var(--ds-gray-700)]">
+            Production base / design system / runtime slots
+          </p>
+        </StaggerItem>
+        <StaggerItem>
+          <h1 className="mt-3 max-w-[760px] text-[42px] font-semibold leading-[1.03] sm:text-[58px]">
+            A compact foundation for a <SpectralText>spectrum</SpectralText> of web products.
+          </h1>
+        </StaggerItem>
+        <StaggerItem>
+          <p className="mt-5 max-w-2xl text-[15px] leading-7 text-[var(--ds-gray-900)]">
+            {siteConfig.name} is a neutral Next.js template with a real site shell,
+            direct component pages, and runtime-ready structure for APIs,
+            jobs, streams, triggers, and future transport adapters.
+          </p>
+        </StaggerItem>
+        <StaggerItem>
+          <ActionBar className="mt-6">
+            <Magnetic>
+              <ButtonLink href="/components" icon={ArrowRight} variant="primary">
+                Open components
+              </ButtonLink>
+            </Magnetic>
+            <ButtonLink href="#structure" icon={GitBranch} variant="secondary">
+              View structure
+            </ButtonLink>
+          </ActionBar>
+        </StaggerItem>
+        <StaggerItem>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {frameworkBadges.map((badge) => (
+              <StatusSignal color={badge.color} key={badge.label} variant="pill">
+                {badge.label}
+              </StatusSignal>
+            ))}
+            <StatusSignal color="var(--ds-amber-700)" variant="pill">
+              Recharts
             </StatusSignal>
-          ))}
-          <StatusSignal color="var(--ds-amber-700)" variant="pill">
-            Recharts
-          </StatusSignal>
-        </div>
-      </div>
+          </div>
+        </StaggerItem>
+      </Stagger>
 
-      <div className="relative min-h-[460px] overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-gray-1000)] shadow-[0_18px_38px_-28px_rgb(0_0_0_/_0.82)] sm:min-h-[520px] min-[1800px]:min-h-[600px]">
-        <Image
-          alt="Template visual preview"
-          className="object-cover object-center opacity-90"
-          fill
-          priority
-          sizes="(min-width: 1800px) 760px, (min-width: 1280px) 620px, 100vw"
-          src={assetDemo.media.image02}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_36%,transparent_32%,rgb(0_0_0_/_0.20)_66%,rgb(0_0_0_/_0.62)_100%)]" />
+      <ParallaxPanel className="relative min-h-[460px] overflow-hidden rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-gray-1000)] shadow-[0_18px_38px_-28px_rgb(0_0_0_/_0.82)] sm:min-h-[520px] min-[1800px]:min-h-[600px]">
+        <AuroraCanvas className="absolute inset-0 h-full w-full" dark />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_32%,transparent_42%,rgb(0_0_0_/_0.32)_100%)]" />
         <div className="absolute inset-x-4 top-4 flex flex-wrap gap-2">
           <GlassTag>visual system</GlassTag>
           <GlassTag>docs linked</GlassTag>
         </div>
-        <div className="absolute inset-x-4 bottom-4 rounded-[10px] border border-white/24 bg-white/[0.40] p-4 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.62),0_18px_40px_-28px_rgb(0_0_0_/_0.88)] backdrop-blur-md">
+        <div className="absolute inset-x-4 bottom-4 rounded-[10px] border border-black/10 bg-white p-4 shadow-[0_1px_2px_rgb(0_0_0_/_0.16)]">
           <div className="grid gap-4 sm:grid-cols-[1fr_220px] sm:items-end">
             <div>
-              <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
+              <p className="font-mono text-[11px] uppercase text-black/55">
                 Website shell
               </p>
-              <h2 className="mt-2 text-[24px] font-semibold leading-7">
+              <h2 className="mt-2 text-[24px] font-semibold leading-7 text-[#0a0a0a]">
                 Header, navigation, content, and component routes now coexist.
               </h2>
             </div>
@@ -235,33 +248,37 @@ function Hero() {
             </div>
           </div>
         </div>
-      </div>
+      </ParallaxPanel>
     </section>
   );
 }
 
 function PlatformSection() {
   return (
-    <section className="scroll-mt-24 reveal" id="platform">
-      <div className="stagger grid gap-3 lg:grid-cols-3">
+    <section className="scroll-mt-24" id="platform">
+      <Stagger className="grid gap-3 lg:grid-cols-3">
         {featureCards.map((feature) => {
           const Icon = feature.icon;
 
           return (
-            <Card depth="lifted" key={feature.title}>
-              <CardHeader
-                action={<StatusSignal color={feature.color} variant="pill">base</StatusSignal>}
-              >
-                <div className="grid h-10 w-10 place-items-center rounded-[8px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)]">
-                  <Icon aria-hidden="true" className="h-5 w-5 text-[var(--ds-gray-800)]" />
-                </div>
-                <CardTitle className="mt-4">{feature.title}</CardTitle>
-                <CardDescription>{feature.description}</CardDescription>
-              </CardHeader>
-            </Card>
+            <StaggerItem key={feature.title}>
+              <TiltCard>
+                <Card className="h-full" depth="lifted">
+                  <CardHeader
+                    action={<StatusSignal color={feature.color} variant="pill">base</StatusSignal>}
+                  >
+                    <div className="grid h-10 w-10 place-items-center rounded-[8px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)]">
+                      <Icon aria-hidden="true" className="h-5 w-5 text-[var(--ds-gray-800)]" />
+                    </div>
+                    <CardTitle className="mt-4">{feature.title}</CardTitle>
+                    <CardDescription>{feature.description}</CardDescription>
+                  </CardHeader>
+                </Card>
+              </TiltCard>
+            </StaggerItem>
           );
         })}
-      </div>
+      </Stagger>
     </section>
   );
 }
@@ -334,7 +351,7 @@ function RuntimeSection() {
                 <div className="flex items-center justify-between gap-3">
                   <span className="truncate text-[13px] font-semibold">{row.module}</span>
                   <StatusSignal
-                    color={row.risk === "High" ? "var(--ds-pink-700)" : row.risk === "Medium" ? "var(--ds-amber-700)" : "var(--ds-green-700)"}
+                    color={row.risk === "High" ? "var(--ds-red-700)" : row.risk === "Medium" ? "var(--ds-amber-700)" : "var(--ds-green-700)"}
                     variant="dot"
                   />
                 </div>
@@ -370,7 +387,8 @@ function StructureSection() {
 
 function FinalCta() {
   return (
-    <section className="rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] p-5">
+    <Reveal>
+      <section className="rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] p-5">
       <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
         <div>
           <p className="font-mono text-[11px] uppercase text-[var(--ds-gray-700)]">
@@ -381,15 +399,18 @@ function FinalCta() {
           </h2>
         </div>
         <ActionBar align="right">
-          <ButtonLink href="/components" icon={Workflow} variant="primary">
-            Review components
-          </ButtonLink>
+          <Magnetic>
+            <ButtonLink href="/components" icon={Workflow} variant="primary">
+              Review components
+            </ButtonLink>
+          </Magnetic>
           <ButtonLink href="#platform" icon={Cable} variant="secondary">
             Back to top
           </ButtonLink>
         </ActionBar>
       </div>
-    </section>
+      </section>
+    </Reveal>
   );
 }
 

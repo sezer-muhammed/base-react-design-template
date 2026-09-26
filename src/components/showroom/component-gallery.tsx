@@ -28,6 +28,7 @@ import {
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Calendar, type DateRange } from "@/components/ui/calendar";
 import {
   Card,
   CardDescription,
@@ -44,7 +45,7 @@ const graphData = [
   { color: chartPalette.green, label: "Empathy", value: 88 },
   { color: chartPalette.teal, label: "Risk", value: 54 },
   { color: chartPalette.amber, label: "AI", value: 91 },
-  { color: chartPalette.purple, label: "Trust", value: 67 },
+  { color: chartPalette.red, label: "Trust", value: 67 },
 ];
 
 const listItems = [
@@ -53,11 +54,25 @@ const listItems = [
   ["Governance", "Approval and risk policy", "Draft"],
 ];
 
-const dateOptions = ["2026-05-24", "2026-05-29", "2026-06-03"];
+const SHORT_MONTHS = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
+function parseISODate(value: string) {
+  const [y, m, d] = value.split("-").map(Number);
+  return new Date(y, (m ?? 1) - 1, d ?? 1);
+}
+function toISODate(date: Date) {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+function formatLongDate(date: Date) {
+  return `${SHORT_MONTHS[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}
 
 export function ComponentGallery() {
   const [toastOpen, setToastOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(dateOptions[0]);
+  const [selectedDate, setSelectedDate] = useState("2026-05-24");
 
   return (
     <Toast.Provider swipeDirection="right">
@@ -98,7 +113,10 @@ export function ComponentGallery() {
         >
           <div className="grid gap-3 xl:grid-cols-[1fr_360px]">
             <FormExample selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-            <DatePickerCard selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+            <div className="grid gap-3">
+              <DatePickerCard selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+              <RangePickerCard />
+            </div>
           </div>
         </ShowroomBand>
 
@@ -360,7 +378,7 @@ function CoreActionsCard() {
       <div className="mt-4 flex flex-wrap gap-2">
         <Badge tone="blue">Active</Badge>
         <Badge tone="amber">Review</Badge>
-        <Badge tone="pink">Blocked</Badge>
+        <Badge tone="red">Blocked</Badge>
       </div>
     </Card>
   );
@@ -530,41 +548,82 @@ function DatePickerCard({
         <CardTitle>Datepicker</CardTitle>
         <CardDescription>Compact date selection powered by a popover.</CardDescription>
       </CardHeader>
-      <Popover.Root>
-        <Popover.Trigger asChild>
-          <Button icon={CalendarDays} variant="secondary">
-            {selectedDate}
-          </Button>
-        </Popover.Trigger>
-        <Popover.Portal>
-          <Popover.Content
-            align="start"
-            className="depth-surface z-50 mt-2 w-[240px] rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] p-2"
-          >
-            <div className="grid gap-1">
-              {dateOptions.map((date) => (
-                <Popover.Close asChild key={date}>
-                  <button
-                    className={cn(
-                      "flex h-9 items-center justify-between rounded-[6px] px-2 text-[13px] hover:bg-[var(--ds-gray-100)]",
-                      selectedDate === date && "bg-[var(--ds-gray-100)] font-semibold",
-                    )}
-                    onClick={() => setSelectedDate(date)}
-                    type="button"
-                  >
-                    {date}
-                    {selectedDate === date ? <Check className="h-4 w-4" /> : null}
-                  </button>
-                </Popover.Close>
-              ))}
-            </div>
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover.Root>
+      <DatePickerPopover selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <CardFooter>
         <p className="text-[12px] text-[var(--ds-gray-700)]">
-          Native date input and popover picker are tested together.
+          Native date input and calendar popover stay in sync.
         </p>
+      </CardFooter>
+    </Card>
+  );
+}
+
+function DatePickerPopover({
+  selectedDate,
+  setSelectedDate,
+}: {
+  selectedDate: string;
+  setSelectedDate: (date: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const parsed = parseISODate(selectedDate);
+
+  return (
+    <Popover.Root onOpenChange={setOpen} open={open}>
+      <Popover.Trigger asChild>
+        <Button icon={CalendarDays} variant="secondary">
+          {formatLongDate(parsed)}
+        </Button>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          align="start"
+          className="depth-surface z-50 mt-2 rounded-[8px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] p-3"
+        >
+          <Calendar
+            mode="single"
+            onChange={(date) => {
+              setSelectedDate(toISODate(date));
+              setOpen(false);
+            }}
+            value={parsed}
+          />
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
+  );
+}
+
+function RangePickerCard() {
+  const [range, setRange] = useState<DateRange>({
+    start: new Date(2026, 4, 24),
+    end: new Date(2026, 4, 29),
+  });
+
+  const label = range.start
+    ? range.end
+      ? `${formatLongDate(range.start)} → ${formatLongDate(range.end)}`
+      : `${formatLongDate(range.start)} → pick end`
+    : "Pick a range";
+
+  return (
+    <Card data-component-id="FORM-03" depth="base" id="form-03-daterange" tone="default">
+      <CardHeader
+        action={
+          <div className="flex items-center gap-2">
+            <ComponentIdBadge id="FORM-03" />
+            <CalendarDays className="h-4 w-4 text-[var(--ds-gray-700)]" />
+          </div>
+        }
+      >
+        <CardTitle>Date range</CardTitle>
+        <CardDescription>Range selection on the same calendar primitive.</CardDescription>
+      </CardHeader>
+      <div className="rounded-[8px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-3">
+        <Calendar mode="range" onRangeChange={setRange} range={range} />
+      </div>
+      <CardFooter>
+        <p className="font-mono text-[12px] text-[var(--ds-gray-700)]">{label}</p>
       </CardFooter>
     </Card>
   );
