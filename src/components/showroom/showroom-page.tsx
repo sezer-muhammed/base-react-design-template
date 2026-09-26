@@ -3,6 +3,7 @@ import { SiteShell } from "@/components/layout/site-shell";
 import { ActionShowcase } from "@/components/showroom/action-showcase";
 import { ChartShowcase } from "@/components/showroom/chart-showcase";
 import { FileUploadShowcase } from "@/components/showroom/file-upload-showcase";
+import { PrimitivesShowcase } from "@/components/showroom/primitives-showcase";
 import { LiveTrainingShowcase } from "@/components/showroom/live-training-showcase";
 import {
   NestedHierarchyTable,
@@ -75,6 +76,7 @@ export const catalogSectionKeys = [
   "blueprint",
   "animation",
   "motion",
+  "primitives",
 ] as const;
 
 export type CatalogSectionKey = (typeof catalogSectionKeys)[number];
@@ -497,6 +499,19 @@ export function ShowroomPage({
               summary="Eighteen physics-driven micro-animations. Dots stay ink-black at rest and bloom to the accent only where the cursor touches them — move, click, drag."
             >
               <MotionLab />
+            </ShowcaseSection>
+            ) : null}
+
+            {visibleSections.has("primitives") ? (
+            <ShowcaseSection
+              componentId="S-23"
+              id="primitives"
+              kicker="23 / Primitives"
+              layout={catalogSectionLayouts.primitives}
+              title="Form, feedback, and utility primitives"
+              summary="Toggles, segmented controls, search, pagination, type scale, score colors, chart palette, logo avatars, and state placeholders synced from production apps."
+            >
+              <PrimitivesShowcase />
             </ShowcaseSection>
             ) : null}
 

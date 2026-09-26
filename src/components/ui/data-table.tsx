@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
@@ -10,12 +12,19 @@ export type TableColumn<T> = {
 };
 
 export function DataTable<T extends { id: string }>({
+  cellHeight = "h-11",
   className,
   columns,
+  onRowClick,
   rows,
 }: {
+  /** Tailwind height class for body cells — bump for roomier rows. */
+  cellHeight?: string;
   className?: string;
   columns: TableColumn<T>[];
+  /** Makes whole rows clickable; cells with interactive content should
+      stopPropagation on their own clicks. */
+  onRowClick?: (row: T) => void;
   rows: T[];
 }) {
   return (
@@ -41,13 +50,18 @@ export function DataTable<T extends { id: string }>({
         <tbody>
           {rows.map((row) => (
             <tr
-              className="border-b border-[var(--ds-gray-alpha-300)] last:border-b-0 hover:bg-[var(--ds-gray-100)]"
+              className={cn(
+                "border-b border-[var(--ds-gray-alpha-300)] last:border-b-0 hover:bg-[var(--ds-gray-100)]",
+                onRowClick && "cursor-pointer",
+              )}
               key={row.id}
+              onClick={onRowClick ? () => onRowClick(row) : undefined}
             >
               {columns.map((column) => (
                 <td
                   className={cn(
-                    "h-11 px-3 text-[var(--ds-gray-1000)]",
+                    cellHeight,
+                    "px-3 text-[var(--ds-gray-1000)]",
                     column.align === "right" && "text-right tabular-nums",
                     column.className,
                   )}

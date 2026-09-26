@@ -34,7 +34,7 @@ The component pages, such as `/buttons`, `/forms`, `/tables`, `/templates`, and 
 
 The system follows three rules:
 
-1. **Neutral first.** The base palette is white and black. Color appears only when a status, action, or category needs a signal — never for decoration.
+1. **Neutral first.** The base palette is white and black. Text is always neutral (black/white); color appears only as a *signal* — a small `StatusSignal` dot, a progress fill, or a border — never as colored text or a colored box, and never for decoration. A safety-net rule in `globals.css` folds any colored text utility (`text-blue-*`, `text-green-*`, …) back to neutral so the rule holds even in imported markup.
 2. **Compact density.** UI targets information-rich screens. Default body text is 13 px, captions are 11 px mono, section headers are 18 px semibold. Nothing is padded generously by default.
 3. **Depth through light, not shadows.** Elevation is expressed by subtle inset highlights, hairline borders, and layered backgrounds — not large drop shadows.
 
@@ -52,7 +52,15 @@ All colors are referenced via CSS custom properties named `--ds-{color}-{step}`.
 
 **Focus ring:** `--ds-focus-ring` — a two-layer outline (background gap + blue accent) applied via `focus-visible`.
 
-Dark mode is handled by `@media (prefers-color-scheme: dark)` — no class toggle required. Only the HSL values are overridden; all semantic tokens resolve automatically.
+Dark mode follows `@media (prefers-color-scheme: dark)` by default — no class toggle required. To let users override the OS setting, set `data-theme` on `<html>`: `data-theme="dark"` forces dark, `data-theme="light"` forces light, and no attribute follows the system. Only the HSL values are overridden; all semantic tokens resolve automatically.
+
+### Print
+
+`globals.css` ships a `@media print` block that drops elevation/shadows, compacts type ~11%, prevents cards from splitting across pages, keeps progress fills colored, and lets constrained content use the full printable width — so any report-style page prints cleanly with no extra work.
+
+### Page containers
+
+Beyond the fixed catalog widths, three fluid container utilities are available with a clamp-based gutter: `.site-shell` (standard pages), `.site-shell-wide`, and `.site-header-shell` (wider dashboards and headers).
 
 ### Page background
 
@@ -117,12 +125,28 @@ Eyebrow labels (category tags above section titles) always use `font-mono text-[
 
 | Component | Path | Notes |
 |---|---|---|
-| `DataTable` | `components/ui/data-table.tsx` | Generic typed table; column definitions via `TableColumn<T>[]` |
-| `RecordTable` | `components/ui/record-table.tsx` | Richer table with status, actions per row; `RecordTableColumn<T>[]` |
+| `DataTable` | `components/ui/data-table.tsx` | Generic typed table; column definitions via `TableColumn<T>[]`. Optional `onRowClick` and `cellHeight` |
+| `RecordTable` | `components/ui/record-table.tsx` | Richer table with status, actions per row; `RecordTableColumn<T>[]`. `density="roomy"` for reading-heavy tables |
 | `RecordCard` | `components/ui/record-card.tsx` | Compact card for a single record with a status signal |
 | `DataPanel` | `components/ui/data-panel.tsx` | Key-value grid for metadata or stats |
-| `ProgressCell` | `components/ui/progress-cell.tsx` | Inline progress bar for table cells |
+| `ProgressCell` | `components/ui/progress-cell.tsx` | Inline progress bar for table cells; NaN-safe, clamps 0–100, renders `—` for missing values |
 | `ToggleCell` | `components/ui/toggle-cell.tsx` | Boolean toggle for table cells |
+| `CompanyLogo` | `components/ui/company-logo.tsx` | Logo avatar with initials fallback; vendor-neutral via `src` or `resolveSrc(domain)` |
+
+### Form controls
+
+| Component | Path | Variants / props |
+|---|---|---|
+| `Toggle` | `components/ui/toggle.tsx` | Neutral-first switch (`checked`, `onChange`, `label`) |
+| `Segmented` | `components/ui/toggle.tsx` | Segmented control for small enumerations |
+| `PreferenceRow` | `components/ui/toggle.tsx` | Settings row: title + hint + control slot |
+| `SearchInput` | `components/ui/search-input.tsx` | Icon-left search box; controlled (`value`/`onChange`) or uncontrolled (`onSubmit`) |
+
+### Typography
+
+| Export | Path | Notes |
+|---|---|---|
+| `text` | `components/ui/typography.tsx` | Central type scale as composable class strings (`text.pageTitle`, `text.eyebrow`, …) |
 
 ### Status & signals
 
@@ -136,6 +160,7 @@ Eyebrow labels (category tags above section titles) always use `font-mono text-[
 | Component | Path | Notes |
 |---|---|---|
 | `RecursiveMenu` | `components/ui/recursive-menu.tsx` | Nested menu tree from a data array |
+| `Pagination` | `components/ui/pagination.tsx` | Windowed page numbers + mobile prev/next; transport-agnostic `onPageChange` |
 
 ### Overlays
 
@@ -155,7 +180,16 @@ Eyebrow labels (category tags above section titles) always use `font-mono text-[
 
 | Component | Path | Notes |
 |---|---|---|
-| `StateBlock` | `components/ui/state-block.tsx` | Empty, loading, and error states with an icon, title, and message |
+| `StateBlock` | `components/ui/state-block.tsx` | Catalog gallery tile for showroom state demos (icon, title, message) |
+| `EmptyState` | `components/ui/empty-state.tsx` | Drop-in empty / error / loading placeholder for content regions (dashed well, per-variant icon, optional action) |
+
+### Utilities (`src/lib`)
+
+| Export | Path | Notes |
+|---|---|---|
+| `cn` | `lib/cn.ts` | `clsx` + `tailwind-merge` class combiner |
+| `CATEGORICAL_PALETTE`, `categorical`, `CHART_ACCENT`, `AXIS_TICK`, `GRID_STROKE` | `lib/chart-theme.ts` | Shared chart palette + axis/grid tokens for Recharts |
+| `getScoreColor`, `getScoreGrade` | `lib/score-colors.ts` | Map a 0–100 score to a signal color (for a dot) and a letter grade |
 
 ---
 
@@ -208,6 +242,7 @@ Internal design references are split into direct pages:
 | `/charts` | Recharts area, bar, line, scatter, matrix, and donut examples |
 | `/cards` | Card tones, media cards, and wide data cards |
 | `/theme`, `/usage` | Template config controls and component docs patterns |
+| `/primitives` | Form controls, search, pagination, type scale, score signals, chart palette, logo avatars, and state placeholders |
 | `/auth`, `/jobs`, `/realtime`, `/settings` | Runtime-oriented shelves |
 
 ---
