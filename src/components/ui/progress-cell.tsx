@@ -17,7 +17,7 @@ export function ProgressCell({
 
   return (
     <span className={cn("inline-flex w-[104px] items-center gap-2", className)}>
-      <span className="block h-2 flex-1 overflow-hidden rounded-full border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-[2px]">
+      <span className="block h-3 flex-1 overflow-hidden rounded-full border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-200)] p-[2px]">
         <span
           className="block h-full rounded-full"
           style={{ background: color, width: `${pct}%` }}

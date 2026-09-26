@@ -57,7 +57,7 @@ const commandItems = [
     title: "Open Push Inbox",
   },
   {
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     description: "Review cursor sync jobs and retry windows.",
     group: "Jobs",
     id: "cmd-jobs",
@@ -108,7 +108,7 @@ const jobRows = [
     status: "Watch",
   },
   {
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     id: "job-mail-004",
     label: "Digest delivery",
     nextRun: "18:00",
@@ -168,7 +168,7 @@ const streamRows = [
   },
   {
     channel: "Broadcast",
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     event: "broadcast.sent",
     handled: 78,
     id: "evt-005",
@@ -199,7 +199,7 @@ const stateRows = [
   },
   {
     action: "Retry",
-    color: "var(--ds-pink-700)",
+    color: "var(--ds-red-700)",
     description: "Error surfaces stay neutral; urgency lives in the signal dot.",
     icon: AlertTriangle,
     id: "STATE-03",
@@ -612,7 +612,7 @@ export function AuthShellShelf() {
             {[
               ["Owner", "Full workspace controls", "var(--ds-gray-1000)"],
               ["Operator", "Jobs, streams, and tables", "var(--ds-blue-700)"],
-              ["Viewer", "Read-only observability", "var(--ds-purple-700)"],
+              ["Viewer", "Read-only observability", "var(--ds-teal-700)"],
             ].map(([label, detail, color]) => (
               <div
                 className="rounded-[7px] border border-[var(--ds-gray-alpha-300)] bg-[var(--ds-background-100)] p-3"
@@ -655,9 +655,17 @@ export function AuthShellShelf() {
             </Button>
             <SignalPill color="var(--ds-blue-700)">2FA slot</SignalPill>
           </div>
-          <div className="mt-4 grid gap-2 sm:grid-cols-2">
-            <SocialAuthButton icon={<GoogleLogo />} provider="Google" />
-            <SocialAuthButton icon={<AppleLogo />} provider="Apple" />
+          <div className="mt-4">
+            <div className="mb-2 flex items-center gap-3 text-[var(--ds-gray-700)]">
+              <span className="h-px flex-1 bg-[var(--ds-gray-alpha-300)]" />
+              <span className="font-mono text-[11px] uppercase">or continue with</span>
+              <span className="h-px flex-1 bg-[var(--ds-gray-alpha-300)]" />
+            </div>
+            <div className="grid gap-2 sm:grid-cols-3">
+              <SocialAuthButton icon={<GoogleLogo />} provider="Google" />
+              <SocialAuthButton icon={<AppleLogo />} provider="Apple" />
+              <SocialAuthButton icon={<GitHubLogo />} provider="GitHub" />
+            </div>
           </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
             <MetricTile color="var(--ds-green-700)" icon={<ShieldCheck />} label="Trust" value="98%" />
@@ -675,18 +683,30 @@ function SocialAuthButton({
   provider,
 }: {
   icon: ReactNode;
-  provider: "Apple" | "Google";
+  provider: "Apple" | "GitHub" | "Google";
 }) {
   return (
     <button
+      aria-label={`Sign in with ${provider}`}
       className="inline-flex h-10 items-center justify-center gap-2 rounded-[7px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-3 text-[13px] font-medium text-[var(--ds-gray-1000)] outline-none transition hover:border-[var(--ds-gray-alpha-500)] hover:bg-[var(--ds-gray-100)] focus-visible:shadow-[var(--ds-focus-ring)]"
       type="button"
     >
       <span className="grid h-5 w-5 place-items-center [&_svg]:h-5 [&_svg]:w-5">
         {icon}
       </span>
-      Sign in with {provider}
+      {provider}
     </button>
+  );
+}
+
+function GitHubLogo() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path
+        d="M12 1C5.92 1 1 5.92 1 12c0 4.87 3.16 9 7.54 10.46.55.1.75-.24.75-.53 0-.26-.01-.96-.02-1.88-3.07.67-3.72-1.48-3.72-1.48-.5-1.28-1.23-1.62-1.23-1.62-1-.69.08-.67.08-.67 1.11.08 1.7 1.14 1.7 1.14.99 1.7 2.6 1.21 3.23.92.1-.72.39-1.21.7-1.49-2.45-.28-5.03-1.23-5.03-5.47 0-1.21.43-2.2 1.14-2.97-.11-.28-.5-1.41.11-2.95 0 0 .93-.3 3.05 1.13a10.6 10.6 0 0 1 5.56 0c2.12-1.43 3.05-1.13 3.05-1.13.61 1.54.22 2.67.11 2.95.71.77 1.14 1.76 1.14 2.97 0 4.25-2.59 5.19-5.05 5.46.4.34.76 1.02.76 2.06 0 1.49-.02 2.69-.02 3.05 0 .29.2.64.76.53A11 11 0 0 0 23 12c0-6.08-4.92-11-11-11Z"
+        fill="currentColor"
+      />
+    </svg>
   );
 }
 

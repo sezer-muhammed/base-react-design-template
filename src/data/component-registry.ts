@@ -65,7 +65,7 @@ export const componentRegistry = [
   },
   {
     aliases: ["graph", "charts", "recharts"],
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     description: "Chart, graph, matrix, scatter, and donut examples.",
     href: "/charts",
     id: "PAGE-CHARTS",
@@ -146,7 +146,7 @@ export const componentRegistry = [
   },
   {
     aliases: ["alert", "error", "danger"],
-    color: "var(--ds-pink-700)",
+    color: "var(--ds-red-700)",
     description: "Neutral danger alert with a signal dot.",
     href: "/buttons#alert-03",
     id: "ALERT-03",
@@ -155,7 +155,7 @@ export const componentRegistry = [
   },
   {
     aliases: ["table bars", "progress", "bar alternative"],
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     description: "Signal bars expressed with the reusable table primitive.",
     href: "/buttons#graph-01-signal-bars",
     id: "GRAPH-01",
@@ -209,7 +209,7 @@ export const componentRegistry = [
   },
   {
     aliases: ["bar chart", "grouped bars", "matrix"],
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     description: "Planned versus live grouped bar chart.",
     href: "/charts#chart-03-bar-matrix",
     id: "CHART-03",
@@ -245,7 +245,7 @@ export const componentRegistry = [
   },
   {
     aliases: ["donut", "pie", "share"],
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     description: "Channel share donut chart.",
     href: "/charts#chart-07-donut",
     id: "CHART-07",
@@ -281,7 +281,7 @@ export const componentRegistry = [
   },
   {
     aliases: ["image", "media", "crop-safe", "glass"],
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     description: "Soft visual frame with edge-safe metadata.",
     href: "/media#media-01",
     id: "MEDIA-01",
@@ -344,7 +344,7 @@ export const componentRegistry = [
   },
   {
     aliases: ["analytics template", "metrics", "charts page"],
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     description: "Analytics starter page with metrics and chart zones.",
     href: "/templates#tpl-analytics",
     id: "TPL-ANALYTICS",
@@ -398,7 +398,7 @@ export const componentRegistry = [
   },
   {
     aliases: ["modal command", "launcher"],
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     description: "Modal command launcher pattern.",
     href: "/command#cmd-02",
     id: "CMD-02",
@@ -425,7 +425,7 @@ export const componentRegistry = [
   },
   {
     aliases: ["state", "error"],
-    color: "var(--ds-pink-700)",
+    color: "var(--ds-red-700)",
     description: "Error state component.",
     href: "/states#state-03",
     id: "STATE-03",

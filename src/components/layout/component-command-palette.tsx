@@ -68,6 +68,22 @@ export function ComponentCommandPalette() {
     window.setTimeout(() => inputRef.current?.focus(), 40);
   }, [open]);
 
+  // Hide the floating launcher once the footer is in view so it never
+  // overlaps the footer; the footer carries its own launcher instead.
+  const [footerVisible, setFooterVisible] = useState(false);
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) {
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setFooterVisible(entry.isIntersecting),
+      { rootMargin: "0px 0px -8px 0px" },
+    );
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const pendingTarget = readPendingTarget();
 
@@ -125,9 +141,16 @@ export function ComponentCommandPalette() {
   return (
     <>
       <button
+        aria-hidden={footerVisible}
         aria-label="Open component command palette"
-        className="depth-surface fixed bottom-3 right-3 z-30 hidden h-9 items-center gap-2 rounded-[7px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-2.5 text-[12px] font-medium text-[var(--ds-gray-1000)] transition hover:bg-[var(--ds-gray-100)] md:inline-flex"
+        className={cn(
+          "depth-surface fixed bottom-3 right-3 z-30 hidden h-9 items-center gap-2 rounded-[7px] border border-[var(--ds-gray-alpha-400)] bg-[var(--ds-background-100)] px-2.5 text-[12px] font-medium text-[var(--ds-gray-1000)] transition duration-200 hover:bg-[var(--ds-gray-100)] md:inline-flex",
+          footerVisible
+            ? "pointer-events-none translate-y-2 opacity-0"
+            : "translate-y-0 opacity-100",
+        )}
         onClick={() => setOpen(true)}
+        tabIndex={footerVisible ? -1 : undefined}
         type="button"
       >
         <Command aria-hidden="true" className="h-4 w-4 text-[var(--ds-gray-700)]" />

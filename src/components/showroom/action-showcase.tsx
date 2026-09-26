@@ -29,7 +29,7 @@ import { Surface } from "@/components/ui/surface";
 const alertRows = [
   ["ALERT-01", "Info", "System notes stay neutral and use a small signal dot instead of a colored surface.", "var(--ds-blue-700)"],
   ["ALERT-02", "Saved", "Successful states keep the same surface; only the signal color changes.", "var(--ds-green-700)"],
-  ["ALERT-03", "Risk", "Critical messages stay noticeable without shouting.", "var(--ds-pink-700)"],
+  ["ALERT-03", "Risk", "Critical messages stay noticeable without shouting.", "var(--ds-red-700)"],
 ] as const;
 
 const graphRows = [
@@ -58,7 +58,7 @@ const graphRows = [
     value: 54,
   },
   {
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-red-700)",
     description: "Judgment or confidence signal for decisions that need human review before shipping.",
     id: "graph-trust",
     label: "Trust",
@@ -102,8 +102,8 @@ const badgeRows = [
   ["Active", "var(--ds-blue-700)"],
   ["Done", "var(--ds-green-700)"],
   ["Medium Risk", "var(--ds-amber-700)"],
-  ["High Risk", "var(--ds-pink-700)"],
-  ["Judgment", "var(--ds-purple-700)"],
+  ["High Risk", "var(--ds-red-700)"],
+  ["Judgment", "var(--ds-blue-700)"],
   ["Empathy", "var(--ds-teal-700)"],
 ] as const;
 
@@ -223,7 +223,7 @@ export function ActionShowcase() {
               <div className="flex flex-wrap gap-2">
                 <StatusSignal color="var(--ds-blue-700)" variant="pill">AI Ready</StatusSignal>
                 <StatusSignal color="var(--ds-green-700)" variant="pill">Governed</StatusSignal>
-                <StatusSignal color="var(--ds-purple-700)" variant="pill">Judgment</StatusSignal>
+                <StatusSignal color="var(--ds-blue-700)" variant="pill">Judgment</StatusSignal>
                 <StatusSignal color="var(--ds-amber-700)" variant="pill">Review</StatusSignal>
                 <GlassTag tone="dark">glass</GlassTag>
               </div>
@@ -317,15 +317,14 @@ function NeutralAlert({
       data-component-id={id}
       id={id.toLowerCase()}
     >
-      <div className="flex items-start gap-2">
-        <StatusSignal className="mt-1.5" color={color} variant="dot" />
-        <div className="min-w-0">
-          <p className="flex flex-wrap items-center gap-2 text-[13px] font-semibold">
-            <ComponentIdBadge id={id} />
+      <div className="min-w-0">
+        <p className="flex flex-wrap items-center gap-2">
+          <ComponentIdBadge id={id} />
+          <StatusSignal color={color} variant="pill">
             {title}
-          </p>
-          <p className="mt-1 text-[12px] leading-5 text-[var(--ds-gray-900)]">{body}</p>
-        </div>
+          </StatusSignal>
+        </p>
+        <p className="mt-1 text-[12px] leading-5 text-[var(--ds-gray-900)]">{body}</p>
       </div>
     </div>
   );

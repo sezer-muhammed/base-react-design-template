@@ -14,7 +14,7 @@ export const platformCapabilities = [
     title: "Inbound Push Events",
   },
   {
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     id: "CAP-03",
     items: ["scheduled sync", "cursor pagination", "retry windows"],
     mode: "Pull",

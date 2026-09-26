@@ -22,7 +22,6 @@ export const chartPalette = {
   blue: "var(--ds-blue-700)",
   gray: "var(--ds-gray-1000)",
   green: "var(--ds-green-700)",
-  purple: "var(--ds-purple-700)",
   red: "var(--ds-red-700)",
   teal: "var(--ds-teal-700)",
 } as const;
@@ -503,7 +502,8 @@ export function InteractiveConfusionMatrix({
             allowDecimals={false}
             axisLine={false}
             dataKey="actualIndex"
-            domain={[size - 0.5, -0.5]}
+            domain={[-0.5, size - 0.5]}
+            reversed
             interval={0}
             label={{
               value: "Actual",

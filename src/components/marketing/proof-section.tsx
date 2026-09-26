@@ -50,7 +50,7 @@ const consoleRows = [
     kind: "Realtime",
     owner: "Runtime",
     status: "Live",
-    color: "var(--ds-purple-700)",
+    color: "var(--ds-teal-700)",
     load: 91,
   },
 ] as const;

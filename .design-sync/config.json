@@ -1,0 +1,122 @@
+{
+  "projectId": "ba64bcf8-9653-4287-afa2-7d6b46ffe3a9",
+  "shape": "package",
+  "pkg": "base-react-design-template",
+  "globalName": "SezerDS",
+  "srcDir": "src/components/ui",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": ".design-sync/compiled.css",
+  "buildCmd": "node .design-sync/compile-css.mjs",
+  "componentSrcMap": {
+    "ActionBar": "src/components/ui/action-bar.tsx",
+    "Badge": "src/components/ui/badge.tsx",
+    "Button": "src/components/ui/button.tsx",
+    "ButtonLink": "src/components/ui/button.tsx",
+    "Card": "src/components/ui/card.tsx",
+    "CardHeader": "src/components/ui/card.tsx",
+    "CardTitle": "src/components/ui/card.tsx",
+    "CardDescription": "src/components/ui/card.tsx",
+    "CardFooter": "src/components/ui/card.tsx",
+    "DataPanel": "src/components/ui/data-panel.tsx",
+    "DataTable": "src/components/ui/data-table.tsx",
+    "GlassTag": "src/components/ui/glass-tag.tsx",
+    "InfoTooltip": "src/components/ui/info-tooltip.tsx",
+    "InteractiveLineChart": "src/components/ui/interactive-charts.tsx",
+    "InteractiveGroupedBarChart": "src/components/ui/interactive-charts.tsx",
+    "InteractiveSingleBarChart": "src/components/ui/interactive-charts.tsx",
+    "InteractiveScatterChart": "src/components/ui/interactive-charts.tsx",
+    "InteractiveConfusionMatrix": "src/components/ui/interactive-charts.tsx",
+    "DialogFrame": "src/components/ui/overlay-frame.tsx",
+    "DefaultDialogFooter": "src/components/ui/overlay-frame.tsx",
+    "ProgressCell": "src/components/ui/progress-cell.tsx",
+    "RecordCard": "src/components/ui/record-card.tsx",
+    "RecordTable": "src/components/ui/record-table.tsx",
+    "RecursiveMenu": "src/components/ui/recursive-menu.tsx",
+    "SearchFilterHeader": "src/components/ui/search-filter-header.tsx",
+    "FilterButton": "src/components/ui/search-filter-header.tsx",
+    "StateBlock": "src/components/ui/state-block.tsx",
+    "StatusSignal": "src/components/ui/status-signal.tsx",
+    "Surface": "src/components/ui/surface.tsx",
+    "SectionHeader": "src/components/ui/surface.tsx",
+    "ToggleCell": "src/components/ui/toggle-cell.tsx"
+  },
+  "dtsPropsFor": {
+    "ActionBar": "  /** Horizontal alignment of the action items. */\n  align?: \"left\" | \"right\" | \"split\";\n  children: React.ReactNode;\n  className?: string;",
+    "Badge": "  /** Color identity, shown as a small leading dot; the box itself stays grayscale. */\n  tone?: \"gray\" | \"blue\" | \"green\" | \"amber\" | \"teal\" | \"purple\" | \"pink\";\n  /** Show the leading colored dot (default true). */\n  dot?: boolean;\n  children: React.ReactNode;\n  className?: string;",
+    "Button": "  variant?: \"primary\" | \"secondary\" | \"ghost\";\n  size?: \"md\" | \"sm\";\n  /** Optional leading icon (e.g. a lucide-react icon component). */\n  icon?: React.ComponentType<{ className?: string }>;\n  /** Render as a Radix Slot, merging props onto the single child element. */\n  asChild?: boolean;\n  children: React.ReactNode;\n  className?: string;\n  onClick?: React.MouseEventHandler<HTMLButtonElement>;\n  disabled?: boolean;\n  type?: \"button\" | \"submit\" | \"reset\";",
+    "ButtonLink": "  variant?: \"primary\" | \"secondary\" | \"ghost\";\n  size?: \"md\" | \"sm\";\n  icon?: React.ComponentType<{ className?: string }>;\n  href?: string;\n  children: React.ReactNode;\n  className?: string;",
+    "Card": "  tone?: \"default\" | \"accent\" | \"dark\" | \"muted\" | \"warning\";\n  depth?: \"flat\" | \"base\" | \"lifted\" | \"deep\";\n  density?: \"compact\" | \"md\" | \"spacious\";\n  children?: React.ReactNode;\n  className?: string;\n  id?: string;",
+    "CardHeader": "  /** Right-aligned action slot at the top-right of the header. */\n  action?: React.ReactNode;\n  children: React.ReactNode;\n  className?: string;",
+    "CardTitle": "  children: React.ReactNode;\n  className?: string;",
+    "CardDescription": "  children: React.ReactNode;\n  className?: string;",
+    "CardFooter": "  children: React.ReactNode;\n  className?: string;",
+    "DataPanel": "  title: string;\n  eyebrow?: string;\n  summary?: string;\n  action?: React.ReactNode;\n  tone?: \"flat\" | \"raised\" | \"sunken\";\n  /** Pad the content area. */\n  padded?: boolean;\n  children: React.ReactNode;\n  className?: string;\n  contentClassName?: string;\n  componentId?: string;\n  id?: string;",
+    "DataTable": "  columns: Array<{\n    key: string;\n    header: string;\n    align?: \"left\" | \"right\";\n    className?: string;\n    render: (row: any) => React.ReactNode;\n  }>;\n  /** Each row must have a unique `id`. */\n  rows: Array<{ id: string } & Record<string, unknown>>;\n  className?: string;",
+    "GlassTag": "  /** \"light\" = white text (for dark/photo backgrounds); \"dark\" = dark text. */\n  tone?: \"light\" | \"dark\";\n  children: React.ReactNode;\n  className?: string;",
+    "InfoTooltip": "  label: string;\n  description: string;\n  /** Dot color — any CSS color or var(--ds-*). */\n  color: string;\n  side?: \"top\" | \"bottom\";\n  className?: string;",
+    "InteractiveLineChart": "  data: Array<{ label: string; [key: string]: number | string }>;\n  series: Array<{\n    key: string;\n    label: string;\n    /** Line/area color — any CSS color or var(--ds-*) / chartPalette value. */\n    color: string;\n    area?: boolean;\n    dash?: string;\n  }>;\n  /** Fixed pixel height; the chart fills its parent's width. */\n  height: number;\n  ariaLabel?: string;\n  hideYAxis?: boolean;\n  showLegend?: boolean;\n  minValue?: number | \"auto\" | \"dataMin\";\n  maxValue?: number;\n  margin?: { top: number; right: number; bottom: number; left: number };\n  valueFormatter?: (value: number | string) => string;",
+    "InteractiveGroupedBarChart": "  data: Array<{ label: string; [key: string]: number | string }>;\n  series: Array<{ key: string; label: string; color: string }>;\n  /** Fixed pixel height; the chart fills its parent's width. */\n  height: number;\n  ariaLabel?: string;\n  barSize?: number;\n  showLegend?: boolean;\n  maxValue?: number;\n  margin?: { top: number; right: number; bottom: number; left: number };\n  valueFormatter?: (value: number | string) => string;",
+    "InteractiveSingleBarChart": "  data: Array<{ label: string; value: number; color?: string }>;\n  /** Fixed pixel height; the chart fills its parent's width. */\n  height: number;\n  ariaLabel?: string;\n  barSize?: number;\n  maxValue?: number;\n  margin?: { top: number; right: number; bottom: number; left: number };\n  valueFormatter?: (value: number | string) => string;",
+    "InteractiveScatterChart": "  data: Array<{ name: string; actual: number; predicted: number }>;\n  domain: [number, number];\n  /** Fixed pixel height; the chart fills its parent's width. */\n  height: number;\n  ariaLabel?: string;\n  valueFormatter?: (value: number | string) => string;",
+    "InteractiveConfusionMatrix": "  labels: string[];\n  matrix: number[][];\n  height?: number;\n  ariaLabel?: string;",
+    "DialogFrame": "  title: string;\n  description?: React.ReactNode;\n  footer?: React.ReactNode;\n  children?: React.ReactNode;\n  /** Renders a Radix Dialog.Content — use inside <Dialog.Root><Dialog.Portal>…. */",
+    "DefaultDialogFooter": "  /** No props. Renders Cancel/Confirm buttons; must be inside a Radix Dialog (Dialog.Root). */",
+    "ProgressCell": "  /** 0–100 percentage filled. */\n  value: number;\n  /** Bar fill color — any CSS color or var(--ds-*). */\n  color?: string;\n  showValue?: boolean;\n  className?: string;",
+    "RecordCard": "  componentId: string;\n  title: React.ReactNode;\n  eyebrow?: React.ReactNode;\n  description?: React.ReactNode;\n  action?: React.ReactNode;\n  footer?: React.ReactNode;\n  children?: React.ReactNode;",
+    "RecordTable": "  columns: ReadonlyArray<{\n    key: string;\n    header: string;\n    align?: \"left\" | \"right\";\n    className?: string;\n    render: (row: any) => React.ReactNode;\n  }>;\n  rows: ReadonlyArray<any>;\n  getRowId: (row: any) => string;\n  onRowClick?: (row: any) => void;\n  rowClassName?: (row: any) => string | undefined;\n  fit?: boolean;\n  minWidth?: number;",
+    "RecursiveMenu": "  items: Array<{\n    label: string;\n    href?: string;\n    meta?: React.ReactNode;\n    status?: \"active\" | \"draft\" | \"ready\";\n    /** Nested RecursiveMenuItem[]. */\n    children?: any[];\n  }>;\n  className?: string;",
+    "SearchFilterHeader": "  query: string;\n  onQueryChange: (query: string) => void;\n  placeholder: string;\n  /** Optional filter controls (e.g. <FilterButton>) rendered on the right. */\n  children?: React.ReactNode;",
+    "FilterButton": "  active?: boolean;\n  onClick: () => void;\n  children: React.ReactNode;",
+    "StateBlock": "  componentId: string;\n  title: string;\n  description: string;\n  /** Status dot color — any CSS color or var(--ds-*). */\n  color: string;\n  /** Icon component (e.g. a lucide-react icon). */\n  icon: React.ComponentType<{ className?: string }>;\n  action?: React.ReactNode;\n  loading?: boolean;\n  children?: React.ReactNode;",
+    "StatusSignal": "  /** Dot color — any CSS color or var(--ds-*). */\n  color: string;\n  variant?: \"dot\" | \"inline\" | \"pill\" | \"cell\" | \"glass\";\n  pulse?: boolean;\n  children?: React.ReactNode;\n  className?: string;",
+    "Surface": "  tone?: \"flat\" | \"raised\" | \"sunken\";\n  children: React.ReactNode;\n  className?: string;\n  id?: string;",
+    "SectionHeader": "  title: string;\n  eyebrow?: string;\n  summary?: string;\n  action?: React.ReactNode;",
+    "ToggleCell": "  checked: boolean;\n  onChange: () => void;"
+  },
+  "overrides": {
+    "InteractiveLineChart": {
+      "cardMode": "column"
+    },
+    "Card": {
+      "cardMode": "column"
+    },
+    "DialogFrame": {
+      "cardMode": "single",
+      "viewport": "480x360"
+    },
+    "CardDescription": {
+      "cardMode": "column"
+    },
+    "CardHeader": {
+      "cardMode": "column"
+    },
+    "CardTitle": {
+      "cardMode": "column"
+    },
+    "DataPanel": {
+      "cardMode": "column"
+    },
+    "DataTable": {
+      "cardMode": "column"
+    },
+    "InfoTooltip": {
+      "cardMode": "column"
+    },
+    "RecordTable": {
+      "cardMode": "column"
+    },
+    "SearchFilterHeader": {
+      "cardMode": "column"
+    },
+    "SectionHeader": {
+      "cardMode": "column"
+    },
+    "Surface": {
+      "cardMode": "column"
+    }
+  },
+  "extraEntries": [
+    "@radix-ui/react-dialog"
+  ],
+  "readmeHeader": ".design-sync/conventions.md"
+}
